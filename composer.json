@@ -1,0 +1,53 @@
+{
+    "name": "weijiajia/saloonphp-apple-client",
+    "description": "A PHP client for Apple's APIs built with Saloon PHP HTTP client framework",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "apple",
+        "api",
+        "client",
+        "saloon",
+        "php",
+        "apple-id",
+        "icloud"
+    ],
+    "authors": [
+        {
+            "name": "Wei Jiajia",
+            "email": "email@example.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Weijiajia\\SaloonphpAppleClient\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "saloonphp/saloon": "^3.0",
+        "weijiajia/saloonphp-logs-plugin": "@dev",
+        "weijiajia/saloonphp-http-proxy-plugin": "@dev",
+        "weijiajia/saloonphp-cookie-plugin": "@dev",
+        "weijiajia/saloonphp-header-synchronize-plugin": "@dev",
+        "spatie/laravel-data": "^4.13"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "mockery/mockery": "^1.5"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/packagist/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
