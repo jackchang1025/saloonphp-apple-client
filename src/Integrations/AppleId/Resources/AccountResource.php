@@ -23,7 +23,7 @@ use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Exception\CaptchaException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
-
+use Weijiajia\SaloonphpAppleClient\Exception\AccountExistRegisterException;
 class AccountResource extends BaseResource
 {
     /**
@@ -34,6 +34,7 @@ class AccountResource extends BaseResource
      */
     public function account(ValidateDto $validateDto): Response
     {
+
         return $this->connector->send(new Account($validateDto));
     }
 
@@ -55,6 +56,7 @@ class AccountResource extends BaseResource
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
+     * @throws AccountExistRegisterException
      */
     public function validate(ValidateDto $validateDto): Response
     {
@@ -69,6 +71,11 @@ class AccountResource extends BaseResource
 
             if ($validationErrors[0]['code'] ?? '' === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            }
+
+            //账号已经注册
+            if ($validationErrors[0]['code'] ?? '' === 'SecurityQuestion.Default.values') {
+                throw new AccountExistRegisterException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
             throw $e;
