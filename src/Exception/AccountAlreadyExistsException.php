@@ -2,6 +2,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class AccountExistRegisterException extends AppleException
+class AccountAlreadyExistsException extends AppleException
 {
 }

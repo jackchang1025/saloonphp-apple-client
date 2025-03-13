@@ -23,7 +23,7 @@ use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Exception\CaptchaException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
-use Weijiajia\SaloonphpAppleClient\Exception\AccountExistRegisterException;
+use Weijiajia\SaloonphpAppleClient\Exception\AccountAlreadyExistsException;
 class AccountResource extends BaseResource
 {
     /**
@@ -56,7 +56,7 @@ class AccountResource extends BaseResource
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
-     * @throws AccountExistRegisterException
+     * @throws AccountAlreadyExistsException
      */
     public function validate(ValidateDto $validateDto): Response
     {
@@ -75,7 +75,7 @@ class AccountResource extends BaseResource
 
             //账号已经注册
             if ($validationErrors[0]['code'] ?? '' === 'SecurityQuestion.Default.values') {
-                throw new AccountExistRegisterException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+                throw new AccountAlreadyExistsException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
             throw $e;
