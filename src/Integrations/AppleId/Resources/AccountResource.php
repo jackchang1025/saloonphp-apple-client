@@ -69,13 +69,14 @@ class AccountResource extends BaseResource
 
             $validationErrors = $e->getResponse()->json('validationErrors');
 
-            if ($validationErrors[0]['code'] ?? '' === 'captchaAnswer.Invalid') {
-                throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+             //account already exists
+             if ($validationErrors[0]['code'] ?? '' === 'SecurityQuestion.Default.values') {
+                throw new AccountAlreadyExistsException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
-            //账号已经注册
-            if ($validationErrors[0]['code'] ?? '' === 'SecurityQuestion.Default.values') {
-                throw new AccountAlreadyExistsException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            //captcha answer invalid
+            if ($validationErrors[0]['code'] ?? '' === 'captchaAnswer.Invalid') {
+                throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
             throw $e;
