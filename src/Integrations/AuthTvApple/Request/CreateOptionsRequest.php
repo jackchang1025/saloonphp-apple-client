@@ -1,13 +1,13 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
-use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateOptionsResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\CreateOptionsResponse;
 
 class CreateOptionsRequest extends Request implements HasBody
 {

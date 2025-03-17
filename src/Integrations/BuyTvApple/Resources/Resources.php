@@ -16,8 +16,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrv
 use Weijiajia\SaloonphpAppleClient\Exception\CreateAccountException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\AccountException;
-use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request\CreateOptionsRequest;
-use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateOptionsResponse;
+
 
 class Resources extends BaseResource
 {
@@ -79,15 +78,6 @@ class Resources extends BaseResource
         }
 
         throw new CreateAccountException($response->body());
-    }
-
-    public function createOptions(string $restrictedAccountType = 'restrictedEmailOptimizedWeb'): CreateOptionsResponse
-    {
-        $request = new CreateOptionsRequest($restrictedAccountType);
-        $response = $this->getConnector()
-            ->send($request);
-
-       return $request->createDtoFromResponse($response);
     }
 }
 

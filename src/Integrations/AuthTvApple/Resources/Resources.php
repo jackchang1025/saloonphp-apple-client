@@ -7,6 +7,8 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request\InitializeSe
 use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request\AccountNameValidateRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\AccountNameValidateResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\InitializeSessionResponse; 
+use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request\CreateOptionsRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\CreateOptionsResponse;
 
 class Resources extends BaseResource
 {
@@ -26,6 +28,15 @@ class Resources extends BaseResource
             ->send($request);
 
         return $request->createDtoFromResponse($response);
+    }
+
+    public function createOptions(string $restrictedAccountType = 'restrictedEmailOptimizedWeb'): CreateOptionsResponse
+    {
+        $request = new CreateOptionsRequest($restrictedAccountType);
+        $response = $this->getConnector()
+            ->send($request);
+
+       return $request->createDtoFromResponse($response);
     }
 }
 

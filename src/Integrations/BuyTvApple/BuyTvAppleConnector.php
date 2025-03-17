@@ -19,7 +19,6 @@ class BuyTvAppleConnector extends AppleConnector
     {
         return [
             'accept'                    => '*/*',
-            'content-type'              => 'application/x-www-form-urlencoded;charset=UTF-8',
             'accept-encoding'           => 'gzip, deflate, br, zstd',
             'Connection'                => 'Keep-Alive',
             'Sec-Fetch-Site'            => 'same-site',
