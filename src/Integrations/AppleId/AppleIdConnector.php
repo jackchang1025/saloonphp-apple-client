@@ -34,7 +34,7 @@ class AppleIdConnector extends AppleConnector
             'Connection' => 'Keep-Alive',
             // 'Content-Type' => 'application/json',
             'Accept' => 'application/json, text/plain, */*',
-            'Accept-Language' => 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+            // 'Accept-Language' => 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
             // 'X-Apple-I-Request-Context' => 'ca',
             // 'X-Apple-I-TimeZone' => 'Asia/Shanghai',
             'Sec-Fetch-Site' => 'same-origin',
@@ -43,14 +43,7 @@ class AppleIdConnector extends AppleConnector
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'appleid.apple.com',
-            'User-Agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0.6778.73 Mobile/15E148 Safari/604.1',
-            'X-Apple-I-FD-Client-Info' => json_encode([
-                "U" => "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0.6778.73 Mobile/15E148 Safari/604.1",
-                "L" => 'en_US',
-                "Z" => "GMT+08:00",
-                "V" => "1.1",
-                "F" => "",
-            ]),
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
         ];
 
         return array_merge($defaultHeaders, $this->config()->get('headers', []));
