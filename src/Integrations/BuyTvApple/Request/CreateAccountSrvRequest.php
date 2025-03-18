@@ -8,6 +8,7 @@ use Saloon\Http\Response;
 use Saloon\Traits\Body\HasFormBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrvResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrvData;
+use Saloon\Http\Auth\TokenAuthenticator;
 
 class CreateAccountSrvRequest extends Request implements HasBody
 {
@@ -16,6 +17,7 @@ class CreateAccountSrvRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
+        public string $token,
         public CreateAccountSrvData $data,
         public bool $isTVPlus = true,
     ) {
@@ -34,5 +36,10 @@ class CreateAccountSrvRequest extends Request implements HasBody
     public function createDtoFromResponse(Response $response): CreateAccountSrvResponse
     {
         return CreateAccountSrvResponse::from($response->json());
+    }
+
+    protected function defaultAuth(): TokenAuthenticator
+    {
+        return new TokenAuthenticator($this->token);
     }
 }

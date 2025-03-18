@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data;
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 

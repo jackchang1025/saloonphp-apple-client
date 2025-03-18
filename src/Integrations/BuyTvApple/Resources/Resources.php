@@ -16,68 +16,78 @@ use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrv
 use Weijiajia\SaloonphpAppleClient\Exception\CreateAccountException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\AccountException;
-
+use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request\CreateOptionsRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateOptionsResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request\PodRequest;
+use Weijiajia\SaloonphpAppleClient\Exception\RegistrationException;
+use Saloon\Http\Response;
 
 class Resources extends BaseResource
 {
     public function validateAccountFieldsSrv(ValidateAccountFieldsSrvData $data): ValidateAccountFieldsSrvResponse
     {
-        $request = new ValidateAccountFieldsSrvRequest($data);
         $response = $this->getConnector()
-            ->send($request);
+            ->send(new ValidateAccountFieldsSrvRequest($data))->dto();
 
-        $data = $request->createDtoFromResponse($response);
-
-        if ($data->status === 0) {
-            return $data;
+        if ($response->status === 0) {
+            return $response;
         }
 
-        throw new AccountException($response->body());
+        throw new AccountException($response->getResponse()->body());
     }
 
     public function generateEmailConfirmationCodeSrv(string $email): GenerateEmailConfirmationCodeSrvResponse
     {
-        $request = new GenerateEmailConfirmationCodeSrvRequest($email);
         $response = $this->getConnector()
-            ->send($request);
+            ->send(new GenerateEmailConfirmationCodeSrvRequest($email))->dto();
 
-        $data = $request->createDtoFromResponse($response);
-
-        if ($data->status === 0) {
-            return $data;
+        if ($response->status === 0) {
+            return $response;
         }
 
-        throw new VerificationCodeException($response->body());
+        throw new VerificationCodeException($response->getResponse()->body());
     }
 
     public function validateEmailConfirmationCodeSrv(string $email, string $clientToken, string $secretCode): ValidateEmailConfirmationCodeSrvResponse
     {
-        $request = new ValidateEmailConfirmationCodeSrvRequest($email, $clientToken, $secretCode);
         $response = $this->getConnector()
-            ->send($request);
+            ->send(new ValidateEmailConfirmationCodeSrvRequest($email, $clientToken, $secretCode))->dto();
 
-        $data = $request->createDtoFromResponse($response);
-
-        if ($data->status === 0) {
-            return $data;
+        if ($response->status !== 0) {
+            throw new RegistrationException($response->getResponse()->body());
         }
 
-        throw new VerificationCodeException($response->body());
+        $validationResults = $response->getResponse()->json('validationResults');
+
+        if(!empty($validationResults[0]['error'])){
+            throw new VerificationCodeException($response->getResponse()->body());
+        }
+
+        return $response;
     }
 
-    public function createAccountSrv(CreateAccountSrvData $data): CreateAccountSrvResponse
+    public function createAccountSrv(string $token,CreateAccountSrvData $data): CreateAccountSrvResponse
     {
-        $request = new CreateAccountSrvRequest($data);
         $response = $this->getConnector()
-            ->send($request);
+            ->send(new CreateAccountSrvRequest($token, $data))->dto();
 
-        $data = $request->createDtoFromResponse($response);
-
-        if ($data->status === 0) {
-            return $data;
+        if ($response->status === 0) {
+            return $response;
         }
 
-        throw new CreateAccountException($response->body());
+        throw new CreateAccountException($response->getResponse()->body());
+    }
+
+    public function createOptions(string $restrictedAccountType = 'restrictedEmailOptimizedWeb'): CreateOptionsResponse
+    {
+        return $this->getConnector()
+            ->send(new CreateOptionsRequest($restrictedAccountType))->dto();
+    }
+
+    public function pod(): Response
+    {
+        return $this->getConnector()
+            ->send(new PodRequest());
     }
 }
 
