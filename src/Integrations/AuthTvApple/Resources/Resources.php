@@ -16,10 +16,10 @@ class Resources extends BaseResource
             ->send(new InitializeSessionRequest())->dto();
     }
 
-    public function getAccountNameValidate(string $accountName): AccountNameValidateResponse
+    public function getAccountNameValidate(string $accountName,string $pageUUID): AccountNameValidateResponse
     {
         return $this->getConnector()
-            ->send(new AccountNameValidateRequest($accountName))->dto();
+            ->send(new AccountNameValidateRequest($accountName,$pageUUID))->dto();
 
     }
 

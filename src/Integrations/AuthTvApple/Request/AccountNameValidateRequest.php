@@ -16,6 +16,7 @@ class AccountNameValidateRequest extends Request implements HasBody
 
     public function __construct(
         public string $accountName,
+        public string $pageUUID,
     ) {
     }
 
@@ -34,5 +35,12 @@ class AccountNameValidateRequest extends Request implements HasBody
     public function createDtoFromResponse(Response $response): AccountNameValidateResponse
     {
         return AccountNameValidateResponse::from($response->json());
+    }
+
+    protected function defaultHeaders(): array
+    {
+        return [
+            'X-Apple-Page-UUID' => $this->pageUUID,
+        ];
     }
 }

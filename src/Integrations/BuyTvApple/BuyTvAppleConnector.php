@@ -2,13 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple;
 
-use Saloon\Traits\Plugins\AcceptsJson;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Resources\Resources;
 
 class BuyTvAppleConnector extends AppleConnector
 {
-    use AcceptsJson;
 
     public function resolveBaseUrl(): string
     {
@@ -46,7 +44,7 @@ class BuyTvAppleConnector extends AppleConnector
             // 不同地区有不同的年龄限制和内容规定
             // 调整隐私政策和数据处理方式
             // 正确设置这个头部对于模拟 Apple TV 网站注册流程至关重要，确保遵循与浏览器一致的地区和语言设置，避免区域验证错误。
-            'X-Set-Apple-Store-Front'  => '143441-1,8'//143441
+            'X-Apple-Store-Front'  => '143441-1,8'//143441
         ];
     }
 

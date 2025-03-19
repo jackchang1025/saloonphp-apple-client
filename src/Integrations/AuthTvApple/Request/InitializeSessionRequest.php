@@ -20,4 +20,11 @@ class InitializeSessionRequest extends Request
     {
         return InitializeSessionResponse::from($response->json());
     }
+
+    protected function defaultHeaders(): array
+    {
+        return [
+            'Content-Type'                    => 'application/json',
+        ];
+    }
 }
