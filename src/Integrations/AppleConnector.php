@@ -17,10 +17,12 @@ use Weijiajia\SaloonphpCookiePlugin\HasCookie;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\HasHeaderSynchronize;
 use Weijiajia\SaloonphpCookiePlugin\Contracts\CookieJarInterface;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronize;
+use Weijiajia\SaloonphpHttpProxyPlugin\Contracts\ProxyManagerInterface;
 use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Saloon\Http\Request;
 
-abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize
+
+abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface
 {
     use HasTimeout;
     use AlwaysThrowOnErrors;

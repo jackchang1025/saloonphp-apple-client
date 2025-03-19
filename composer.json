@@ -26,11 +26,11 @@
     "require": {
         "php": ">=8.0",
         "saloonphp/saloon": "^3.0",
-        "weijiajia/saloonphp-logs-plugin": "@dev",
-        "weijiajia/saloonphp-http-proxy-plugin": "@dev",
+        "spatie/laravel-data": "^4.13",
         "weijiajia/saloonphp-cookie-plugin": "@dev",
         "weijiajia/saloonphp-header-synchronize-plugin": "@dev",
-        "spatie/laravel-data": "^4.13"
+        "weijiajia/saloonphp-http-proxy-plugin": "dev-main",
+        "weijiajia/saloonphp-logs-plugin": "@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
