@@ -8,6 +8,11 @@ use Saloon\Http\Response;
 
 class Resources extends BaseResource
 {
+    /**
+     * @return Response
+     * @throws \Saloon\Exceptions\Request\FatalRequestException
+     * @throws \Saloon\Exceptions\Request\RequestException
+     */
     public function getTvApple(): Response
     {
         return $this->getConnector()

@@ -2,28 +2,34 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Buy;
 
+use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\Buy\Request\PaymentInfosRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Buy\Request\TokenRequest;
 use Saloon\Http\Response;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
-class Resources
+class Resources extends BaseResource
 {
-    public function __construct(protected BuyConnector $connector)
-    {
+    /**
+     * @param BuyConnector $connector
+     * @throws FatalRequestException
+     * @throws RequestException
+     */
+    public function __construct(BuyConnector $connector){
+        parent::__construct($connector);
         $this->getToken();
     }
 
+    /**
+     * @return Response
+     * @throws FatalRequestException
+     * @throws RequestException
+     */
     public function getToken(): Response
     {
         return $this->getConnector()
             ->send(new TokenRequest());
-    }
-
-    public function getConnector(): BuyConnector
-    {
-        return $this->connector;
     }
 
     /**

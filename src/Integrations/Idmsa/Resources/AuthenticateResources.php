@@ -123,7 +123,6 @@ class AuthenticateResources extends BaseResource
      * @return NullData
      * @throws RequestException
      * @throws VerificationCodeException
-     *
      * @throws FatalRequestException
      */
     public function verifySecurityCode(string $code): NullData
@@ -135,16 +134,11 @@ class AuthenticateResources extends BaseResource
                 ->dto();
 
         } catch (RequestException $e) {
-            /**
-             * @var Response $response
-             */
+
             $response = $e->getResponse();
 
             if ($response->status() === 400) {
-                throw new VerificationCodeException(
-                    $response,
-                    $response->getFirstServiceError()?->getMessage() ?? '验证码错误'
-                );
+                throw new VerificationCodeException($response->body());
             }
 
             if ($response->status() === 412) {
@@ -173,7 +167,6 @@ class AuthenticateResources extends BaseResource
      * @return VerifyPhoneSecurityCode
      * @throws RequestException
      * @throws VerificationCodeException
-     *
      * @throws FatalRequestException
      */
     public function verifyPhoneCode(string $id, string $code): VerifyPhoneSecurityCode
@@ -185,16 +178,11 @@ class AuthenticateResources extends BaseResource
                 ->dto();
 
         } catch (RequestException $e) {
-            /**
-             * @var Response $response
-             */
+
             $response = $e->getResponse();
 
             if ($response->status() === 400) {
-                throw new VerificationCodeException(
-                    $response,
-                    $response->getFirstServiceError()?->getMessage() ?? '验证码错误'
-                );
+                throw new VerificationCodeException($response->body());
             }
 
             if ($response->status() === 412) {
@@ -234,16 +222,10 @@ class AuthenticateResources extends BaseResource
 
         } catch (RequestException $e) {
 
-            /**
-             * @var Response $response
-             */
             $response = $e->getResponse();
 
             if ($response->status() === 423) {
-                throw new VerificationCodeSentTooManyTimesException(
-                    $response,
-                    $response->getFirstServiceError()?->getMessage() ?? '验证码发送次数过多'
-                );
+                throw new VerificationCodeSentTooManyTimesException($response->body());
             }
 
             throw $e;
@@ -251,15 +233,12 @@ class AuthenticateResources extends BaseResource
     }
 
     /**
-     * @param string $id
-     * @param string $code
-     * @param string $email
-     *
+     * @param VerifyEmailSecurityCode $data
      * @return VerifyEmailSecurityCodeResponse
+     * @throws ClientException
+     * @throws FatalRequestException
      * @throws RequestException
      * @throws VerificationCodeException
-     * @throws FatalRequestException
-     * @throws ClientException
      */
     public function verifyEmailSecurityCode(VerifyEmailSecurityCode $data): VerifyEmailSecurityCodeResponse
     {
@@ -270,9 +249,6 @@ class AuthenticateResources extends BaseResource
 
        } catch (ClientException $e) {
 
-            /**
-             * @var Response $response
-             */
             $response = $e->getResponse();
 
             if($response->status() === 400){
