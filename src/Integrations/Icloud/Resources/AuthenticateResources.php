@@ -2,7 +2,7 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources;
 
-use Weijiajia\SaloonphpAppleClient\Exception\AppleRequestException\LoginRequestException;
+use Weijiajia\SaloonphpAppleClient\Exception\LoginRequestException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Authenticate\Authenticate;

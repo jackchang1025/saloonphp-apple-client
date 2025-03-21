@@ -7,8 +7,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem;
 
-use Weijiajia\SaloonphpAppleClient\Apple;
-use Weijiajia\SaloonphpAppleClient\Cookies\CookieAuthenticator;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Resources\Resources;
 

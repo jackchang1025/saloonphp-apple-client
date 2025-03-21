@@ -4,8 +4,8 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources;
 
 use Weijiajia\SaloonphpAppleClient\Exception\BindPhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\ErrorException;
-use Weijiajia\SaloonphpAppleClient\Exception\PhoneException;
-use Weijiajia\SaloonphpAppleClient\Exception\PhoneNumberAlreadyExistsException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;

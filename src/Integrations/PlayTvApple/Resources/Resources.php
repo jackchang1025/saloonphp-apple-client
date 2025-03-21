@@ -10,6 +10,12 @@ use Weijiajia\SaloonphpAppleClient\Exception\RegistrationException;
 class Resources extends BaseResource
 {
 
+    /**
+     * @return CreateAccountFieldsSrvResponse
+     * @throws RegistrationException
+     * @throws \Saloon\Exceptions\Request\FatalRequestException
+     * @throws \Saloon\Exceptions\Request\RequestException
+     */
     public function createAccountFieldsSrv(): CreateAccountFieldsSrvResponse
     {
         $response = $this->getConnector()

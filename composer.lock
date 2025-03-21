@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a209232693eff44e6f9ed4b9239c5e3a",
+    "content-hash": "695ed949126077be7534ac3f513e6fe6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3412,16 +3412,16 @@
         },
         {
             "name": "weijiajia/saloonphp-logs-plugin",
-            "version": "0.0.6",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackchang1025/saloonphp-logs-plugin.git",
-                "reference": "0532ea538e1eb1be2ff71c5325b1c00032240d70"
+                "reference": "b341c8a87bedffbb358caf571bdab2d15847f7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackchang1025/saloonphp-logs-plugin/zipball/0532ea538e1eb1be2ff71c5325b1c00032240d70",
-                "reference": "0532ea538e1eb1be2ff71c5325b1c00032240d70",
+                "url": "https://api.github.com/repos/jackchang1025/saloonphp-logs-plugin/zipball/b341c8a87bedffbb358caf571bdab2d15847f7f1",
+                "reference": "b341c8a87bedffbb358caf571bdab2d15847f7f1",
                 "shasum": ""
             },
             "require": {
@@ -3429,6 +3429,7 @@
                 "psr/log": "^3.0",
                 "saloonphp/saloon": "^3.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3453,9 +3454,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jackchang1025/saloonphp-logs-plugin/issues",
-                "source": "https://github.com/jackchang1025/saloonphp-logs-plugin/tree/0.0.6"
+                "source": "https://github.com/jackchang1025/saloonphp-logs-plugin/tree/main"
             },
-            "time": "2025-02-28T09:11:28+00:00"
+            "time": "2025-03-21T10:37:02+00:00"
         }
     ],
     "packages-dev": [
@@ -5282,7 +5283,8 @@
     "stability-flags": {
         "weijiajia/saloonphp-cookie-plugin": 20,
         "weijiajia/saloonphp-header-synchronize-plugin": 20,
-        "weijiajia/saloonphp-http-proxy-plugin": 20
+        "weijiajia/saloonphp-http-proxy-plugin": 20,
+        "weijiajia/saloonphp-logs-plugin": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
