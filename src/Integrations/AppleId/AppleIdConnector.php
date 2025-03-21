@@ -15,9 +15,17 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\PaymentResourc
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityDevicesResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityPhoneResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountResource;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\RepairResource;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasRequestedWith;
 
 class AppleIdConnector extends AppleConnector
 {
+    use HasSecCh;
+    use HasSecFetch;
+    use HasRequestedWith;
+
     public function resolveBaseUrl(): string
     {
         return 'https://appleid.apple.com';
@@ -25,24 +33,18 @@ class AppleIdConnector extends AppleConnector
 
     public function defaultHeaderSynchronizes(): array
     {
-        return ['scnt'];
+        return ['scnt','X-Apple-OAuth-Context','X-Apple-Session-Token'];
     }
 
     protected function defaultHeaders(): array
     {
         $defaultHeaders = [
             'Connection' => 'Keep-Alive',
-            // 'Content-Type' => 'application/json',
             'Accept' => 'application/json, text/plain, */*',
-            // 'Accept-Language' => 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
-            // 'X-Apple-I-Request-Context' => 'ca',
-            // 'X-Apple-I-TimeZone' => 'Asia/Shanghai',
-            'Sec-Fetch-Site' => 'same-origin',
-            'Sec-Fetch-Mode' => 'cors',
-            'Sec-Fetch-Dest' => 'empty',
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'appleid.apple.com',
+            'X-Apple-Skip-Repair-Attributes' => '[]',
             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
         ];
 
@@ -82,5 +84,10 @@ class AppleIdConnector extends AppleConnector
     public function getAccountResource(): AccountResource
     {
         return new AccountResource($this);
+    }
+
+    public function getRepairResource(): RepairResource
+    {
+        return new RepairResource($this);
     }
 }

@@ -7,17 +7,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Account;
 
-use Saloon\Http\Connector;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Account\Resources\Resources;
-use Weijiajia\SaloonphpLogsPlugin\HasLogger;
 
-class AccountConnector extends Connector
+class AccountConnector extends AppleConnector
 {
-
-    public function __construct(
-    ) {
-
-    }
 
     public function resolveBaseUrl(): string
     {
@@ -28,12 +22,9 @@ class AccountConnector extends Connector
     {
         return [
             'Connection' => 'Keep-Alive',
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json, text/plain, */*',
-            // 'Accept-Language' => 'zh-CN,en;q=0.9,zh;q=0.8',
+            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-excha',
             'Accept-Language' => 'en,zh-CN;q=0.9,zh;q=0.8',
             'X-Apple-I-Request-Context' => 'ca',
-            // 'X-Apple-I-TimeZone' => 'Asia/Shanghai',
             'Sec-Fetch-Site' => 'same-origin',
             'Sec-Fetch-Mode' => 'cors',
             'Sec-Fetch-Dest' => 'empty',

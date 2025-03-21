@@ -2,6 +2,7 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources;
 
+use Saloon\Exceptions\Request\ClientException;
 use Weijiajia\SaloonphpAppleClient\Config\Config;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\NullData;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
@@ -24,10 +25,13 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth\SignInCo
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth\SignInInitRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth\VerifyPhoneSecurityCodeRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth\VerifyTrustedDeviceSecurityCodeRequest;
-use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth\VerifyEmailSecurityCodeRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Request\AppleAuth\VerifyEmailSecurityCode\VerifyEmailSecurityCode;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\Auth\VerifyEmailSecurityCode\VerifyEmailSecurityCodeResponse;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
-
+use Weijiajia\SaloonphpAppleClient\Response\Response;
+use Weijiajia\SaloonphpAppleClient\Exception\SignInException;
 class AuthenticateResources extends BaseResource
 {
 
@@ -51,13 +55,19 @@ class AuthenticateResources extends BaseResource
      * @param SignInComplete $data
      * @return SignInCompleteResponse
      * @throws FatalRequestException
+     * @throws SignInException
      * @throws RequestException
      */
     public function signInComplete(SignInComplete $data): SignInCompleteResponse
     {
-        return $this->getConnector()->send(
-            new SignInCompleteRequest($data)
-        )->dto();
+        try {
+
+            return $this->getConnector()->send(new SignInCompleteRequest($data))->dto();
+
+        } catch (ClientException $e) {
+
+            throw new SignInException($e->getResponse()->body());
+        }
     }
 
     /**
@@ -238,5 +248,42 @@ class AuthenticateResources extends BaseResource
 
             throw $e;
         }
+    }
+
+    /**
+     * @param string $id
+     * @param string $code
+     * @param string $email
+     *
+     * @return VerifyEmailSecurityCodeResponse
+     * @throws RequestException
+     * @throws VerificationCodeException
+     * @throws FatalRequestException
+     * @throws ClientException
+     */
+    public function verifyEmailSecurityCode(VerifyEmailSecurityCode $data): VerifyEmailSecurityCodeResponse
+    {
+    
+       try {
+
+            return $this->getConnector()->send(new VerifyEmailSecurityCodeRequest($data))->dto();
+
+       } catch (ClientException $e) {
+
+            /**
+             * @var Response $response
+             */
+            $response = $e->getResponse();
+
+            if($response->status() === 400){
+                throw new VerificationCodeException($response->body());
+            }
+
+            if($response->status() === 412){
+                return $response->dto();
+            }
+
+            throw $e;
+       }
     }
 }

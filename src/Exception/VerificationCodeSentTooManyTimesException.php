@@ -7,6 +7,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class VerificationCodeSentTooManyTimesException extends AppleClientException
+class VerificationCodeSentTooManyTimesException extends AppleException
 {
 }

@@ -19,8 +19,6 @@ class SignInCompleteRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
-    protected bool $proxyEnabled = false;
-
     protected Method $method = Method::POST;
 
     public function __construct(

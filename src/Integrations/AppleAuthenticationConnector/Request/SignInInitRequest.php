@@ -20,8 +20,6 @@ class SignInInitRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    protected bool $proxyEnabled = false;
-
     public function __construct(protected string $account)
     {
     }

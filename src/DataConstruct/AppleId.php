@@ -2,17 +2,15 @@
 
 namespace Weijiajia\SaloonphpAppleClient\DataConstruct;
 
-use App\Models\Account as AccountModel;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleIdInterface;
 
-#[MapName(SnakeCaseMapper::class)]
-class Account extends Data
+class AppleId extends Data implements AppleIdInterface
 {
-
     public function __construct(
-        public string $account,
-        public string $password,
+        public string $appleId,
+        public ?string $password = null,
         public ?string $bindPhone = null,
         public ?string $bindPhoneAddress = null,
         public ?string $dsid = null,
@@ -36,19 +34,14 @@ class Account extends Data
         return $this->accountCountryCode;
     }
 
-    public function model(): AccountModel
-    {
-        return AccountModel::where('account', $this->getAccount())->firstOrFail();
-    }
-
     public function getSessionId(): string
     {
-        return md5(sprintf('%s_%s', $this->getAccount(), $this->getPassword()));
+        return md5(sprintf('%s_%s', $this->getAppleId(), $this->getPassword()));
     }
 
-    public function getAccount(): string
+    public function getAppleId(): string
     {
-        return $this->account;
+        return $this->appleId;
     }
 
     public function getBindPhone(): ?string

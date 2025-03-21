@@ -15,10 +15,11 @@ class TwoSV extends Data
      */
     public function __construct(
         public array $supportedPushModes,
-        public PhoneNumberVerification $phoneNumberVerification,
         public array $authFactors,
         public string $source_returnurl,
-        public int $sourceAppId
+        public int $sourceAppId,
+        public array $emailVerification = [],
+        public ?PhoneNumberVerification $phoneNumberVerification = null
     ) {
     }
 }

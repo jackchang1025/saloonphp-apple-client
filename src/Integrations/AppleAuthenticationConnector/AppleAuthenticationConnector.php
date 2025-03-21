@@ -7,7 +7,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector;
 
-use Weijiajia\SaloonphpAppleClient\Apple;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Resources\AuthenticationResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Saloon\Exceptions\Request\FatalRequestException;
@@ -16,6 +15,10 @@ use Saloon\Http\Request;
 
 class AppleAuthenticationConnector extends AppleConnector
 {
+    public function isProxyEnabled(): bool
+    {
+        return false;
+    }
 
     /**
      * @param string $url

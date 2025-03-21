@@ -13,6 +13,12 @@ use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Saloon\CachePlugin\Contracts\Driver;
+use Saloon\CachePlugin\Traits\HasCaching;
+use Saloon\CachePlugin\Contracts\Cacheable;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+use Saloon\CachePlugin\Drivers\FlysystemDriver;
 
 class SignInInitRequest extends Request implements HasBody
 {
@@ -23,6 +29,21 @@ class SignInInitRequest extends Request implements HasBody
     public function __construct(protected string $a, protected string $account)
     {
     }
+
+    // public function resolveCacheDriver(): Driver
+    // {
+    //     // This example uses the "AwsS3V3Adapter" driver
+    //     // that is provided by Flysystem.
+
+    //     return new FlysystemDriver(
+    //         new Filesystem(new LocalFilesystemAdapter(storage_path('app/public/cache')))
+    //     );
+    // }
+
+    // public function cacheExpiryInSeconds(): int
+    // {
+    //     return 3600; // One Hour
+    // }
 
     public function createDtoFromResponse(Response $response): SignInInit
     {

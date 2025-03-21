@@ -12,6 +12,7 @@ use Saloon\Http\Faking\MockClient;
 use Saloon\Traits\Plugins\AlwaysThrowOnErrors;
 use Saloon\Traits\Plugins\HasTimeout;
 use Weijiajia\SaloonphpLogsPlugin\HasLogger;
+use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\SaloonphpHttpProxyPlugin\HasProxy;
 use Weijiajia\SaloonphpCookiePlugin\HasCookie;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\HasHeaderSynchronize;
@@ -22,7 +23,7 @@ use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Saloon\Http\Request;
 
 
-abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface
+abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
     use HasTimeout;
     use AlwaysThrowOnErrors;
