@@ -2,14 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\DataConstruct;
 
-use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Weijiajia\SaloonphpAppleClient\Contracts\AppleIdInterface;
 
 class AppleId extends Data implements AppleIdInterface
 {
     public function __construct(
         public string $appleId,
+        public ?string $uri  = null,
         public ?string $password = null,
         public ?string $bindPhone = null,
         public ?string $bindPhoneAddress = null,
@@ -18,12 +17,21 @@ class AppleId extends Data implements AppleIdInterface
     ) {
     }
 
+    public function getEmailUri(): ?string
+    {
+        return $this->uri;
+    }
+
+    public function getPhoneUri(): ?string
+    {
+        return $this->bindPhoneAddress;
+    }
+
     public function getDsid(): ?string
     {
         return $this->dsid;
     }
 
-    //判断是否是大陆账号
     public function isCN(): bool
     {
         return $this->accountCountryCode === 'CHN';
