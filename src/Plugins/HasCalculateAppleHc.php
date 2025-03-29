@@ -6,16 +6,18 @@ use Saloon\Http\PendingRequest;
 use Weijiajia\SaloonphpAppleClient\Contracts\CalculateAppleHc;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronize;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\HeaderSynchronizeException;
-use Weijiajia\SaloonphpHeaderSynchronizePlugin\HeaderSynchronizeDriver;
 use DateTime;
 use DateTimeZone;
 
 trait HasCalculateAppleHc
 {
+
+    /**
+     * @throws \DateMalformedStringException
+     */
     public function date(): string
     {
-        $dateTime = new DateTime('now', new DateTimeZone('UTC'));
-        return $dateTime->format('YmdHis');
+        return (new DateTime('now', new DateTimeZone('UTC')))->format('YmdHis');
     }
 
     public function version(): int
@@ -23,6 +25,9 @@ trait HasCalculateAppleHc
         return 1;
     }
 
+    /**
+     * @throws HeaderSynchronizeException
+     */
     public function bootHasCalculateAppleHc(PendingRequest $pendingRequest): void
     {
 
@@ -30,7 +35,7 @@ trait HasCalculateAppleHc
         $connector = $pendingRequest->getConnector();
 
         if (!$connector instanceof CalculateAppleHc && !$request instanceof CalculateAppleHc) {
-            throw new \Exception('connector or request must implement '.CalculateAppleHc::class);
+            throw new \RuntimeException('connector or request must implement '.CalculateAppleHc::class);
         }
 
 
@@ -39,7 +44,7 @@ trait HasCalculateAppleHc
         }
 
         /**
-         * @var HeaderSynchronizeDriver
+         * @var HeaderSynchronize $connector
          */
         $headerSynchronizeDriver = $request instanceof HeaderSynchronize
            ? $request->resolveHeaderSynchronizeDriver()
@@ -54,7 +59,7 @@ trait HasCalculateAppleHc
 
         $calculateAppleHc = $request instanceof CalculateAppleHc ? $request : $connector;
         $version = $calculateAppleHc->version();
-        $date = $calculateAppleHc->date($pendingRequest->headers()->get('X-Apple-I-Timezone'));
+        $date = $calculateAppleHc->date();
 
         $hc = self::calculate_hc($version, $hcBits, $date, $hcChallenge);
 
@@ -90,7 +95,7 @@ trait HasCalculateAppleHc
             }
 
             // 检查前 $bits 位是否全为零
-            if (substr($binary_hc, 0, $bits) === str_repeat('0', $bits)) {
+            if (str_starts_with($binary_hc, str_repeat('0', $bits))) {
                 return $hc;
             }
 
