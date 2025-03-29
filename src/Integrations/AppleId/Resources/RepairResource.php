@@ -34,7 +34,7 @@ class RepairResource extends BaseResource
     {
         try{
 
-            return $this->connector->send(new Options($widgetKey,$sessionId));;
+            return $this->connector->send(new Options($widgetKey,$sessionId));
 
         }catch(ClientException $e){
 
@@ -49,7 +49,7 @@ class RepairResource extends BaseResource
 
                 $this->verifyPayment($location,$widgetKey,$sessionId);
 
-                return $this->connector->send(new Options($widgetKey,$sessionId));;
+                return $this->connector->send(new Options($widgetKey,$sessionId));
             }
             throw $e;
         }

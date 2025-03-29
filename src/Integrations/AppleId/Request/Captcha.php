@@ -2,21 +2,26 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaDto;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\BaseAccount;
 
-class Captcha extends Request implements HasBody
+class Captcha extends BaseAccount implements HasBody
 {
     use HasJsonBody;
+    use HasAcceptsJson;
 
     protected Method $method = Method::POST;
 
     public function __construct(
+        public string $appleIdSessionId,
+        public string $appleWidgetKey,
         public string $type = 'IMAGE',
+        public string $appleRequestContext = 'create',
     ) {
     }
 
@@ -32,8 +37,17 @@ class Captcha extends Request implements HasBody
         ];
     }
 
-    public function createDtoFromResponse(Response $response): CaptchaDto
+    public function defaultHeaders(): array
     {
-        return CaptchaDto::from($response->json());
+        return [
+            'X-Apple-Id-Session-Id' => $this->appleIdSessionId,
+            'X-Apple-Widget-Key' => $this->appleWidgetKey,
+            'X-Apple-Request-Context' => $this->appleRequestContext,
+        ];
+    }
+
+    public function createDtoFromResponse(Response $response): CaptchaResponse
+    {
+        return CaptchaResponse::from($response->json());
     }
 }

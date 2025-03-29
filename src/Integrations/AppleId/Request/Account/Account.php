@@ -2,20 +2,28 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Contracts\Body\HasBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate;
-class Account extends Request implements HasBody
+use Weijiajia\SaloonphpAppleClient\Contracts\CalculateAppleHc;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasCalculateAppleHc;
+
+class Account extends BaseAccount implements HasBody,CalculateAppleHc
 {
 
     use HasJsonBody;
+    use HasAcceptsJson;
+    use HasCalculateAppleHc;
 
     protected Method $method = Method::POST;
 
     public function __construct(
         public Validate $data,
+        public string $appleIdSessionId,
+        public string $appleWidgetKey,
+        public string $appleRequestContext = 'create',
     ) {
     }
 
@@ -27,5 +35,14 @@ class Account extends Request implements HasBody
     public function defaultBody(): array
     {
         return $this->data->toArray();
+    }
+
+    public function defaultHeaders(): array
+    {
+        return [
+            'X-Apple-Id-Session-Id' => $this->appleIdSessionId,
+            'X-Apple-Widget-Key' => $this->appleWidgetKey,
+            'X-Apple-Request-Context' => $this->appleRequestContext,
+        ];
     }
 }

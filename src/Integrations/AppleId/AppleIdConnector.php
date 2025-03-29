@@ -18,13 +18,12 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountResourc
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\RepairResource;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasRequestedWith;
+
 
 class AppleIdConnector extends AppleConnector
 {
     use HasSecCh;
     use HasSecFetch;
-    use HasRequestedWith;
 
     public function resolveBaseUrl(): string
     {
@@ -41,11 +40,11 @@ class AppleIdConnector extends AppleConnector
         $defaultHeaders = [
             'Connection' => 'Keep-Alive',
             'Accept' => 'application/json, text/plain, */*',
+            'Accept-Encoding' => 'gzip, deflate, br, zstd',
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'appleid.apple.com',
-            'X-Apple-Skip-Repair-Attributes' => '[]',
-            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
         ];
 
         return array_merge($defaultHeaders, $this->config()->get('headers', []));
