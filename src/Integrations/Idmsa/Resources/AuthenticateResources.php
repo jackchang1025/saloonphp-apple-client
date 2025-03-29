@@ -3,7 +3,6 @@
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources;
 
 use Saloon\Exceptions\Request\ClientException;
-use Weijiajia\SaloonphpAppleClient\Config\Config;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\NullData;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
@@ -79,14 +78,20 @@ class AuthenticateResources extends BaseResource
      * @throws FatalRequestException
      * @throws RequestException
      */
-    public function sign(string $frameId, string $clientId, string $redirectUri, string $state): Response
+    public function signIn(string $frameId, string $iframeId, string $clientId, string $redirectUri, string $state, string $language = 'en_US', string $skVersion = '7', string $authVersion = 'latest', string $responseType = 'code', string $responseMode = 'web_message'): Response
     {
         return $this->getConnector()->send(
             new AuthorizeSignInRequest(
                 frameId: $frameId,
                 clientId: $clientId,
                 redirectUri: $redirectUri,
+                iframeId: $iframeId,
                 state: $state,
+                language: $language,
+                skVersion: $skVersion,
+                authVersion: $authVersion,
+                responseType: $responseType,
+                responseMode: $responseMode,
             )
         );
     }

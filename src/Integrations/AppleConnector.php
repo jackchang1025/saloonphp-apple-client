@@ -21,7 +21,8 @@ use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronize;
 use Weijiajia\SaloonphpHttpProxyPlugin\Contracts\ProxyManagerInterface;
 use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Saloon\Http\Request;
-
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
@@ -35,6 +36,11 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
     public function resolveResponseClass(): string
     {
         return Response::class;
+    }
+
+    public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
+    {
+        return $exception instanceof FatalRequestException;
     }
 
     /**

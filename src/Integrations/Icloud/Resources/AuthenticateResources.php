@@ -11,7 +11,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\AuthenticateReque
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\LoginDelegatesRequest;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
-
+use Weijiajia\SaloonphpAppleClient\Response\Response;
 class AuthenticateResources extends BaseResource
 {
     /**
@@ -51,4 +51,6 @@ class AuthenticateResources extends BaseResource
             ->send(new LoginDelegatesRequest($appleId, $password, $authCode, $clientId, $protocolVersion))
             ->dto();
     }
+
+    
 }

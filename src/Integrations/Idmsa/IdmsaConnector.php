@@ -9,9 +9,14 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources\AuthenticateResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources\JsLogResources;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 
 class IdmsaConnector extends AppleConnector
 {
+    use HasSecCh;
+    use HasSecFetch;
     public function __construct(
         readonly protected string $serviceKey,
         readonly protected string $redirectUri
@@ -21,7 +26,8 @@ class IdmsaConnector extends AppleConnector
 
     public function defaultHeaderSynchronizes(): array
     {
-        return ['X-Apple-ID-Session-Id', 'X-Apple-Auth-Attributes', 'scnt'];
+        // return ['X-Apple-ID-Session-Id', 'X-Apple-Auth-Attributes', 'scnt'];
+        return [];
     }
 
     public function resolveBaseUrl(): string
@@ -58,29 +64,28 @@ class IdmsaConnector extends AppleConnector
             'Host'                        => 'idmsa.apple.com',
             'Origin'                      => $this->resolveBaseUrl(),
             'Referer'                     => $this->resolveBaseUrl(),
-            'Sec-Fetch-Site'              => 'same-origin',
-            'Sec-Fetch-Mode'              => 'cors',
-            'Sec-Fetch-Dest'              => 'empty',
-            'User-Agent'                  => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36',
-            'X-Apple-Widget-Key'            => $this->serviceKey,
-            'X-Apple-OAuth-Redirect-URI'   => $this->redirectUri,
-            'X-Apple-OAuth-Client-Id'      => $this->serviceKey,
-            'X-Apple-OAuth-Client-Type'    => 'firstPartyAuth',
-            'X-Requested-With'            => 'XMLHttpRequest',
-            'X-Apple-OAuth-Response-Mode' => 'web_message',
-            'X-Apple-OAuth-Response-Type' => 'code',
-            'X-APPLE-HC'                  => '1:12:20240626165907:82794b5d498b7d7dc29740b23971ded5::4824',
-            'X-Apple-Domain-Id'           => '1',
+            'User-Agent'                  => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            // 'X-Apple-Widget-Key'            => $this->serviceKey,
+            // 'X-Apple-OAuth-Redirect-URI'   => $this->redirectUri,
+            // 'X-Apple-OAuth-Client-Id'      => $this->serviceKey,
+            // 'X-Apple-OAuth-Client-Type'    => 'firstPartyAuth',
+            // 'X-Requested-With'            => 'XMLHttpRequest',
+            // 'X-Apple-OAuth-Response-Mode' => 'web_message',
+            // 'X-Apple-OAuth-Response-Type' => 'code',
+            // 'X-APPLE-HC'                  => '1:12:20240626165907:82794b5d498b7d7dc29740b23971ded5::4824',
+            // 'X-Apple-Domain-Id'           => '1',
             
-            'Priority'                    => 'u=1, i',
-            'Sec-Ch-Ua'                   => "Chromium;v=124, Google Chrome;v=124",
-            'Sec-Ch-Ua-Mobile'            => '?0',
-            'Sec-Ch-Ua-Platform'          => 'Windows',
+            // 'Priority'                    => 'u=1, i',
         ];
     }
 
     public function getAuthenticateResources(): AuthenticateResources
     {
         return new AuthenticateResources($this);
+    }
+
+    public function getJsLogResources(): JsLogResources
+    {
+        return new JsLogResources($this);
     }
 }
