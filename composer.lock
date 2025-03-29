@@ -3248,12 +3248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackchang1025/saloonphp-cookie-plugin.git",
-                "reference": "cefccd6692b9d564fb49ca39c8d4b74841b455ea"
+                "reference": "014facc44b3692ddd6fa3779be6b3d6c0eadd464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackchang1025/saloonphp-cookie-plugin/zipball/cefccd6692b9d564fb49ca39c8d4b74841b455ea",
-                "reference": "cefccd6692b9d564fb49ca39c8d4b74841b455ea",
+                "url": "https://api.github.com/repos/jackchang1025/saloonphp-cookie-plugin/zipball/014facc44b3692ddd6fa3779be6b3d6c0eadd464",
+                "reference": "014facc44b3692ddd6fa3779be6b3d6c0eadd464",
                 "shasum": ""
             },
             "require": {
@@ -3295,7 +3295,7 @@
                 "issues": "https://github.com/jackchang1025/saloonphp-cookie-plugin/issues",
                 "source": "https://github.com/jackchang1025/saloonphp-cookie-plugin/tree/main"
             },
-            "time": "2025-03-08T16:08:15+00:00"
+            "time": "2025-03-23T15:36:15+00:00"
         },
         {
             "name": "weijiajia/saloonphp-header-synchronize-plugin",
