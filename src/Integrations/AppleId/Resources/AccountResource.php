@@ -10,6 +10,7 @@ use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Exception\AccountAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\CaptchaException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
+use Weijiajia\SaloonphpAppleClient\Exception\RegistrationException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate as ValidateDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\VerificationEmail as VerificationEmailData;
@@ -69,7 +70,7 @@ class AccountResource extends BaseResource
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
-     * @throws JsonException
+     * @throws JsonException|RegistrationException
      */
     public function validate(ValidateDto $validateDto, string $appleIdSessionId, string $appleWidgetKey): Response
     {
@@ -92,6 +93,12 @@ class AccountResource extends BaseResource
             //captcha answer invalid
             if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            }
+
+            //Could Not Create Account
+            $validationErrors = $e->getResponse()->json('service_errors');
+            if ($validationErrors[0]['code'] ?? '' === '-34607001') {
+                throw new RegistrationException($e->getResponse()->body());
             }
 
             throw $e;
