@@ -35,15 +35,29 @@ class AccountResource extends BaseResource
      * @param string $appleIdSessionId
      * @param string $appleWidgetKey
      * @return Response
+     * @throws ClientException
      * @throws FatalRequestException
+     * @throws JsonException
+     * @throws RegistrationException
      * @throws RequestException
      */
     public function account(ValidateDto $validateDto, string $appleIdSessionId, string $appleWidgetKey): Response
     {
+        try {
 
-        return $this->connector->send(
-            new Account(data: $validateDto, appleIdSessionId: $appleIdSessionId, appleWidgetKey: $appleWidgetKey)
-        );
+            return $this->connector->send(
+                new Account(data: $validateDto, appleIdSessionId: $appleIdSessionId, appleWidgetKey: $appleWidgetKey)
+            );
+        }catch (ClientException $e) {
+
+            //Could Not Create Account
+            $validationErrors = $e->getResponse()->json('service_errors');
+            if ($validationErrors[0]['code'] ?? '' === '-34607001') {
+                throw new RegistrationException($e->getResponse()->body());
+            }
+
+            throw $e;
+        }
     }
 
     /**
