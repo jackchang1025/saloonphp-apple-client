@@ -7,6 +7,12 @@ use Weijiajia\SaloonphpAppleClient\Contracts\HasSleepInterface;
 
 trait HasSleep
 {
+
+    public function sleep(): int
+    {
+        return 0;
+    }
+
     public function bootHasSleep(PendingRequest $pendingRequest): void
     {
         $request = $pendingRequest->getRequest();

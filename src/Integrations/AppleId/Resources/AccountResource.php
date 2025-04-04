@@ -27,6 +27,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Verifica
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Widget\Account as WidgetAccount;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Captcha;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 
 class AccountResource extends BaseResource
 {
@@ -209,8 +210,11 @@ class AccountResource extends BaseResource
             $validationErrors = $e->getResponse()->json('service_errors');
 
             if ($validationErrors[0]['code'] ?? '' === '-28248') {
+                throw new PhoneException(message: $e->getResponse()->body());
+            }
 
-                throw new PhoneException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            if($e->getResponse()->status() === 423) {
+                throw new VerificationCodeSentTooManyTimesException(message: $e->getResponse()->body());
             }
 
             throw $e;
