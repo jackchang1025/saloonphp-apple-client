@@ -12,6 +12,11 @@ trait HasClientInfo
     {
 
         $pendingRequest->middleware()->onRequest(function (PendingRequest $pendingRequest) {
+
+            if($pendingRequest->headers()->get('X-Apple-I-FD-Client-Info')){
+                return;
+            }
+
             $userAgent = $pendingRequest->headers()->get('User-Agent');
             $language = $pendingRequest->headers()->get('Accept-Language');
             if($language){
@@ -33,7 +38,7 @@ trait HasClientInfo
                 'F' => '',
             ];
             
-            $pendingRequest->headers()->add('x-apple-i-fd-client-info', json_encode($clientInfo));
+            $pendingRequest->headers()->add('X-Apple-I-FD-Client-Info', json_encode($clientInfo));
         });
 
     }
