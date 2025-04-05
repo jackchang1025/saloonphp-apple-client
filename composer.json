@@ -26,6 +26,7 @@
     "require": {
         "php": ">=8.0",
         "league/flysystem": "^3",
+        "matomo/device-detector": "^6.4",
         "saloonphp/cache-plugin": "^3.0",
         "saloonphp/saloon": "^3.0",
         "spatie/laravel-data": "^4.13",
@@ -35,11 +36,15 @@
         "weijiajia/saloonphp-logs-plugin": "dev-main"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
-        "mockery/mockery": "^1.5"
+        "mockery/mockery": "^1.5",
+        "pestphp/pest": "^1.23",
+        "phpunit/phpunit": "^9.0"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
