@@ -5,7 +5,7 @@ namespace Weijiajia\SaloonphpAppleClient\Plugins;
 use Saloon\Http\PendingRequest;
 use DateTime;
 use DateTimeZone;
-use Weijiajia\SaloonphpAppleClient\Browser;
+use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Weijiajia\SaloonphpAppleClient\Services\DCHelper;
 use Weijiajia\SaloonphpAppleClient\Helpers\Fingerprint;
 

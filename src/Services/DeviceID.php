@@ -6,7 +6,7 @@ namespace Weijiajia\SaloonphpAppleClient\Services;
 use DateTime;
 use DateTimeZone;
 use DateInterval;
-use Weijiajia\SaloonphpAppleClient\Browser; // Assuming Browser class is in the root namespace
+use Weijiajia\SaloonphpAppleClient\Browser\Browser; // Assuming Browser class is in the root namespace
 use IntlDateFormatter; // 需要 intl 扩展
 use IntlException; // 需要 intl 扩展
 

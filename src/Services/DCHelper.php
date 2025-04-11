@@ -5,17 +5,14 @@ namespace Weijiajia\SaloonphpAppleClient\Services;
 
 use DateTime;
 use DateTimeZone;
-use Exception; // Add Exception for potential errors
-use Weijiajia\SaloonphpAppleClient\Browser;
+use Exception;
+use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 
-// Placeholder for logging if needed
-// use Psr\Log\LoggerInterface;
 
 class DCHelper
 {
     private Browser $browser;
     private DeviceID $deviceID;
-    // private ?LoggerInterface $logger;
 
     /** @var array<int, array{0: int, 1: int}> */
     private array $charMap;

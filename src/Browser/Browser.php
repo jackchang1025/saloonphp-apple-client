@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Weijiajia\SaloonphpAppleClient;
+namespace Weijiajia\SaloonphpAppleClient\Browser;
 
 use Weijiajia\SaloonphpAppleClient\Browser\Document;
 use Weijiajia\SaloonphpAppleClient\Browser\Location;

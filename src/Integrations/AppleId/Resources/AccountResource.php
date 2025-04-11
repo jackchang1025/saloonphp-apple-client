@@ -28,7 +28,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Widget\A
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Captcha;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
-
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 class AccountResource extends BaseResource
 {
     /**
@@ -329,7 +329,7 @@ class AccountResource extends BaseResource
         string $referer,
         string $appContext = 'account',
         string $lv = '0.3.17',
-    ): Response {
+    ): AccountDto {
         return $this->connector->send(
             new WidgetAccount(
                 widgetKey: $widgetKey,
@@ -337,6 +337,6 @@ class AccountResource extends BaseResource
                 appContext: $appContext,
                 lv: $lv
             )
-        );
+        )->dto();
     }
 }

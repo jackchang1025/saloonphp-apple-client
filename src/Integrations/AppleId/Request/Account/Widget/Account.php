@@ -4,7 +4,8 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Wi
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
-
+use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 
 class Account extends Request 
 {
@@ -37,5 +38,10 @@ class Account extends Request
             'Sec-Fetch-Site' => 'cross-site',
             'Sec-Fetch-User' => '?1',
         ];
+    }
+
+    public function createDtoFromResponse(Response $response): AccountDto
+    {
+        return AccountDto::from($response->json());
     }
 }
