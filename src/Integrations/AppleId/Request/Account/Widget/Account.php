@@ -42,6 +42,6 @@ class Account extends Request
 
     public function createDtoFromResponse(Response $response): AccountDto
     {
-        return AccountDto::from($response->json());
+        return AccountDto::from();
     }
 }
