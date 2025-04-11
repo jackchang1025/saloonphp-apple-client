@@ -5,9 +5,26 @@ namespace Weijiajia\SaloonphpAppleClient\Plugins;
 use Saloon\Http\PendingRequest;
 use DateTime;
 use DateTimeZone;
+use Weijiajia\SaloonphpAppleClient\Browser;
+use Weijiajia\SaloonphpAppleClient\Services\DCHelper;
+use Weijiajia\SaloonphpAppleClient\Helpers\Fingerprint;
 
 trait HasClientInfo
 {
+    protected bool $isDCHelper = true;
+
+    public function isDCHelper(): bool
+    {
+        return $this->isDCHelper;
+    }
+
+    public function withDCHelper(bool $isDCHelper = true): self
+    {
+        $this->isDCHelper = $isDCHelper;
+        return $this;
+    }
+
+
     public function bootHasClientInfo(PendingRequest $pendingRequest): void
     {
 
@@ -18,27 +35,33 @@ trait HasClientInfo
             }
 
             $userAgent = $pendingRequest->headers()->get('User-Agent');
-            $language = $pendingRequest->headers()->get('Accept-Language');
-            if($language){
-                $language = explode(',', $language)[0];
+
+            $acceptLanguage = $pendingRequest->headers()->get('Accept-Language');
+            if($acceptLanguage){
+                $language = explode(',', $acceptLanguage)[0];
             }
             
             $timezone = $pendingRequest->headers()->get('X-Apple-I-Timezone');
-            if($timezone){
-                
-                $dateTime = new DateTime('now', new DateTimeZone($timezone));
-                $timezone = "GMT{$dateTime->format('O')}";
+            if(!$timezone){
+                throw new \RuntimeException('timezone is required');
             }
 
+            $dateTime = new DateTime('now', new DateTimeZone($timezone));
+            // $browser = new Browser(userAgent: $userAgent, acceptLanguage: $acceptLanguage, timezone: $timezone,language: $language);
+            // $DCHelper = new DCHelper($browser);
+
+
+            $f = $this->isDCHelper() ? Fingerprint::createFingerprint($timezone) : '';
             $clientInfo = [
                 'U' => $userAgent,
                 'L' => $language,
-                'Z' => $timezone,
+                'Z' => "GMT{$dateTime->format('P')}",
                 'V' => '1.1',
-                'F' => '',
+                'F' => $f,
             ];
             
             $pendingRequest->headers()->add('X-Apple-I-FD-Client-Info', json_encode($clientInfo));
+            return;
         });
 
     }
