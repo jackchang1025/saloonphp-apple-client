@@ -33,6 +33,58 @@ composer require weijiajia/saloonphp-apple-client
 
 ## Usage
 
+## Advanced Usage
+
+### Cookie Management
+
+```php
+use Weijiajia\SaloonphpCookiePlugin\Driver\FileCookieJar;
+
+// Configure cookie jar
+$cookieJar = new FileCookieJar('/path/to/cookies.json');
+$connector->withCookieJar($cookieJar);
+```
+
+### Logging
+
+```php
+use Weijiajia\SaloonphpLogsPlugin\Driver\FileLogDriver;
+
+// Configure logger
+$logger = new FileLogDriver('/path/to/logs');
+$connector->withLogger($logger);
+```
+
+### Header Synchronization
+
+```php
+use Weijiajia\SaloonphpHeaderSynchronizePlugin\Driver\ArrayStoreHeaderSynchronize;
+
+// Configure header synchronization
+$headerSynchronize = new ArrayStoreHeaderSynchronize();
+$connector->withHeaderSynchronizeDriver($headerSynchronize);
+```
+
+### Proxy Queue
+```php
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
+use Weijiajia\HttpProxyManager\Data\Proxy;
+
+
+$proxySplQueue = new ProxySplQueue(roundRobinEnabled: true);
+$proxySplQueue->enqueue(new Proxy(host:'127.0.0.1',port:'10809',username:"xxxx",password:'xxxx',url:'http://user-xxxx_password@127.0.0.1:10809'));
+$connector->withProxyQueue($proxySplQueue);
+
+```
+
+```php
+use Weijiajia\SaloonphpHeaderSynchronizePlugin\Driver\ArrayStoreHeaderSynchronize;
+
+// Configure header synchronization
+$headerSynchronize = new ArrayStoreHeaderSynchronize();
+$connector->withHeaderSynchronizeDriver($headerSynchronize);
+```
+
 ### Basic Usage
 
 ```php
@@ -55,7 +107,7 @@ $connector->withLogger($logger);
 $connector->withHeaderSynchronizeDriver(new ArrayStoreHeaderSynchronize());
 
 // Configure proxy if needed
-$connector->setProxy('http://proxy.example.com:8080');
+$connector->withProxyQueue($proxySplQueue);
 
 // Make requests
 $response = $connector->send(new SomeAppleRequest());
@@ -358,37 +410,7 @@ try {
 }
 ```
 
-## Advanced Usage
 
-### Cookie Management
-
-```php
-use Weijiajia\SaloonphpCookiePlugin\Driver\FileCookieJar;
-
-// Configure cookie jar
-$cookieJar = new FileCookieJar('/path/to/cookies.json');
-$connector->withCookieJar($cookieJar);
-```
-
-### Logging
-
-```php
-use Weijiajia\SaloonphpLogsPlugin\Driver\FileLogDriver;
-
-// Configure logger
-$logger = new FileLogDriver('/path/to/logs');
-$connector->withLogger($logger);
-```
-
-### Header Synchronization
-
-```php
-use Weijiajia\SaloonphpHeaderSynchronizePlugin\Driver\ArrayStoreHeaderSynchronize;
-
-// Configure header synchronization
-$headerSynchronize = new ArrayStoreHeaderSynchronize();
-$connector->withHeaderSynchronizeDriver($headerSynchronize);
-```
 
 ## License
 

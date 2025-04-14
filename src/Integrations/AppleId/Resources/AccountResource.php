@@ -53,7 +53,7 @@ class AccountResource extends BaseResource
 
             //Could Not Create Account
             $validationErrors = $e->getResponse()->json('service_errors');
-            if ($validationErrors[0]['code'] ?? '' === '-34607001') {
+            if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
             }
 
@@ -171,7 +171,7 @@ class AccountResource extends BaseResource
 
             $validationErrors = $e->getResponse()->json('service_errors');
 
-            if ($validationErrors[0]['code'] ?? '' === '-21418') {
+            if (($validationErrors[0]['code'] ?? '') === '-21418') {
                 throw new VerificationCodeException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
@@ -209,8 +209,12 @@ class AccountResource extends BaseResource
 
             $validationErrors = $e->getResponse()->json('service_errors');
 
-            if ($validationErrors[0]['code'] ?? '' === '-28248') {
+            if (($validationErrors[0]['code'] ?? '') === '-28248') {
                 throw new PhoneException(message: $e->getResponse()->body());
+            }
+
+            if (($validationErrors[0]['code'] ?? '') === '-34607001') {
+                throw new RegistrationException(message: $e->getResponse()->body());
             }
 
             if($e->getResponse()->status() === 423) {
@@ -251,7 +255,7 @@ class AccountResource extends BaseResource
 
             $validationErrors = $e->getResponse()->json('service_errors');
 
-            if ($validationErrors[0]['code'] ?? '' === '-21669') {
+            if (($validationErrors[0]['code'] ?? '') === '-21669') {
 
                 throw new VerificationCodeException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }

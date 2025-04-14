@@ -388,6 +388,18 @@ $headerSynchronize = new ArrayStoreHeaderSynchronize();
 $connector->withHeaderSynchronizeDriver($headerSynchronize);
 ```
 
+### 使用代理
+```php
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
+use Weijiajia\HttpProxyManager\Data\Proxy;
+
+
+$proxySplQueue = new ProxySplQueue(roundRobinEnabled: true);
+$proxySplQueue->enqueue(new Proxy(host:'127.0.0.1',port:'10809',username:"xxxx",password:'xxxx',url:'http://user-xxxx_password@127.0.0.1:10809'));
+$connector->withProxyQueue($proxySplQueue);
+
+```
+
 ## 许可证
 
 本软件包是根据 [MIT 许可证](LICENSE) 授权的开源软件。 
