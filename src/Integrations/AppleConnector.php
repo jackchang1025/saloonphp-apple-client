@@ -23,7 +23,7 @@ use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Saloon\Http\Request;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
-
+use Saloon\Exceptions\Request\ServerException;
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
     use HasTimeout;
@@ -33,6 +33,8 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
     use HasCookie;
     use HasHeaderSynchronize;
 
+    public ?int $tries = 3;
+
     public function resolveResponseClass(): string
     {
         return Response::class;
@@ -40,7 +42,7 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
     {
-        return $exception instanceof FatalRequestException;
+        return $exception instanceof FatalRequestException || $exception instanceof ServerException;
     }
 
     /**
