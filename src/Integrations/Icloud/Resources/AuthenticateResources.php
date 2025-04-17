@@ -9,7 +9,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Devices\Devi
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\AccountLoginRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\GetDevicesRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Icloud;
-use Weijiajia\SaloonphpAppleClient\Response\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Icloud\Icloud as IcloudResponse;
 class AuthenticateResources extends BaseResource
 {
     /**
@@ -38,8 +38,8 @@ class AuthenticateResources extends BaseResource
      * @throws \Saloon\Exceptions\Request\FatalRequestException
      * @throws \Saloon\Exceptions\Request\RequestException
      */
-    public function icloud(): Response
+    public function icloud(): IcloudResponse
     {
-        return $this->getConnector()->send(new Icloud());
+        return $this->getConnector()->send(new Icloud())->dto();
     }
 }

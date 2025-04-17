@@ -5,7 +5,7 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\AuthenticateResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\FamilyResources;
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\SetupWResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\SetupWsResources;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 
@@ -49,8 +49,8 @@ class SetupIcloudConnector extends AppleConnector
         return new AuthenticateResources($this);
     }
 
-    public function setupWResources(): SetupWResources
+    public function setupWsResources(): SetupWsResources
     {
-        return new SetupWResources($this);
+        return new SetupWsResources($this);
     }
 }
