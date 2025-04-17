@@ -26,7 +26,6 @@ class GetTerms extends Data
     public function __construct(
         public string $locale,
         public array $createPayload,
-        public array $account,
     ) {}
 
     
