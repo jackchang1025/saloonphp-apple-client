@@ -1,14 +1,14 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Http\Response;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Response\AccountLogin\AccountLogin as AccountLoginResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Request\AccountLogin\AccountLogin;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\AccountLogin\AccountLogin as AccountLoginResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Request\AccountLogin\AccountLogin;
 
 class AccountLoginRequest extends Request implements HasBody
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Resources;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources;
 
 use Saloon\Exceptions\InvalidPoolItemException;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Response\Response;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\Locales\Locales as LocalesRequest;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\Locales\JsRequest;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\System\MainJs;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Locales\Locales as LocalesRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Locales\JsRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\System\MainJs;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 

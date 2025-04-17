@@ -1,14 +1,14 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Resources;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Request\AccountLogin\AccountLogin;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Response\AccountLogin\AccountLogin as AccountLoginResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Response\Devices\Devices;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\AccountLoginRequest;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\GetDevicesRequest;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\Icloud;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Request\AccountLogin\AccountLogin;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\AccountLogin\AccountLogin as AccountLoginResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Devices\Devices;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\AccountLoginRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\GetDevicesRequest;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Icloud;
 use Weijiajia\SaloonphpAppleClient\Response\Response;
 class AuthenticateResources extends BaseResource
 {

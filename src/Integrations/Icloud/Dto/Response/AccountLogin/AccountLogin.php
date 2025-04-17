@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Dto\Response\AccountLogin;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\AccountLogin;
 
 use Spatie\LaravelData\Data;
 

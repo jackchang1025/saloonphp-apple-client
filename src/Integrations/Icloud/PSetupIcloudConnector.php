@@ -1,9 +1,9 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Resources\PSetupIcloudResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources\PSetupIcloudResources;
 
 class PSetupIcloudConnector extends AppleConnector
 {

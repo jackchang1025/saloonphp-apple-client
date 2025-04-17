@@ -1,14 +1,14 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Resources\AuthenticateResources;
-use Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Resources\LocalesResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources\AuthenticateResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources\LocalesResources;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 
-class WebIcloudConnector extends AppleConnector
+class IcloudConnector extends AppleConnector
 {
     use HasSecFetch;
     use HasSecCh;

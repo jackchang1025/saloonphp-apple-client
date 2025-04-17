@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\Locales;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Locales;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;

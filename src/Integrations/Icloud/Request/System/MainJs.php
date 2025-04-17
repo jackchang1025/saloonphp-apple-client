@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Integrations\WebIcloud\Request\System;
+namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\System;
 
 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
