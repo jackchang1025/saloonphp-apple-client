@@ -156,7 +156,7 @@ $paymentResource = $appleIdConnector->getPaymentResources();
 Access to iCloud services including family sharing management.
 
 ```php
-use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\SetupIcloudConnector;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\SetupIcloudConnector;
 
 // Create connector
 $icloudConnector = new SetupIcloudConnector();

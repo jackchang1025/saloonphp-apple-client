@@ -102,7 +102,7 @@ $paymentResource = $appleIdConnector->getPaymentResources();
 访问 iCloud 服务，包括家庭共享管理。
 
 ```php
-use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\SetupIcloudConnector;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\SetupIcloudConnector;
 
 // 创建连接器
 $icloudConnector = new SetupIcloudConnector();
