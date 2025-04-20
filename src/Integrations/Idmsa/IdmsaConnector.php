@@ -10,20 +10,9 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources\AuthenticateResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Resources\JsLogResources;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 
 class IdmsaConnector extends AppleConnector
 {
-    use HasSecCh;
-    use HasSecFetch;
-    public function __construct(
-        readonly protected string $serviceKey,
-        readonly protected string $redirectUri
-    ) {
-
-    }
-
     public function defaultHeaderSynchronizes(): array
     {
         // return ['X-Apple-ID-Session-Id', 'X-Apple-Auth-Attributes', 'scnt'];
@@ -64,7 +53,7 @@ class IdmsaConnector extends AppleConnector
             'Host'                        => 'idmsa.apple.com',
             'Origin'                      => $this->resolveBaseUrl(),
             'Referer'                     => $this->resolveBaseUrl(),
-            'User-Agent'                  => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            'User-Agent'                  => $this->browser()->userAgent,
             // 'X-Apple-Widget-Key'            => $this->serviceKey,
             // 'X-Apple-OAuth-Redirect-URI'   => $this->redirectUri,
             // 'X-Apple-OAuth-Client-Id'      => $this->serviceKey,

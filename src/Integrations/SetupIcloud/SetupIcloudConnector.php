@@ -6,13 +6,9 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\AuthenticateResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\FamilyResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources\SetupWsResources;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 
 class SetupIcloudConnector extends AppleConnector
 {
-    use HasSecFetch;
-    use HasSecCh;
 
     public function defaultHeaders(): array
     {
@@ -25,7 +21,7 @@ class SetupIcloudConnector extends AppleConnector
             'Referer'                => $this->resolveBaseUrl(),
             // 'Referer'                => 'https://setup.icloud.com/setup/mac/family/addFamilyMemberUI',
             // 'X-Requested-With'       => 'XMLHttpRequest',
-            'User-Agent'             => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            'User-Agent'             => $this->browser()->userAgent,
             'Proxy-Connection'       => 'keep-alive',
             
             // 'X-MMe-Client-Info'      => '<MacBook Pro> <Mac OS X;10.10.0;14A314h> <webclient/731eb0905570 (com.apple.systempreferences/14.0)>',

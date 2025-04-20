@@ -24,6 +24,10 @@ use Saloon\Http\Request;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\ServerException;
+use Weijiajia\SaloonphpAppleClient\Browser\Browser;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
+
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
     use HasTimeout;
@@ -32,8 +36,20 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
     use HasProxy;
     use HasCookie;
     use HasHeaderSynchronize;
+    use HasSecCh;
+    use HasSecFetch;
 
     public ?int $tries = 3;
+
+    public function __construct(protected Browser $browser)
+    {
+        $this->browser = $browser;
+    }
+
+    public function browser(): Browser
+    {
+        return $this->browser;
+    }
 
     public function resolveResponseClass(): string
     {

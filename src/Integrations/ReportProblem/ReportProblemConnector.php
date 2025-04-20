@@ -25,22 +25,13 @@ class ReportProblemConnector extends AppleConnector
             'Connection'       => 'Keep-Alive',
             'Content-Type'     => 'application/json',
             'Accept'           => 'application/json, text/plain, */*',
-            'Accept-Language'  => 'zh-CN,en;q=0.9,zh;q=0.8',
+            'Accept-Language'  => $this->browser()->language,
             'x-apple-rap2-api' => '2.0.1',
-            'Sec-Fetch-Site'   => 'same-origin',
-            'Sec-Fetch-Mode'   => 'cors',
-            'Sec-Fetch-Dest'   => 'empty',
-            'Host'             => $this->host(),
-            'Referer'          => $this->host(),
-            'User-Agent'       => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+            'Host'             => 'reportaproblem.apple.com',
+            'Referer'          => 'https://reportaproblem.apple.com',
+            'User-Agent'       => $this->browser()->userAgent,
         ];
     }
-
-    public function host()
-    {
-        return 'reportaproblem.apple.com';
-    }
-
     public function getResources(): Resources
     {
         return new Resources($this);

@@ -22,7 +22,7 @@ class Browser
     protected SecChHeadersService $secChHeadersService;
 
     public function __construct(
-        string $userAgent,
+        public string $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
         public string $secFetchDest = "document",
         public string $secFetchMode = "navigate",
         public string $secFetchSite = "none",

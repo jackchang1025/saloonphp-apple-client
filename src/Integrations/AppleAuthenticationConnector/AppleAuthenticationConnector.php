@@ -9,6 +9,7 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnect
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Resources\AuthenticationResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
+use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Request;
@@ -23,9 +24,9 @@ class AppleAuthenticationConnector extends AppleConnector
     /**
      * @param string $url
      */
-    public function __construct(readonly protected string $url)
+    public function __construct(readonly protected string $url, Browser $browser)
     {
-        
+        parent::__construct($browser);
     }
 
     public function resolveBaseUrl(): string

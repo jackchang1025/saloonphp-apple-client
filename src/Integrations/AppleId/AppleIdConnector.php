@@ -16,14 +16,11 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityDevice
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityPhoneResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\RepairResource;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 
 
 class AppleIdConnector extends AppleConnector
 {
-    use HasSecCh;
-    use HasSecFetch;
+    
 
     public function resolveBaseUrl(): string
     {
@@ -37,17 +34,17 @@ class AppleIdConnector extends AppleConnector
 
     protected function defaultHeaders(): array
     {
-        $defaultHeaders = [
+        return [
             'Connection' => 'Keep-Alive',
             'Accept' => 'application/json, text/plain, */*',
             'Accept-Encoding' => 'gzip, deflate, br, zstd',
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'appleid.apple.com',
-            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            'User-Agent' => $this->browser()->userAgent,
+            'Accept-Language' => $this->browser()->language,
+            "X-Apple-I-Timezone" => $this->browser()->timezone,
         ];
-
-        return array_merge($defaultHeaders, $this->config()->get('headers', []));
     }
 
     public function getPaymentResources(): PaymentResources

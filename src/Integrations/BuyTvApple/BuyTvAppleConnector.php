@@ -17,19 +17,11 @@ class BuyTvAppleConnector extends AppleConnector
     {
         return [
             'Accept'                    => '*/*',
-            // 'Accept-encoding'           => 'gzip, deflate, br, zstd',
             'Connection'                => 'keep-alive',
-            'Sec-Fetch-Site'            => 'same-site',
-            'Sec-Fetch-Mode'            => 'cors',
-            'Sec-Fetch-Dest'            => 'empty',
-            // 'Sec-Fetch-User'            => '?1',
-            'Sec-ch-ua'                 => '"Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"',
-            'Sec-ch-ua-mobile'          => '?0',
-            'Sec-ch-ua-platform'        => '"Windows"',
             'Host'                      => 'buy.tv.apple.com',
             'Origin'                    => 'https://tv.apple.com',
             'Referer'                   => 'https://tv.apple.com/',
-            'User-Agent'                => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+            'User-Agent'                => $this->browser()->userAgent,
             //这个值表示:
             // 美国区域商店 (143441)
             // 英语界面 (-1)

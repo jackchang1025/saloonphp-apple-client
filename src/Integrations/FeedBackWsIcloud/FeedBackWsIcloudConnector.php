@@ -9,10 +9,6 @@ use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 
 class FeedBackWsIcloudConnector extends AppleConnector
 {
-    use HasSecFetch;
-    use HasSecCh;
-
-
     public function defaultHeaders(): array
     {
         return [
@@ -21,7 +17,7 @@ class FeedBackWsIcloudConnector extends AppleConnector
             'Host'                   => 'feedbackws.icloud.com',
             'Accept-Encoding'        => 'gzip, deflate, br, zstd',
             'Referer'                => 'https://www.icloud.com',
-            'User-Agent'             => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            'User-Agent'             => $this->browser()->userAgent,
             'Origin'                 => 'https://www.icloud.com',
             'Connection'             => 'keep-alive',
             'Cache-Control'          => 'no-cache',
