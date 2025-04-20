@@ -6,9 +6,13 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
+use Weijiajia\SaloonphpLogsPlugin\HasLogger;
+use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 
-class Account extends Request 
+class Account extends Request implements HasLoggerInterface
 {
+    use HasLogger;
+
     protected Method $method = Method::GET;
 
     public function __construct(
