@@ -217,6 +217,10 @@ class AccountResource extends BaseResource
                 throw new RegistrationException(message: $e->getResponse()->body());
             }
 
+            if (($validationErrors[0]['code'] ?? '') === '-24059') {
+                throw new VerificationCodeSentTooManyTimesException(message: $e->getResponse()->body());
+            }
+            
             if($e->getResponse()->status() === 423) {
                 throw new VerificationCodeSentTooManyTimesException(message: $e->getResponse()->body());
             }

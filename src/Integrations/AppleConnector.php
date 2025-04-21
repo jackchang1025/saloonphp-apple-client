@@ -27,7 +27,7 @@ use Saloon\Exceptions\Request\ServerException;
 use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
-
+use Saloon\Traits\Conditionable;
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
     use HasTimeout;
@@ -38,6 +38,7 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
     use HasHeaderSynchronize;
     use HasSecCh;
     use HasSecFetch;
+    use Conditionable;
 
     public ?int $tries = 3;
 
