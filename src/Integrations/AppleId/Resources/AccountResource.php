@@ -186,9 +186,11 @@ class AccountResource extends BaseResource
      * @return Response
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws PhoneException
-     * @throws RequestException
      * @throws JsonException
+     * @throws PhoneException
+     * @throws RegistrationException
+     * @throws RequestException
+     * @throws VerificationCodeSentTooManyTimesException
      */
     public function sendVerificationPhone(
         ValidateDto $validateDto,
@@ -328,7 +330,7 @@ class AccountResource extends BaseResource
      * @param string $referer
      * @param string $appContext
      * @param string $lv
-     * @return Response
+     * @return AccountDto
      * @throws FatalRequestException
      * @throws RequestException
      */
