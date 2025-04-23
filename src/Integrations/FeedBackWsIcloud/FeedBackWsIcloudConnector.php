@@ -4,8 +4,6 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\FeedBackWsIcloud;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\FeedBackWsIcloud\Resources\Resources;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 
 class FeedBackWsIcloudConnector extends AppleConnector
 {
@@ -17,7 +15,7 @@ class FeedBackWsIcloudConnector extends AppleConnector
             'Host'                   => 'feedbackws.icloud.com',
             'Accept-Encoding'        => 'gzip, deflate, br, zstd',
             'Referer'                => 'https://www.icloud.com',
-            'User-Agent'             => $this->browser()->userAgent,
+            'User-Agent'             => $this->apple()->browser()->userAgent,
             'Origin'                 => 'https://www.icloud.com',
             'Connection'             => 'keep-alive',
             'Cache-Control'          => 'no-cache',

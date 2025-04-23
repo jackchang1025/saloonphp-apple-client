@@ -21,7 +21,7 @@ class SetupIcloudConnector extends AppleConnector
             'Referer'                => $this->resolveBaseUrl(),
             // 'Referer'                => 'https://setup.icloud.com/setup/mac/family/addFamilyMemberUI',
             // 'X-Requested-With'       => 'XMLHttpRequest',
-            'User-Agent'             => $this->browser()->userAgent,
+            'User-Agent'             => $this->apple()->browser()->userAgent,
             'Proxy-Connection'       => 'keep-alive',
             
             // 'X-MMe-Client-Info'      => '<MacBook Pro> <Mac OS X;10.10.0;14A314h> <webclient/731eb0905570 (com.apple.systempreferences/14.0)>',

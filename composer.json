@@ -30,6 +30,7 @@
         "saloonphp/cache-plugin": "^3.0",
         "saloonphp/saloon": "^3.0",
         "spatie/laravel-data": "^4.13",
+        "symfony/intl": "^7.2",
         "weijiajia/saloonphp-cookie-plugin": "@dev",
         "weijiajia/saloonphp-header-synchronize-plugin": "@dev",
         "weijiajia/saloonphp-http-proxy-plugin": "dev-main",

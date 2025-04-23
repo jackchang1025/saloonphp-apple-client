@@ -25,11 +25,11 @@ class ReportProblemConnector extends AppleConnector
             'Connection'       => 'Keep-Alive',
             'Content-Type'     => 'application/json',
             'Accept'           => 'application/json, text/plain, */*',
-            'Accept-Language'  => $this->browser()->language,
+            'Accept-Language'  => $this->apple()->browser()->language,
             'x-apple-rap2-api' => '2.0.1',
             'Host'             => 'reportaproblem.apple.com',
             'Referer'          => 'https://reportaproblem.apple.com',
-            'User-Agent'       => $this->browser()->userAgent,
+            'User-Agent'       => $this->apple()->browser()->userAgent,
         ];
     }
     public function getResources(): Resources

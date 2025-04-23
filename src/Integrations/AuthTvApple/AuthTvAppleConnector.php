@@ -27,7 +27,7 @@ class AuthTvAppleConnector extends AppleConnector
             'Origin'                    => 'https://tv.apple.com',
             'Referer'                   => 'https://tv.apple.com/',
             'Priority'                  => 'u=1, i',
-            'User-Agent'                => $this->browser()->userAgent,
+            'User-Agent'                => $this->apple()->browser()->userAgent,
             'X-Apple-Store-Front'       => '143441-1,8'
         ];
     }

@@ -23,12 +23,12 @@ class AccountConnector extends AppleConnector
         return [
             'Connection' => 'Keep-Alive',
             'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-excha',
-            'Accept-Language' => $this->browser()->language,
+            'Accept-Language' => $this->apple()->browser()->language,
             'X-Apple-I-Request-Context' => 'ca',
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'account.apple.com',
-            'User-Agent' => $this->browser()->userAgent,
+            'User-Agent' => $this->apple()->browser()->userAgent,
         ];
     }
 

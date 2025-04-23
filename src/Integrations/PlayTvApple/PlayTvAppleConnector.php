@@ -23,7 +23,7 @@ class PlayTvAppleConnector extends AppleConnector
             'Priority'                  => 'u=1, i',
             'Origin'                    => 'https://tv.apple.com',
             'Referer'                   => 'https://tv.apple.com/',
-            'User-Agent'                => $this->browser()->userAgent,
+            'User-Agent'                => $this->apple()->browser()->userAgent,
             'X-Apple-Store-Front'       => '143441-1,8'//143441
         ];
     }

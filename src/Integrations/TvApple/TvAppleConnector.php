@@ -18,14 +18,14 @@ class TvAppleConnector extends AppleConnector
             'Connection'                => 'Keep-Alive',
             'Content-Type'              => 'text/html',
             'Accept'                    => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'Accept-Language'           => $this->browser()->language,
+            'Accept-Language'           => $this->apple()->browser()->language,
             'X-Apple-I-Request-Context' => 'ca',
-            'X-Apple-I-TimeZone'        => $this->browser()->timezone,
+            'X-Apple-I-TimeZone'        => $this->apple()->browser()->timezone,
             'Upgrade-Insecure-Requests' => '1',
             'Host'                      => 'tv.apple.com',
             'Origin'                    => 'https://tv.apple.com',
             'Referer'                   => 'https://tv.apple.com/',
-            'User-Agent'                => $this->browser()->userAgent,
+            'User-Agent'                => $this->apple()->browser()->userAgent,
         ];
     }
 

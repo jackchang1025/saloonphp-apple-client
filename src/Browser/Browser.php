@@ -29,14 +29,12 @@ class Browser
         public string $secFetchUser = "?1",
         public string $timezone = "America/New_York",
         public string $acceptEncoding = "gzip, deflate, br",
-        public string $acceptLanguage = "en-US,en;q=0.9",
-        public string $language = "en-US",
+        public string $language = "en-US,en;q=0.9",
         public string $accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     )
     {
 
-        // Initialize Browser components
-        $this->window = new Window(); // Window initializes others
+        $this->window = new Window();
         $this->document = $this->window->document;
         $this->navigator = $this->window->navigator;
         $this->screen = $this->window->screen;
@@ -44,13 +42,10 @@ class Browser
 
         $this->location->setURL("https://www.icloud.com");
 
-        $this->secChHeadersService = new SecChHeadersService($userAgent);
+        $this->secChHeadersService = new SecChHeadersService($this->userAgent);
 
-        $this->navigator->setup($userAgent);
-        $this->navigator->language = $language;
-
-        // Set timezone if needed globally
-        // date_default_timezone_set($this->timezone);
+        $this->navigator->setup($this->userAgent);
+        $this->navigator->language = $this->language;
     }
 
     /**
@@ -65,7 +60,7 @@ class Browser
             'user-agent' => $this->navigator->userAgent,
             'accept' => $this->accept,
             'accept-encoding' => $this->acceptEncoding,
-            'accept-language' => $this->acceptLanguage,
+            'accept-language' => $this->language,
         ];
         $headers = array_merge($headers, $this->secFetchHeaders());
         $headers = array_merge($headers, $this->secChHeadersService->generateAllHeaders());

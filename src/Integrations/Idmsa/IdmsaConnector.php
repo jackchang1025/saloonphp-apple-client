@@ -53,7 +53,7 @@ class IdmsaConnector extends AppleConnector
             'Host'                        => 'idmsa.apple.com',
             'Origin'                      => $this->resolveBaseUrl(),
             'Referer'                     => $this->resolveBaseUrl(),
-            'User-Agent'                  => $this->browser()->userAgent,
+            'User-Agent'                  => $this->apple()->browser()->userAgent,
             // 'X-Apple-Widget-Key'            => $this->serviceKey,
             // 'X-Apple-OAuth-Redirect-URI'   => $this->redirectUri,
             // 'X-Apple-OAuth-Client-Id'      => $this->serviceKey,

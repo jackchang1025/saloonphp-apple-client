@@ -24,10 +24,13 @@ use Saloon\Http\Request;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\ServerException;
-use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecCh;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasSecFetch;
 use Saloon\Traits\Conditionable;
+use Weijiajia\SaloonphpAppleClient\Apple;
+use Psr\Log\LoggerInterface;
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
+
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize,ProxyManagerInterface,HasLoggerInterface
 {
     use HasTimeout;
@@ -42,14 +45,18 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public ?int $tries = 3;
 
-    public function __construct(protected Browser $browser)
+    public function __construct(protected Apple $apple)
     {
-        $this->browser = $browser;
+        $this->when($this->apple->debug(),fn(AppleConnector $connector)=>$connector->debug())
+        ->when($this->apple->getLogger(),fn(AppleConnector $connector,LoggerInterface $logger)=>$connector->withLogger($logger))
+        ->when($this->apple->getProxySplQueue(),fn(AppleConnector $connector,ProxySplQueue $proxySplQueue)=>$connector->withProxyQueue($proxySplQueue))
+        ->middleware()->merge($this->apple->middleware());
+        
     }
 
-    public function browser(): Browser
+    public function apple(): Apple
     {
-        return $this->browser;
+        return $this->apple;
     }
 
     public function resolveResponseClass(): string
