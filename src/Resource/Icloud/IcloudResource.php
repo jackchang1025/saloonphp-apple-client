@@ -6,6 +6,7 @@ use Weijiajia\SaloonphpAppleClient\Resource\Idmsa\IdmsaResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\IdmsaConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\IcloudConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Devices\Devices;
+use Weijiajia\SaloonphpAppleClient\Resource\AppleIdBatchRegistrationResource;
 
 class IcloudResource extends IdmsaResource
 {
@@ -24,6 +25,11 @@ class IcloudResource extends IdmsaResource
     public function getDevices(): Devices
     {
         return $this->icloudConnector()->getAuthenticateResources()->getDevices();
+    }
+
+    public function appleIdBatchRegistrationResource(): AppleIdBatchRegistrationResource
+    {
+        return new AppleIdBatchRegistrationResource($this->apple());
     }
 
 }

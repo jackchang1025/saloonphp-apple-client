@@ -1,6 +1,6 @@
 <?php
 
-namespace Weijiajia\SaloonphpAppleClient\Resource\Icloud;
+namespace Weijiajia\SaloonphpAppleClient\Resource;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\AppleIdConnector;
@@ -20,16 +20,22 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Vali
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Verification\SendVerificationEmail;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\SendVerificationEmail as SendVerificationEmailResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
+use Weijiajia\SaloonphpAppleClient\Apple;
 
-class AppleIdBatchRegistrationResource extends IcloudResource
+class AppleIdBatchRegistrationResource extends Resource
 {
     protected ?AccountDto $widgetAccount = null;
     
     protected ?AppleIdConnector $appleIdConnector = null;
 
+    public function __construct(Apple $apple,protected string $widgetKey='af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3')
+    {
+        parent::__construct($apple);
+    }
+
     public function widgetKey(): string
     {
-        return 'af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3';
+        return $this->widgetKey;
     }
     
     public function appleIdConnector(): AppleIdConnector

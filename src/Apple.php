@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient;
 
-use App\Services\Resource\AppleIdBatchRegistrationForIcloud;
 use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Traits\Conditionable;
@@ -21,6 +20,7 @@ use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Driver\ArrayStoreHeaderSynchronize;
 use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Weijiajia\SaloonphpAppleClient\Resource\AppleId\AppleIdResource;
+use Weijiajia\SaloonphpAppleClient\Resource\Icloud\IcloudResource;
 
 /**
  * Apple 服务类
@@ -244,11 +244,11 @@ class Apple
     /**
      * 获取 AppleIdBatchRegistrationForIcloud 实例
      *
-     * @return AppleIdBatchRegistrationForIcloud
+     * @return IcloudResource
      */
-    public function appleIdBatchRegistrationForIcloud(): AppleIdBatchRegistrationForIcloud
+    public function icloudResource(): IcloudResource
     {
-        return new AppleIdBatchRegistrationForIcloud($this);
+        return new IcloudResource($this);
     }
 
     public function appleIdResource(): AppleIdResource
