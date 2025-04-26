@@ -51,7 +51,6 @@ class Browser
     /**
      * Generates basic browser headers.
      *
-     * @param string $userAgent
      * @return array<string, string>
      */
     public function generateHeaders(): array
@@ -63,8 +62,8 @@ class Browser
             'accept-language' => $this->language,
         ];
         $headers = array_merge($headers, $this->secFetchHeaders());
-        $headers = array_merge($headers, $this->secChHeadersService->generateAllHeaders());
-        return $headers;
+
+        return array_merge($headers, $this->secChHeadersService->generateAllHeaders());
     }
 
     /**

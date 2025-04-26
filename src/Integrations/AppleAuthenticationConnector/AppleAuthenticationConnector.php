@@ -9,11 +9,10 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnect
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Resources\AuthenticationResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
-use Weijiajia\SaloonphpAppleClient\Apple;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Request;
-
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleId;
 class AppleAuthenticationConnector extends AppleConnector
 {
     public function isProxyEnabled(): bool
@@ -24,9 +23,12 @@ class AppleAuthenticationConnector extends AppleConnector
     /**
      * @param string $url
      */
-    public function __construct(readonly protected string $url, Apple $apple)
+    public function __construct(readonly protected string $url, AppleId $appleId)
     {
-        parent::__construct($apple);
+        parent::__construct($appleId);
+        
+        $this->withProxyEnabled(false);
+        $this->withForceProxy(false);
     }
 
     public function resolveBaseUrl(): string

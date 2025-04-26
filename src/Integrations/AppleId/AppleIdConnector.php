@@ -41,9 +41,9 @@ class AppleIdConnector extends AppleConnector
             'Referer' => $this->resolveBaseUrl(),
             'Origin' => $this->resolveBaseUrl(),
             'Host' => 'appleid.apple.com',
-            'User-Agent' => $this->apple()->browser()->userAgent,
-            'Accept-Language' => $this->apple()->browser()->language,
-            "X-Apple-I-Timezone" => $this->apple()->browser()->timezone,
+            'User-Agent' => $this->appleId()->browser()->userAgent,
+            'Accept-Language' => $this->appleId()->browser()->language,
+            "X-Apple-I-Timezone" => $this->appleId()->browser()->timezone,
         ];
     }
 

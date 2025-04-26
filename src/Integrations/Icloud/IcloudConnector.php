@@ -19,7 +19,7 @@ class IcloudConnector extends AppleConnector
             'Origin'               => 'https://www.icloud.com',
             'upgrade-insecure-requests' => '1',
             'Connection'           => 'keep-alive',
-            'user-agent'           => $this->apple()->browser()->userAgent,
+            'user-agent'           => $this->appleId()->browser()->userAgent,
         ];
 
     }

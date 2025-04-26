@@ -4,71 +4,74 @@ declare(strict_types=1);
 namespace Weijiajia\SaloonphpAppleClient;
 
 use GuzzleHttp\Cookie\CookieJar;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
-use \InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Saloon\Traits\RequestProperties\HasConfig;
 use Saloon\Traits\RequestProperties\HasMiddleware;
-use Weijiajia\HttpProxyManager\Exception\ProxyModelNotFoundException;
-use Weijiajia\HttpProxyManager\ProxyManager;
-use Weijiajia\IpAddress\IpAddressManager;
 use Weijiajia\SaloonphpAppleClient\Browser\Browser;
-use Weijiajia\SaloonphpAppleClient\Contracts\AppleIdInterface;
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleId as AppleIdContract;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Driver\ArrayStoreHeaderSynchronize;
 use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Weijiajia\SaloonphpAppleClient\Resource\AppleId\AppleIdResource;
 use Weijiajia\SaloonphpAppleClient\Resource\Icloud\IcloudResource;
+use Illuminate\Support\Collection;
+use Weijiajia\SaloonphpAppleClient\Helpers\GeneratePassword;
+use Weijiajia\SaloonphpAppleClient\Contracts\Phone;
+use Weijiajia\SaloonphpAppleClient\Resource\Account\AccountResource;
 
-/**
- * Apple 服务类
- *
- * 提供与 Apple API 交互的核心功能
- * 使用工厂模式和策略模式管理各种连接器
- */
-class Apple
+class AppleId implements AppleIdContract
 {
     use Macroable;
     use HasConfig;
     use Conditionable;
     use HasMiddleware;
-    // 服务属性
-    protected ?LoggerInterface $logger = null;
+
     protected ?ProxySplQueue $proxySplQueue = null;
+    
     protected ?HeaderSynchronizeDriver $headerSynchronizeDriver = null;
+    
+    protected ?CookieJar $cookieJar = null;
+
+    protected Collection $trustedPhoneNumbers;
+
     protected bool $debug = true;
-    protected ?Country $country = null;
 
-    // 资源属性
-    private ?CookieJar $cookieJar = null;
-
-    private ?Browser $browser = null;
     
     /**
      * 构造函数
-     *
-     * @param AppleIdInterface $appleId Apple ID 接口实现
-     * @param IpAddressManager $ipAddressManager IP 地址管理器
-     * @param ProxyManager $proxyManager 代理管理器
-     * @param Dispatcher|null $dispatcher 事件分发器
+     *    
+     * @param string $appleId Apple ID 接口实现
+     * @param Browser|null $browser 浏览器实例
+     * @param string|null $password 密码
+     * @param Country|null $country 国家/地区
+     * @param LoggerInterface|null $logger 日志记录器
+     * @param Collection|array $trustedPhoneNumbers 可信电话号码列表
      */
     public function __construct(
-        protected AppleIdInterface $appleId
+        protected string $appleId,
+        protected ?Browser $browser = null,
+        protected ?string $password = null,
+        protected ?Country $country = null,
+        protected ?LoggerInterface $logger = null,
+        Collection|array $trustedPhoneNumbers = [],
     ) {
+        $this->trustedPhoneNumbers = is_array($trustedPhoneNumbers) ? collect($trustedPhoneNumbers) : $trustedPhoneNumbers;
+    }
+
+    public function appleId(): string
+    {
+        return $this->appleId;
     }
 
     /**
-     * 设置国家/地区
-     *
-     * @param Country $country 国家/地区代码
-     * @return static
+     * @return string
+     * @throws \Random\RandomException
      */
-    public function withCountry(Country $country): static
+    public function password(): string
     {
-        $this->country = $country;
-        return $this;
+        return $this->password ??= GeneratePassword::generatePassword();
     }
 
     /**
@@ -76,20 +79,31 @@ class Apple
      *
      * @return Country|null
      */
-    public function getCountry(): ?Country
+    public function country(): ?Country
     {
         return $this->country;
+    }
+
+    public function withCountry(Country $country): static
+    {
+        $this->country = $country;
+        return $this;
     }
 
     /**
      * 获取浏览器实例
      *
      * @return Browser
-     * @throws ProxyModelNotFoundException
      */
     public function browser(): Browser
     {
-        return $this->browser??= new Browser();
+        return $this->browser ??= new Browser();
+    }
+
+    public function withBrowser(Browser $browser): static
+    {
+        $this->browser = $browser;
+        return $this;
     }
 
     /**
@@ -109,7 +123,7 @@ class Apple
      *
      * @return LoggerInterface|null 日志记录器
      */
-    public function getLogger(): ?LoggerInterface
+    public function logger(): ?LoggerInterface
     {
         return $this->logger;
     }
@@ -131,28 +145,17 @@ class Apple
      *
      * @return CookieJar
      */
-    public function getCookieJar(): CookieJar
+    public function cookieJar(): CookieJar
     {
         return $this->cookieJar ??= new CookieJar();
     }
 
     /**
-     * 获取 Apple ID 接口
-     *
-     * @return AppleIdInterface
-     */
-    public function getAppleId(): AppleIdInterface
-    {
-        return $this->appleId;
-    }
-
-    /**
      * 获取代理队列
      *
-     * @return ProxySplQueue
-     * @throws InvalidArgumentException|\Weijiajia\HttpProxyManager\Exception\ProxyModelNotFoundException 当代理无效时
+     * @return ProxySplQueue|null
      */
-    public function getProxySplQueue(): ProxySplQueue
+    public function proxySplQueue(): ?ProxySplQueue
     {
         return $this->proxySplQueue;
     }
@@ -162,7 +165,7 @@ class Apple
      *
      * @return HeaderSynchronizeDriver
      */
-    public function getHeaderSynchronizeDriver(): HeaderSynchronizeDriver
+    public function headerSynchronizeDriver(): HeaderSynchronizeDriver
     {
         return $this->headerSynchronizeDriver ??= new ArrayStoreHeaderSynchronize();
     }
@@ -255,4 +258,39 @@ class Apple
     {
         return new AppleIdResource($this);
     }
+
+    public function accountResource(): AccountResource
+    {
+        return new AccountResource($this);
+    }
+
+    public function trustedPhoneNumbers(): Collection{
+
+        return $this->trustedPhoneNumbers;
+    }
+
+    public function addTrustedPhoneNumber(Phone $phone): self{
+
+        $this->trustedPhoneNumbers->push($phone);
+
+        return $this;
+    }
+
+    public function removeTrustedPhoneNumber(Phone $phone): self{
+        
+        $this->trustedPhoneNumbers->forget($phone);
+
+        return $this;
+    }
+
+    public function hasTrustedPhoneNumber(Phone $phone): bool{
+
+        return $this->trustedPhoneNumbers->contains($phone);
+    }
+
+    public function securityCode(): string
+    {
+        throw new \RuntimeException('Not implemented');
+    }
+
 }

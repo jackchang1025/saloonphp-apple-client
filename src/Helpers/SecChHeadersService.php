@@ -10,11 +10,11 @@ class SecChHeadersService
     /**
      * 支持的浏览器列表
      */
-    private const SUPPORTED_BROWSERS = [
+    private const array SUPPORTED_BROWSERS = [
         'Chrome', 'Edge', 'Opera', 'Chromium', 'Microsoft Edge', 'Chrome Mobile', 'CriOS'
     ];
 
-    private const FAKE_BRAND_VERSIONS = [
+    private const array FAKE_BRAND_VERSIONS = [
         'chrome_134_plus' => ['"Not:A-Brand"', '24'],
         'chrome_131_133' => ['"Not(A:Brand"', '99'],
         'chrome_121_130' => ['"Not_A Brand"', '24'],
@@ -22,7 +22,7 @@ class SecChHeadersService
         'chrome_default' => ['"Not A;Brand"', '99'],
     ];
 
-    private const PLATFORM_MAPPING = [
+    private const array PLATFORM_MAPPING = [
         'Windows' => '"Windows"',
         'Mac' => '"macOS"',
         'iOS' => '"iOS"',
@@ -58,9 +58,9 @@ class SecChHeadersService
         $isMobileChrome = preg_match('/Chrome.*Mobile.*Android/i', $this->userAgent) === 1;
         
         // iOS设备上的Chrome浏览器支持（CriOS）
-        $isIOSChrome = preg_match('/CriOS/i', $this->userAgent) === 1;
+        $isIOSChrome = false !== stripos($this->userAgent, "CriOS");
 
-        if (!in_array($browserName, self::SUPPORTED_BROWSERS) && !$isMobileChrome && !$isIOSChrome) {
+        if (!$isMobileChrome && !$isIOSChrome && !in_array($browserName, self::SUPPORTED_BROWSERS, true)) {
             throw new SecChHeadersException('Not a Chromium browser');
         }
     }
@@ -79,9 +79,9 @@ class SecChHeadersService
     public function generateSecChUaMobile(): string
     {
         // 直接检测 iOS 移动设备
-        if (strpos($this->userAgent, 'iPhone') !== false || 
-            strpos($this->userAgent, 'iPad') !== false || 
-            strpos($this->userAgent, 'iPod') !== false) {
+        if (str_contains($this->userAgent, 'iPhone') ||
+            str_contains($this->userAgent, 'iPad') ||
+            str_contains($this->userAgent, 'iPod')) {
             return '?1';
         }
         
@@ -134,7 +134,7 @@ class SecChHeadersService
         }
         
         // 处理iOS上的Chrome浏览器
-        $isIOSChrome = preg_match('/CriOS/i', $this->userAgent) === 1;
+        $isIOSChrome = false !== stripos($this->userAgent, "CriOS");
         if ($isIOSChrome) {
             return $this->generateChromeSecChUa($this->extractChromeVersion());
         }
@@ -175,15 +175,21 @@ class SecChHeadersService
     {
         if ($majorVersion >= 134) {
             return self::FAKE_BRAND_VERSIONS['chrome_134_plus'];
-        } elseif ($majorVersion >= 131 && $majorVersion <= 133) {
-            return self::FAKE_BRAND_VERSIONS['chrome_131_133'];
-        } elseif ($majorVersion >= 121 && $majorVersion <= 130) {
-            return self::FAKE_BRAND_VERSIONS['chrome_121_130'];
-        } elseif ($majorVersion >= 90 && $majorVersion <= 120) {
-            return self::FAKE_BRAND_VERSIONS['chrome_90_120'];
-        } else {
-            return self::FAKE_BRAND_VERSIONS['chrome_default'];
         }
+
+        if ($majorVersion >= 131 && $majorVersion <= 133) {
+            return self::FAKE_BRAND_VERSIONS['chrome_131_133'];
+        }
+
+        if ($majorVersion >= 121 && $majorVersion <= 130) {
+            return self::FAKE_BRAND_VERSIONS['chrome_121_130'];
+        }
+
+        if ($majorVersion >= 90 && $majorVersion <= 120) {
+            return self::FAKE_BRAND_VERSIONS['chrome_90_120'];
+        }
+
+        return self::FAKE_BRAND_VERSIONS['chrome_default'];
     }
     
     /**
@@ -253,10 +259,10 @@ class SecChHeadersService
     public function generateSecChUaPlatform(): string
     {
         // 对 iOS 设备进行特殊检测
-        if (strpos($this->userAgent, 'iPhone') !== false || 
-            strpos($this->userAgent, 'iPad') !== false || 
-            strpos($this->userAgent, 'iPod') !== false || 
-            strpos($this->userAgent, 'CriOS') !== false) {
+        if (str_contains($this->userAgent, 'iPhone') ||
+            str_contains($this->userAgent, 'iPad') ||
+            str_contains($this->userAgent, 'iPod') ||
+            str_contains($this->userAgent, 'CriOS')) {
             return self::PLATFORM_MAPPING['iOS'];
         }
         

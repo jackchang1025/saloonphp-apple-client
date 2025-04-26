@@ -71,9 +71,15 @@ class AuthenticateResources extends BaseResource
 
     /**
      * @param string $frameId
+     * @param string $iframeId
      * @param string $clientId
      * @param string $redirectUri
      * @param string $state
+     * @param string $language
+     * @param string $skVersion
+     * @param string $authVersion
+     * @param string $responseType
+     * @param string $responseMode
      * @return Response
      * @throws FatalRequestException
      * @throws RequestException
@@ -83,15 +89,15 @@ class AuthenticateResources extends BaseResource
         return $this->getConnector()->send(
             new AuthorizeSignInRequest(
                 frameId: $frameId,
+                iframeId: $iframeId,
                 clientId: $clientId,
                 redirectUri: $redirectUri,
-                iframeId: $iframeId,
                 state: $state,
+                responseType: $responseType,
+                responseMode: $responseMode,
                 language: $language,
                 skVersion: $skVersion,
                 authVersion: $authVersion,
-                responseType: $responseType,
-                responseMode: $responseMode,
             )
         );
     }

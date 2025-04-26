@@ -25,11 +25,11 @@ class PaymentResource
      */
     public function getPayment(): PaymentConfig
     {
-        return $this->getAppleIdResource()->getAppleIdConnector()->getPaymentResources()->payments();
+        return $this->getAppleIdResource()->appleIdConnector()->getPaymentResources()->payments();
     }
 
-    public function getPaymentInfos(): \Modules\AppleClient\Service\Response\Response
+    public function getPaymentInfos()
     {
-        return $this->getAppleIdResource()->getBuyConnector()->getResources()->paymentInfosRequest();
+        return $this->getAppleIdResource()->buyConnector()->getResources()->paymentInfosRequest();
     }
 }

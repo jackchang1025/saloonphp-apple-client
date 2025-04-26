@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource\Idmsa;
 
+use JsonException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Resource\Resource;
-use Weijiajia\HttpProxyManager\Exception\ProxyModelNotFoundException;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\NullData;
 use Weijiajia\SaloonphpAppleClient\Exception\SignInException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
@@ -33,40 +33,29 @@ abstract class IdmsaResource extends Resource
 
     protected ?IdmsaConnector $idmsaConnector = null;
 
-    public function appleAuthenticationConnector(): AppleAuthenticationConnector
-    {
-        return $this->appleAuthenticationConnector ?? new AppleAuthenticationConnector(
-            $this->apple()->config()->get('apple_auth_url'),
-            $this->apple()
-           );
-    }
-
-    abstract public function idmsaConnector(): IdmsaConnector;
-    
     /**
      * 用户登录方法
      *
      * @return SignInCompleteResponse 登录完成的响应数据
      * @throws FatalRequestException 请求失败异常
      * @throws RequestException 请求异常
-     * @throws \JsonException JSON 解析异常
-     * @throws ProxyModelNotFoundException
+     * @throws JsonException JSON 解析异常
      * @throws SignInException
      */
     public function signIn(): SignInCompleteResponse
     {
-        $account = $this->apple()->getAppleId();
+        $account = $this->appleId();
 
         $initData = $this->appleAuthenticationConnector()
             ->getAuthenticationResource()
             ->signInInit(
-                $account->getAppleId()
+                $account->appleId()
             );
 
         $signInInitData = $this
             ->idmsaConnector()
             ->getAuthenticateResources()
-            ->signInInit(a: $initData->value, account: $account->getAppleId());
+            ->signInInit(a: $initData->value, account: $account->appleId());
 
         $completeResponse = $this->appleAuthenticationConnector()
             ->getAuthenticationResource()
@@ -77,7 +66,7 @@ abstract class IdmsaResource extends Resource
                         'salt'      => $signInInitData->salt,
                         'b'         => $signInInitData->b,
                         'c'         => $signInInitData->c,
-                        'password'  => $account->getPassword(),
+                        'password'  => $account->password(),
                         'iteration' => $signInInitData->iteration,
                         'protocol'  => $signInInitData->protocol,
                     ]
@@ -88,7 +77,7 @@ abstract class IdmsaResource extends Resource
             ->getAuthenticateResources()
             ->signInComplete(
                 IdmsaSignInComplete::from([
-                    'account' => $account->getAppleId(),
+                    'account' => $account->appleId(),
                     'm1'      => $completeResponse->M1,
                     'm2'      => $completeResponse->M2,
                     'c'       => $completeResponse->c,
@@ -96,6 +85,15 @@ abstract class IdmsaResource extends Resource
             );
     }
 
+    public function appleAuthenticationConnector(): AppleAuthenticationConnector
+    {
+        return $this->appleAuthenticationConnector ?? new AppleAuthenticationConnector(
+            $this->appleId()->config()->get('apple_auth_url'),
+            $this->appleId()
+        );
+    }
+
+    abstract public function idmsaConnector(): IdmsaConnector;
 
     /**
      * 发送手机安全码
@@ -144,14 +142,14 @@ abstract class IdmsaResource extends Resource
      *
      * @param string $code 安全码
      * @return NullData 验证响应数据
-     * @throws RequestException|FatalRequestException|\JsonException|VerificationCodeException 请求异常
+     * @throws RequestException|FatalRequestException|JsonException|VerificationCodeException 请求异常
      */
     public function verifySecurityCode(string $code): NullData
     {
         return $this->idmsaConnector()->getAuthenticateResources()->verifySecurityCode($code);
     }
 
-     /**
+    /**
      * @return AppleAuth
      * @throws FatalRequestException
      * @throws RequestException

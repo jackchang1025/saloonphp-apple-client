@@ -2,6 +2,7 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource;
 
+use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\AppleIdConnector;
 use JsonException;
@@ -20,27 +21,37 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Vali
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Verification\SendVerificationEmail;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\SendVerificationEmail as SendVerificationEmailResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
-use Weijiajia\SaloonphpAppleClient\Apple;
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleId;
 
 class AppleIdBatchRegistrationResource extends Resource
 {
     protected ?AccountDto $widgetAccount = null;
-    
+
     protected ?AppleIdConnector $appleIdConnector = null;
 
-    public function __construct(Apple $apple,protected string $widgetKey='af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3')
-    {
-        parent::__construct($apple);
+    public function __construct(
+        AppleId $appleId,
+        protected string $widgetKey = 'd39ba9916b7251055b22c7f910e2ea796ee65e98b2ddecea8f5dde8d9d1a815d'
+    ) {
+        parent::__construct($appleId);
     }
 
-    public function widgetKey(): string
+    public function resetWidgetAccount(): void
     {
-        return $this->widgetKey;
+        $this->widgetAccount = null;
     }
-    
+
+    public function captcha(): CaptchaResponse
+    {
+        return $this->appleIdConnector()->getAccountResource()->captcha(
+            $this->widgetAccount()->appleSessionId(),
+            $this->widgetKey()
+        );
+    }
+
     public function appleIdConnector(): AppleIdConnector
     {
-        return $this->appleIdConnector ?? new AppleIdConnector($this->apple());
+        return $this->appleIdConnector ?? new AppleIdConnector($this->appleId());
     }
 
     /**
@@ -48,7 +59,7 @@ class AppleIdBatchRegistrationResource extends Resource
      * @throws FatalRequestException
      * @throws RequestException
      */
-    protected function widgetAccount(): AccountDto
+    public function widgetAccount(): AccountDto
     {
         return $this->widgetAccount ??= $this->appleIdConnector()->getAccountResource()->widgetAccount(
             widgetKey: $this->widgetKey(),
@@ -58,24 +69,23 @@ class AppleIdBatchRegistrationResource extends Resource
         );
     }
 
-    protected function captcha(): CaptchaResponse
+    public function widgetKey(): string
     {
-        return $this->appleIdConnector()->getAccountResource()->captcha(
-            $this->widgetAccount()->appleSessionId(),
-            $this->widgetKey()
-        );
+        return $this->widgetKey;
     }
 
-     /**
+    /**
      * 验证邮箱和密码
      *
+     * @param string $name
+     * @param string $password
      * @return void
      * @throws AccountAlreadyExistsException
      * @throws FatalRequestException
      * @throws JsonException
      * @throws RequestException
      */
-    protected function validateEmailAndPassword(string $name, string $password): void
+    public function validateEmailAndPassword(string $name, string $password): void
     {
         $this->appleIdConnector()->getAccountResource()->appleid(
             $name,
@@ -91,7 +101,7 @@ class AppleIdBatchRegistrationResource extends Resource
         );
     }
 
-     /**
+    /**
      * 验证验证码
      *
      * @return Response 验证响应
@@ -100,9 +110,9 @@ class AppleIdBatchRegistrationResource extends Resource
      * @throws ClientException
      * @throws FatalRequestException
      * @throws JsonException
-     * @throws RequestException|RegistrationException
+     * @throws RequestException|RegistrationException|VerificationCodeSentTooManyTimesException
      */
-    protected function validateCaptcha(Validate $validate): Response
+    public function validateCaptcha(Validate $validate): Response
     {
         return $this->appleIdConnector()->getAccountResource()->validate(
             validateDto: $validate,
@@ -112,11 +122,12 @@ class AppleIdBatchRegistrationResource extends Resource
     }
 
     /**
+     * @param SendVerificationEmail $sendVerificationEmail
      * @return SendVerificationEmailResponse
      * @throws FatalRequestException
      * @throws RequestException
      */
-    protected function sendVerificationEmail(SendVerificationEmail $sendVerificationEmail): SendVerificationEmailResponse
+    public function sendVerificationEmail(SendVerificationEmail $sendVerificationEmail): SendVerificationEmailResponse
     {
         return $this->appleIdConnector()
             ->getAccountResource()
@@ -128,7 +139,7 @@ class AppleIdBatchRegistrationResource extends Resource
             ->dto();
     }
 
-     /**
+    /**
      * 验证邮箱验证码
      *
      * @return Response 验证响应
@@ -137,19 +148,16 @@ class AppleIdBatchRegistrationResource extends Resource
      * @throws JsonException
      * @throws RequestException|VerificationCodeException
      */
-    protected function verifyEmailCode(string $name, string $verificationInfo): Response
+    public function verifyEmailCode(VerificationEmail $verificationEmail): Response
     {
         return $this->appleIdConnector()->getAccountResource()->verificationEmail(
-            VerificationEmail::from([
-                'name'             => $name,
-                'verificationInfo' => $verificationInfo,
-            ]),
+            $verificationEmail,
             $this->widgetAccount()->appleSessionId(),
             $this->widgetKey()
         );
     }
 
-     /**
+    /**
      * 发送手机验证码
      *
      * @param int $attempts 尝试次数
@@ -160,9 +168,9 @@ class AppleIdBatchRegistrationResource extends Resource
      * @throws PhoneException
      * @throws RegistrationException
      * @throws RequestException
-     * @throws VerificationCodeSentTooManyTimesException
+     * @throws VerificationCodeSentTooManyTimesException|CaptchaException
      */
-    protected function attemptSendPhoneVerificationCode(int $attempts = 5 ,Validate $validate): Response
+    public function attemptSendPhoneVerificationCode(Validate $validate, int $attempts = 5): Response
     {
         for ($i = 0; $i < $attempts; $i++) {
             try {
@@ -191,9 +199,30 @@ class AppleIdBatchRegistrationResource extends Resource
      * @throws JsonException
      * @throws RequestException|VerificationCodeException
      */
-    protected function verifyPhoneCode(Validate $validate): Response
+    public function verifyPhoneCode(Validate $validate): Response
     {
         return $this->appleIdConnector()->getAccountResource()->verificationPhone(
+            $validate,
+            $this->widgetAccount()->appleSessionId(),
+            $this->widgetKey()
+        );
+    }
+
+    /**
+     * 创建账号
+     *
+     * @param Validate $validate
+     * @return Response 创建响应
+     * @throws ClientException
+     * @throws FatalRequestException
+     * @throws JsonException
+     * @throws RegistrationException
+     * @throws RequestException
+     * @throws DescriptionNotAvailableException
+     */
+    public function createAccount(Validate $validate): Response
+    {
+        return $this->appleIdConnector()->getAccountResource()->account(
             $validate,
             $this->widgetAccount()->appleSessionId(),
             $this->widgetKey()

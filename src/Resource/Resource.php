@@ -2,17 +2,17 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource;
 
-use Weijiajia\SaloonphpAppleClient\Apple;
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleId;
 
 abstract class Resource
 {
-    public function __construct(protected Apple $apple)
+    public function __construct(protected AppleId $appleId)
     {
     }
 
-    public function apple(): Apple
+    public function appleId(): AppleId
     {
-        return $this->apple;
+        return $this->appleId;
     }
     
     

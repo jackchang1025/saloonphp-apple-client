@@ -29,7 +29,7 @@ class DevicesResource
      */
     public function getDevices(): Devices
     {
-        return $this->getAppleIdResource()->getAppleIdConnector()->getSecurityDevicesResources()->devices();
+        return $this->getAppleIdResource()->appleIdConnector()->getSecurityDevicesResources()->devices();
     }
 
     /**
@@ -60,7 +60,7 @@ class DevicesResource
      */
     public function getDevicesDetail(string $paymentId): DeviceDetail
     {
-        return $this->getAppleIdResource()->getAppleIdConnector()->getSecurityDevicesResources()->deviceDetail(
+        return $this->getAppleIdResource()->appleIdConnector()->getSecurityDevicesResources()->deviceDetail(
             $paymentId
         );
     }

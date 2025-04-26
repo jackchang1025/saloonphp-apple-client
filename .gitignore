@@ -21,3 +21,16 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/.cursor/rules/01-project-overview.mdc
+/.cursor/rules/02-integrations.mdc
+/.cursor/rules/03-saloon-patterns.mdc
+/.cursor/rules/04-exception-handling.mdc
+/.cursor/rules/05-resource-pattern.mdc
+/.cursor/rules/06-connector-pattern.mdc
+/.cursor/rules/07-dto-pattern.mdc
+/.cursor/rules/08-browser-emulation.mdc
+/.cursor/rules/09-extensions-and-plugins.mdc
+/.cursor/rules/10-testing.mdc
+/.cursor/rules/11-contracts.mdc
+/.cursor/rules/12-appleid-implementation.mdc
+/.cursor/rules/13-appleid-batch-registration.mdc

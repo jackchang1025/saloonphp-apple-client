@@ -18,13 +18,13 @@ class BuyConnector extends AppleConnector
             'Connection'                => 'Keep-Alive',
             'Content-Type'              => 'application/json',
             'Accept'                    => 'application/json, text/plain, */*',
-            'Accept-Language'           => $this->apple()->browser()->language,
+            'Accept-Language'           => $this->appleId()->browser()->language,
             'X-Apple-I-Request-Context' => 'ca',
-            'X-Apple-I-TimeZone'        => $this->apple()->browser()->timezone,
+            'X-Apple-I-TimeZone'        => $this->appleId()->browser()->timezone,
             'Host'                      => 'buy.apps.apple.com',
             'Origin'                    => 'https://apps.apple.com',
             'Referer'                   => 'https://apps.apple.com/',
-            'User-Agent'                => $this->apple()->browser()->userAgent,
+            'User-Agent'                => $this->appleId()->browser()->userAgent,
 
         ];
     }

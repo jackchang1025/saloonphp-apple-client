@@ -14,12 +14,12 @@ class IcloudResource extends IdmsaResource
 
     public function idmsaConnector(): IdmsaConnector
     {
-        return $this->idmsaConnector ?? new IdmsaConnector($this->apple());
+        return $this->idmsaConnector ?? new IdmsaConnector($this->appleId(),'d39ba9916b7251055b22c7f910e2ea796ee65e98b2ddecea8f5dde8d9d1a815d','https://www.icloud.com');
     }
 
     public function icloudConnector(): IcloudConnector
     {
-        return $this->icloudConnector ?? new IcloudConnector($this->apple());
+        return $this->icloudConnector ?? new IcloudConnector($this->appleId());
     }
 
     public function getDevices(): Devices
@@ -29,7 +29,7 @@ class IcloudResource extends IdmsaResource
 
     public function appleIdBatchRegistrationResource(): AppleIdBatchRegistrationResource
     {
-        return new AppleIdBatchRegistrationResource($this->apple());
+        return new AppleIdBatchRegistrationResource($this->appleId());
     }
 
 }

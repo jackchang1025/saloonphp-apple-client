@@ -21,7 +21,7 @@ class BuyTvAppleConnector extends AppleConnector
             'Host'                      => 'buy.tv.apple.com',
             'Origin'                    => 'https://tv.apple.com',
             'Referer'                   => 'https://tv.apple.com/',
-            'User-Agent'                => $this->apple()->browser()->userAgent,
+            'User-Agent'                => $this->appleId()->browser()->userAgent,
             //这个值表示:
             // 美国区域商店 (143441)
             // 英语界面 (-1)

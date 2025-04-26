@@ -6,7 +6,7 @@ use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\PhoneNumber;
 use Saloon\Http\Response;
 use Spatie\LaravelData\DataCollection;
-
+use Illuminate\Support\Collection;
 class Auth extends Data
 {
     /**
@@ -24,12 +24,12 @@ class Auth extends Data
         return $this->direct->twoSV->phoneNumberVerification->trustedPhoneNumbers;
     }
 
-    public function filterTrustedPhone(string $phone): DataCollection
+    public function filterTrustedPhone(string $phone): Collection
     {
         // 提取最后两位数字
         $lastTwo = substr($phone, -2);
 
-        return $this->getTrustedPhoneNumbers()->filter(
+        return $this->getTrustedPhoneNumbers()->toCollection()->filter(
             function (PhoneNumber $trustedPhone) use ($lastTwo, $phone) {
                 // 检查最后两位数字是否匹配
                 $lastTwoMatch = $trustedPhone->lastTwoDigits === $lastTwo;

@@ -15,7 +15,7 @@ class FeedBackWsIcloudConnector extends AppleConnector
             'Host'                   => 'feedbackws.icloud.com',
             'Accept-Encoding'        => 'gzip, deflate, br, zstd',
             'Referer'                => 'https://www.icloud.com',
-            'User-Agent'             => $this->apple()->browser()->userAgent,
+            'User-Agent'             => $this->appleId()->browser()->userAgent,
             'Origin'                 => 'https://www.icloud.com',
             'Connection'             => 'keep-alive',
             'Cache-Control'          => 'no-cache',

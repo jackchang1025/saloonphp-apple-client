@@ -24,18 +24,18 @@ class AppleIdResource extends IdmsaResource
 
     public function idmsaConnector(): IdmsaConnector
     {        
-        return $this->idmsaConnector ?? new IdmsaConnector($this->apple());
+        return $this->idmsaConnector ?? new IdmsaConnector($this->appleId(),'af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3','https://account.apple.com');
     }
 
     public function appleIdConnector(): AppleIdConnector
     {
-        return $this->appleIdConnector ?? new AppleIdConnector($this->apple());
+        return $this->appleIdConnector ?? new AppleIdConnector($this->appleId());
     }
 
-    public function getBuyConnector(): BuyConnector
+    public function buyConnector(): BuyConnector
     {
         return $this->buyConnector ??= new BuyConnector(
-            $this->apple()
+            $this->appleId()
         );
     }
 

@@ -6,7 +6,7 @@ use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\AccountManager;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Token\Token;
-use Modules\AppleClient\Service\Integrations\AppleId\Dto\Response\ValidatePassword\ValidatePassword;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\ValidatePassword\ValidatePassword;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
@@ -28,7 +28,10 @@ class AccountManagerResource
 
     public function account(): AccountManager
     {
-        return $this->getAppleIdResource()->getAppleIdConnector()->getAccountManagerResources()->account();
+        return $this->getAppleIdResource()
+        ->appleIdConnector()
+        ->getAccountManagerResources()
+        ->account();
     }
 
     /**
@@ -38,9 +41,11 @@ class AccountManagerResource
      */
     public function authenticatePassword(): ValidatePassword
     {
-        return $this->validatePassword ??= $this->getAppleIdResource()->getAppleIdConnector()->getAuthenticateResources(
-        )->authenticatePassword(
-            $this->getAppleIdResource()->getWebResource()->getApple()->getAccount()->password
+        return $this->validatePassword ??= $this->getAppleIdResource()
+        ->appleIdConnector()
+        ->getAuthenticateResources()
+        ->authenticatePassword(
+            $this->getAppleIdResource()->appleId()->password()
         );
     }
 
@@ -51,7 +56,10 @@ class AccountManagerResource
      */
     public function token(): Token
     {
-        return $this->token ??= $this->getAppleIdResource()->getAppleIdConnector()->getAuthenticateResources()->token();
+        return $this->token ??= $this->getAppleIdResource()
+        ->appleIdConnector()
+        ->getAuthenticateResources()
+        ->token();
     }
 
     /**

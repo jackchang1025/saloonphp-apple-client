@@ -5,7 +5,7 @@ namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 use Illuminate\Support\Collection;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Login;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Search\SearchResponse;
-use Modules\AppleClient\Service\Integrations\ReportProblem\ReportProblemConnector;
+use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\ReportProblemConnector;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
@@ -88,9 +88,8 @@ class ReportProblemResource
         }
 
         //清除 cookie 信息
-        $this->getAppleIdResource()
-            ->getAuthenticator()
-            ->getCookieJar()
+        $this->getAppleIdResource()->appleId()
+             ->cookieJar()
             ->clearCookiesByName(['selfserv_toru', 'selfserv_tahi', 'dqsid', 'user-context']);
 
 
