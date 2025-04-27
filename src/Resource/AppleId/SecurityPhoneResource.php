@@ -3,8 +3,9 @@
 namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\AddSecurityVerifyPhone\AddSecurityVerifyPhoneInterface;
-use Weijiajia\SaloonphpAppleClient\Exception\BindPhoneException;
-use Weijiajia\SaloonphpAppleClient\Exception\ErrorException;
+use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
@@ -31,14 +32,13 @@ class SecurityPhoneResource
      * @param string $countryDialCode
      * @param bool $nonFTEU
      * @return SecurityVerifyPhone
-     * @throws BindPhoneException
-     * @throws ErrorException
      * @throws FatalRequestException
      * @throws RequestException
      * @throws StolenDeviceProtectionException
      * @throws VerificationCodeSentTooManyTimesException
-     * @throws \Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException
-     * @throws \Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException
+     * @throws DescriptionNotAvailableException
+     * @throws PhoneException
+     * @throws PhoneNumberAlreadyExistsException
      */
     public function securityVerifyPhone(
         string $countryCode,
@@ -60,15 +60,14 @@ class SecurityPhoneResource
     /**
      * @param AddSecurityVerifyPhoneInterface $addSecurityVerifyPhone
      * @return SecurityVerifyPhone
-     * @throws BindPhoneException
-     * @throws ErrorException
+     * @throws DescriptionNotAvailableException
      * @throws FatalRequestException
+     * @throws PhoneException
+     * @throws PhoneNumberAlreadyExistsException
      * @throws RequestException
      * @throws StolenDeviceProtectionException
      * @throws VerificationCodeException
      * @throws VerificationCodeSentTooManyTimesException
-     * @throws \Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException
-     * @throws \Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException
      */
     public function addSecurityVerifyPhone(AddSecurityVerifyPhoneInterface $addSecurityVerifyPhone): SecurityVerifyPhone
     {
