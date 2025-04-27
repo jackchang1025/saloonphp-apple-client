@@ -11,7 +11,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\Auth\Auth as 
 use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
-
+use Weijiajia\SaloonphpAppleClient\Exception\InvalidArgumentException;
 class AuthRequest extends Request
 {
     protected Method $method = Method::GET;
@@ -31,7 +31,7 @@ class AuthRequest extends Request
             ->first();
 
         if (!$document->count()) {
-            throw new \RuntimeException('未找到 boot_args 节点');
+            throw new InvalidArgumentException('未找到 boot_args 节点');
         }
 
         // 获取 script 标签的内容
@@ -41,7 +41,11 @@ class AuthRequest extends Request
         $data = json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR);
 
         if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('JSON解析错误: '.json_last_error_msg());
+            throw new InvalidArgumentException('JSON解析错误: '.json_last_error_msg());
+        }
+
+        if(!empty($data['direct']['twoSV']['phoneNumberVerification']['serviceErrors'])){
+            throw new InvalidArgumentException(json_encode($data['direct']['twoSV']['phoneNumberVerification']['serviceErrors'],JSON_UNESCAPED_UNICODE));
         }
 
         return AuthResponse::from($data);
