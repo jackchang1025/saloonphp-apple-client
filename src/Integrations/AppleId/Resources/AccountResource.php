@@ -30,7 +30,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
-
+use Weijiajia\SaloonphpAppleClient\Exception\PhoneFormatException;
 class AccountResource extends BaseResource
 {
     /**
@@ -115,6 +115,20 @@ class AccountResource extends BaseResource
             //captcha answer invalid
             if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            }
+
+            //phone number invalid
+            // "validationErrors": [
+            //     {
+            //         "code": "ExceedsLength",
+            //         "path": "phoneNumberVerification.phoneNumber.number",
+            //         "title": "Nomor Telepon Tidak Valid",
+            //         "message": "Masukkan nomor telepon yang valid.",
+            //         "suppressDismissal": false
+            //     }
+            // ]
+            if (($validationErrors[0]['path'] ?? '') === 'phoneNumberVerification.phoneNumber.number') {
+                throw new PhoneFormatException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
             //Could Not Create Account
