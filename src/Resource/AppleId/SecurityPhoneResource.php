@@ -10,6 +10,7 @@ use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\DeleteSecurityVerify;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 
@@ -122,5 +123,19 @@ class SecurityPhoneResource
 
             throw new VerificationCodeException($e->getResponse());
         }
+    }
+
+    /**
+     * @param int $id
+     * @return DeleteSecurityVerify
+     * @throws FatalRequestException
+     * @throws RequestException
+     */
+    public function deleteSecurityVerify(int $id): DeleteSecurityVerify
+    {
+        return $this->getAppleIdResource()
+            ->appleIdConnector()
+            ->getSecurityPhoneResources()
+            ->deleteSecurityVerify($id);
     }
 }
