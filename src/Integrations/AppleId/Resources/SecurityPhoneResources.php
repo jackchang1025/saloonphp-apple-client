@@ -6,6 +6,7 @@ use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\DeleteSecurityVerify;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\SecurityPhone\SecurityVerifyPhoneRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\SecurityPhone\SecurityVerifyPhoneSecurityCodeRequest;
@@ -15,6 +16,7 @@ use Saloon\Exceptions\Request\ClientException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\SecurityPhone\DeleteSecurityVerifyRequest;
 class SecurityPhoneResources extends BaseResource
 {
     /**
@@ -121,5 +123,18 @@ class SecurityPhoneResources extends BaseResource
             ->send(
                 new SecurityVerifyPhoneSecurityCodeRequest($id, $phoneNumber, $countryCode, $countryDialCode, $code)
             )->dto();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return DeleteSecurityVerify
+     * @throws FatalRequestException
+     * @throws RequestException
+     */
+    public function deleteSecurityVerify(int $id): DeleteSecurityVerify
+    {
+        return $this->getConnector()
+            ->send(new DeleteSecurityVerifyRequest($id))->dto();
     }
 }
