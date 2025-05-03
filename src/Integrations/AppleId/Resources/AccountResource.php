@@ -153,19 +153,42 @@ class AccountResource extends BaseResource
      * @return Response
      * @throws FatalRequestException
      * @throws RequestException
+     * @throws CaptchaException
+     * @throws RegistrationException
      */
     public function sendVerificationEmail(
         SendVerificationEmailData $sendVerificationEmailData,
         string $appleIdSessionId,
         string $appleWidgetKey
     ): Response {
-        return $this->connector->send(
-            new SendVerificationEmail(
-                data: $sendVerificationEmailData,
-                appleIdSessionId: $appleIdSessionId,
-                appleWidgetKey: $appleWidgetKey
-            )
-        );
+
+        try {
+
+            return $this->connector->send(
+                new SendVerificationEmail(
+                    data: $sendVerificationEmailData,
+                    appleIdSessionId: $appleIdSessionId,
+                    appleWidgetKey: $appleWidgetKey
+                )
+            );
+
+        } catch (ClientException  $e) {
+
+            $validationErrors = $e->getResponse()->json('validationErrors');
+
+            //captcha answer invalid
+            if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
+                throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
+            }
+
+            //Could Not Create Account
+            $validationErrors = $e->getResponse()->json('service_errors');
+            if (($validationErrors[0]['code'] ?? '') === '-34607001') {
+                throw new RegistrationException($e->getResponse()->body());
+            }
+
+            throw $e;
+        }
     }
 
     /**

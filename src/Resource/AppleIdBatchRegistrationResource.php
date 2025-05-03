@@ -126,6 +126,8 @@ class AppleIdBatchRegistrationResource extends Resource
      * @return SendVerificationEmailResponse
      * @throws FatalRequestException
      * @throws RequestException
+     * @throws CaptchaException
+     * @throws RegistrationException
      */
     public function sendVerificationEmail(SendVerificationEmail $sendVerificationEmail): SendVerificationEmailResponse
     {
