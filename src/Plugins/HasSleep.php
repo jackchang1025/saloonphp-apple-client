@@ -8,7 +8,7 @@ use Weijiajia\SaloonphpAppleClient\Contracts\HasSleepInterface;
 trait HasSleep
 {
 
-    public function sleep(): int
+    public function sleep(): float|int
     {
         return 0;
     }
