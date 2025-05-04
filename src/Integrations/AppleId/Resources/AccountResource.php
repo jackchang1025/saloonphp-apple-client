@@ -155,6 +155,7 @@ class AccountResource extends BaseResource
      * @throws RequestException
      * @throws CaptchaException
      * @throws RegistrationException
+     * @throws DescriptionNotAvailableException
      */
     public function sendVerificationEmail(
         SendVerificationEmailData $sendVerificationEmailData,
@@ -185,6 +186,13 @@ class AccountResource extends BaseResource
             $validationErrors = $e->getResponse()->json('service_errors');
             if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
+            }
+
+            $validationErrors = $e->getResponse()->json('service_errors');
+           
+            //Error Description not available
+            if (($validationErrors[0]['code'] ?? '') === '-27589') {
+                throw new DescriptionNotAvailableException($e->getResponse()->body());
             }
 
             throw $e;
