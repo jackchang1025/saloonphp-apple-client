@@ -31,6 +31,8 @@ use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesExc
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Exception\PhoneFormatException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentToBeTimeException;
+
 class AccountResource extends BaseResource
 {
     /**
@@ -156,6 +158,7 @@ class AccountResource extends BaseResource
      * @throws CaptchaException
      * @throws RegistrationException
      * @throws DescriptionNotAvailableException
+     * @throws VerificationCodeSentToBeTimeException
      */
     public function sendVerificationEmail(
         SendVerificationEmailData $sendVerificationEmailData,
@@ -184,15 +187,19 @@ class AccountResource extends BaseResource
 
             //Could Not Create Account
             $validationErrors = $e->getResponse()->json('service_errors');
+
             if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
             }
 
-            $validationErrors = $e->getResponse()->json('service_errors');
-           
             //Error Description not available
             if (($validationErrors[0]['code'] ?? '') === '-27589') {
                 throw new DescriptionNotAvailableException($e->getResponse()->body());
+            }
+
+            if (($validationErrors[0]['code'] ?? '') === '-23590') {
+                //A new code can’t be sent at this time. Enter the last code you received or try again later.
+                throw new VerificationCodeSentToBeTimeException($e->getResponse()->body());
             }
 
             throw $e;
