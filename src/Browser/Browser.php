@@ -9,7 +9,7 @@ use Weijiajia\SaloonphpAppleClient\Browser\Navigator;
 use Weijiajia\SaloonphpAppleClient\Browser\Screen;
 use Weijiajia\SaloonphpAppleClient\Browser\Window;
 use Weijiajia\SaloonphpAppleClient\Helpers\SecChHeadersService;
-
+use Weijiajia\CountryAcceptLanguage\CountryAcceptLanguage;
 class Browser
 {
 
@@ -46,6 +46,14 @@ class Browser
 
         $this->navigator->setup($this->userAgent);
         $this->navigator->language = $this->language;
+    }
+
+    public function withLanguageForCountry(string $country): static
+    {
+        $countryLanguage = new CountryAcceptLanguage();
+        $this->language = $countryLanguage->getAcceptLanguageHeader($country);
+        $this->navigator->language = $this->language;
+        return $this;
     }
 
     /**
