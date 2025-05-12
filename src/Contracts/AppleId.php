@@ -10,7 +10,7 @@ use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver
 use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Saloon\Helpers\MiddlewarePipeline;
 use Saloon\Contracts\ArrayStore as ArrayStoreContract;
-
+use Psr\EventDispatcher\EventDispatcherInterface;
 interface AppleId
 {
     public function appleId(): string;
@@ -44,5 +44,7 @@ interface AppleId
     public function middleware(): MiddlewarePipeline;
 
     public function config(): ArrayStoreContract;
+
+    public function dispatcher(): ?EventDispatcherInterface;
     
 }

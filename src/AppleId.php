@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
 use Weijiajia\SaloonphpAppleClient\Helpers\GeneratePassword;
 use Weijiajia\SaloonphpAppleClient\Contracts\Phone;
 use Weijiajia\SaloonphpAppleClient\Resource\Account\AccountResource;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class AppleId implements AppleIdContract
 {
@@ -36,6 +37,8 @@ class AppleId implements AppleIdContract
 
     protected Collection $trustedPhoneNumbers;
 
+    protected ?EventDispatcherInterface $dispatcher = null;
+
     protected bool $debug = true;
 
     
@@ -51,8 +54,8 @@ class AppleId implements AppleIdContract
      */
     public function __construct(
         protected string $appleId,
-        protected ?Browser $browser = null,
         protected ?string $password = null,
+        protected ?Browser $browser = null,
         protected ?Country $country = null,
         protected ?LoggerInterface $logger = null,
         Collection|array $trustedPhoneNumbers = [],
@@ -63,6 +66,17 @@ class AppleId implements AppleIdContract
     public function appleId(): string
     {
         return $this->appleId;
+    }
+
+    public function withDispatcher(EventDispatcherInterface $dispatcher): static
+    {
+        $this->dispatcher = $dispatcher;
+        return $this;
+    }
+
+    public function dispatcher(): ?EventDispatcherInterface
+    {
+        return $this->dispatcher;
     }
 
     /**

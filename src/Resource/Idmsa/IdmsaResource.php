@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Weijiajia\SaloonphpAppleClient\Resource\Idmsa;
 
 use JsonException;
@@ -19,11 +19,15 @@ use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificat
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\VerifyPhoneSecurityCode\VerifyPhoneSecurityCode;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\AppleAuthenticationConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\IdmsaConnector;
+use Weijiajia\SaloonphpAppleClient\Events\SignInSuccessEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SignInFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SendPhoneSecurityCodeSuccessEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SendPhoneSecurityCodeFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SendVerificationCodeSuccessEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SendVerificationCodeFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Events\VerifySecurityCodeSuccessEvent;
+use Weijiajia\SaloonphpAppleClient\Events\VerifySecurityCodeFailedEvent;
 
-/**
- *
- * 负责处理与 IDMSA 相关的苹果认证功能，包括登录、两步验证等。
- */
 abstract class IdmsaResource extends Resource
 {
 
@@ -44,45 +48,56 @@ abstract class IdmsaResource extends Resource
      */
     public function signIn(): SignInCompleteResponse
     {
-        $account = $this->appleId();
+        try {
+            $account = $this->appleId();
 
-        $initData = $this->appleAuthenticationConnector()
-            ->getAuthenticationResource()
+            $initData = $this->appleAuthenticationConnector()
+                ->getAuthenticationResource()
             ->signInInit(
                 $account->appleId()
             );
 
-        $signInInitData = $this
-            ->idmsaConnector()
-            ->getAuthenticateResources()
-            ->signInInit(a: $initData->value, account: $account->appleId());
+            $signInInitData = $this
+                ->idmsaConnector()
+                ->getAuthenticateResources()
+                ->signInInit(a: $initData->value, account: $account->appleId());
 
-        $completeResponse = $this->appleAuthenticationConnector()
-            ->getAuthenticationResource()
-            ->signInComplete(
-                SignInComplete::from(
-                    [
-                        'key'       => $initData->key,
-                        'salt'      => $signInInitData->salt,
-                        'b'         => $signInInitData->b,
-                        'c'         => $signInInitData->c,
-                        'password'  => $account->password(),
-                        'iteration' => $signInInitData->iteration,
-                        'protocol'  => $signInInitData->protocol,
-                    ]
-                )
-            );
+            $completeResponse = $this->appleAuthenticationConnector()
+                ->getAuthenticationResource()
+                ->signInComplete(
+                    SignInComplete::from(
+                        [
+                            'key'       => $initData->key,
+                            'salt'      => $signInInitData->salt,
+                            'b'         => $signInInitData->b,
+                            'c'         => $signInInitData->c,
+                            'password'  => $account->password(),
+                            'iteration' => $signInInitData->iteration,
+                            'protocol'  => $signInInitData->protocol,
+                        ]
+                    )
+                );
 
-        return $this->idmsaConnector()
-            ->getAuthenticateResources()
-            ->signInComplete(
-                IdmsaSignInComplete::from([
-                    'account' => $account->appleId(),
-                    'm1'      => $completeResponse->M1,
-                    'm2'      => $completeResponse->M2,
-                    'c'       => $completeResponse->c,
-                ])
-            );
+            $response = $this->idmsaConnector()
+                ->getAuthenticateResources()
+                ->signInComplete(
+                    IdmsaSignInComplete::from([
+                        'account' => $account->appleId(),
+                        'm1'      => $completeResponse->M1,
+                        'm2'      => $completeResponse->M2,
+                        'c'       => $completeResponse->c,
+                    ])
+                );
+
+            $this->appleId()->dispatcher()?->dispatch(new SignInSuccessEvent($this->appleId(),$response));
+
+            return $response;
+
+        } catch (\Throwable $e) {
+
+            $this->appleId()->dispatcher()?->dispatch(new SignInFailedEvent($this->appleId(),$e));
+            throw new $e;
+        }
     }
 
     public function appleAuthenticationConnector(): AppleAuthenticationConnector
@@ -106,7 +121,23 @@ abstract class IdmsaResource extends Resource
      */
     public function sendPhoneSecurityCode(int $id): SendPhoneVerificationCode
     {
-        return $this->idmsaConnector()->getAuthenticateResources()->sendPhoneSecurityCode($id);
+        try {
+            $response = $this->idmsaConnector()
+                ->getAuthenticateResources()
+                ->sendPhoneSecurityCode($id);
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new SendPhoneSecurityCodeSuccessEvent($this->appleId(),$response));
+
+            return $response;
+        } catch (\Throwable $e) {
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new SendPhoneSecurityCodeFailedEvent($this->appleId(),$e));
+            throw $e;
+        }
     }
 
     /**
@@ -118,7 +149,21 @@ abstract class IdmsaResource extends Resource
      */
     public function sendVerificationCode(): SendDeviceSecurityCode
     {
-        return $this->idmsaConnector()->getAuthenticateResources()->sendSecurityCode();
+        try {
+            $response = $this->idmsaConnector()
+                ->getAuthenticateResources()
+                ->sendSecurityCode();
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new SendVerificationCodeSuccessEvent($this->appleId(),$response));
+            return $response;
+        } catch (\Throwable $e) {
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new SendVerificationCodeFailedEvent($this->appleId(),$e));
+            throw $e;
+        }
     }
 
 
@@ -132,9 +177,23 @@ abstract class IdmsaResource extends Resource
      * @throws RequestException 请求异常
      * @throws VerificationCodeException 验证码异常
      */
-    public function verifyPhoneVerificationCode(int $id, string $code): VerifyPhoneSecurityCode
+    public function verifyPhoneVerificationCode(int|string $id, string $code): VerifyPhoneSecurityCode
     {
-        return $this->idmsaConnector()->getAuthenticateResources()->verifyPhoneCode($id, $code);
+        try {
+            $response = $this->idmsaConnector()
+                ->getAuthenticateResources()
+                ->verifyPhoneCode((string) $id, $code);
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new VerifySecurityCodeSuccessEvent($this->appleId(),$response));
+            return $response;
+        } catch (\Throwable $e) {
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new VerifySecurityCodeFailedEvent($this->appleId(),$e));
+            throw $e;
+        }
     }
 
     /**
@@ -146,7 +205,23 @@ abstract class IdmsaResource extends Resource
      */
     public function verifySecurityCode(string $code): NullData
     {
-        return $this->idmsaConnector()->getAuthenticateResources()->verifySecurityCode($code);
+        try {
+
+            $response = $this->idmsaConnector()
+                ->getAuthenticateResources()
+                ->verifySecurityCode($code);
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new VerifySecurityCodeSuccessEvent($this->appleId(),$response));
+            return $response;
+        } catch (\Throwable $e) {
+
+            $this->appleId()
+                ->dispatcher()
+                ?->dispatch(new VerifySecurityCodeFailedEvent($this->appleId(),$e));
+            throw $e;
+        }
     }
 
     /**

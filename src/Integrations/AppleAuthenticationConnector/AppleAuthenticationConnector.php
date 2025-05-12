@@ -23,7 +23,7 @@ class AppleAuthenticationConnector extends AppleConnector
     /**
      * @param string $url
      */
-    public function __construct(readonly protected string $url, AppleId $appleId)
+    public function __construct(protected  string $url, protected  AppleId $appleId)
     {
         parent::__construct($appleId);
         

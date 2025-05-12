@@ -13,7 +13,7 @@ class SignInComplete extends Data
         public ?Carbon $expiresAt = null
     ) {
         if ($this->expiresAt === null) {
-            $this->expiresAt = now()->addSeconds(30);
+            $this->expiresAt = Carbon::now()->addSeconds(30);
         }
     }
 
@@ -21,7 +21,7 @@ class SignInComplete extends Data
     {
         return new self(
             authType: $response->json('authType'),
-            expiresAt: now()->addSeconds(30)
+            expiresAt: Carbon::now()->addSeconds(30)
         );
     }
 

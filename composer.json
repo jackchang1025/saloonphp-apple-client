@@ -27,6 +27,7 @@
         "php": ">=8.0",
         "league/flysystem": "^3",
         "matomo/device-detector": "^6.4",
+        "psr/event-dispatcher": "^1.0",
         "saloonphp/cache-plugin": "^3.0",
         "saloonphp/saloon": "^3.0",
         "spatie/laravel-data": "^4.13",
