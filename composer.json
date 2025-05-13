@@ -28,7 +28,7 @@
         "egulias/email-validator": "^4.0",
         "league/flysystem": "^3",
         "matomo/device-detector": "^6.4",
-        "propaganistas/laravel-phone": "^6.0",
+        "propaganistas/laravel-phone": "^5.0",
         "psr/event-dispatcher": "^1.0",
         "saloonphp/cache-plugin": "^3.0",
         "saloonphp/saloon": "^3.0",
