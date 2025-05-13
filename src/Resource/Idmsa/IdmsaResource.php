@@ -89,13 +89,17 @@ abstract class IdmsaResource extends Resource
                     ])
                 );
 
-            $this->appleId()->dispatcher()?->dispatch(new SignInSuccessEvent($this->appleId(),$response));
+            $this->appleId()
+            ->dispatcher()
+            ?->dispatch(new SignInSuccessEvent($this->appleId(),$response));
 
             return $response;
 
         } catch (\Throwable $e) {
 
-            $this->appleId()->dispatcher()?->dispatch(new SignInFailedEvent($this->appleId(),$e));
+            $this->appleId()
+            ->dispatcher()
+            ?->dispatch(new SignInFailedEvent($this->appleId(),$e));
             throw new $e;
         }
     }

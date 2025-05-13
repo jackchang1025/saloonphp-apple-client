@@ -4,14 +4,15 @@ namespace Weijiajia\SaloonphpAppleClient\Contracts;
 use Illuminate\Support\Collection;
 use Weijiajia\SaloonphpAppleClient\Country;
 use Psr\Log\LoggerInterface;
-use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Cookie\CookieJarInterface;
 use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver;
 use Weijiajia\SaloonphpAppleClient\Browser\Browser;
 use Saloon\Helpers\MiddlewarePipeline;
 use Saloon\Contracts\ArrayStore as ArrayStoreContract;
 use Psr\EventDispatcher\EventDispatcherInterface;
-interface AppleId
+
+interface AppleId extends ConfigurableAppleId
 {
     public function appleId(): string;
 
@@ -27,7 +28,7 @@ interface AppleId
 
     public function securityCode(): string;
 
-    public function country(): ?Country;
+    public function country(): Country;
 
     public function browser(): Browser;
 
@@ -37,7 +38,7 @@ interface AppleId
 
     public function headerSynchronizeDriver(): HeaderSynchronizeDriver;
 
-    public function cookieJar(): CookieJar;
+    public function cookieJar(): ?CookieJarInterface;
 
     public function debug(): bool;
 
