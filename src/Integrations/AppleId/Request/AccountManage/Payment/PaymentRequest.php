@@ -18,6 +18,6 @@ class PaymentRequest extends Request
 
     public function createDtoFromResponse(Response $response): PaymentConfig
     {
-        return PaymentConfig::from($response->json());
+        return PaymentConfig::from($response->json('paymentDetails'));
     }
 }

@@ -73,15 +73,4 @@ class PrimaryPaymentMethod extends Data
     )
     {
     }
-
-    public function updateOrCreate(int $accountId): Payment
-    {
-        return Payment::updateOrCreate(
-            [
-                'account_id' => $accountId,
-                'payment_id' => $this->paymentId,
-            ],
-            $this->toArray()
-        );
-    }
 }

@@ -3,7 +3,7 @@
 namespace Weijiajia\SaloonphpAppleClient\Trait;
 use Illuminate\Support\Traits\Conditionable;
 use Saloon\Traits\RequestProperties\HasConfig;
-use Saloon\Traits\RequestProperties\HasMiddleware;
+
 trait ProvidesAppleIdCapabilities
 {
     // Use all the individual functionality Traits
@@ -20,7 +20,7 @@ trait ProvidesAppleIdCapabilities
     use ProvidesAppleResources;
     use HasConfig;
     use Conditionable;
-    use HasMiddleware;
+    use ProvidesMiddleware;
     use AccountTypeIdentifier;
     use HandlesPhoneNumbers;
     // --- Abstract Method Requirements ---
