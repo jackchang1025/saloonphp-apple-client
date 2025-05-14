@@ -2,19 +2,19 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Trait;
 
-use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue as ProxySplQueueContract;
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 
 trait ProvidesProxySplQueue
 {
-    protected ?ProxySplQueueContract $proxySplQueue = null;
+    protected ?ProxySplQueue $proxySplQueue = null;
 
 
-    public function proxySplQueue(): ?ProxySplQueueContract
+    public function proxySplQueue(): ?ProxySplQueue
     {
         return $this->proxySplQueue;
     }
 
-    public function withProxySplQueue(ProxySplQueueContract $proxySplQueue): self
+    public function withProxySplQueue(ProxySplQueue $proxySplQueue): static
     {
         $this->proxySplQueue = $proxySplQueue;
         return $this;

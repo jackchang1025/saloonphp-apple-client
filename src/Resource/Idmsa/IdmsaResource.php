@@ -100,7 +100,7 @@ abstract class IdmsaResource extends Resource
             $this->appleId()
             ->dispatcher()
             ?->dispatch(new SignInFailedEvent($this->appleId(),$e));
-            throw new $e;
+            throw $e;
         }
     }
 

@@ -105,11 +105,21 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
      */
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
-        /**
-         * @var Response $response
-         */
-        $response = parent::send($request, $mockClient, $handleRetry);
+       try{
 
-        return $response;
+            /**
+             * @var Response $response
+             */
+            $response = parent::send($request, $mockClient, $handleRetry);
+
+            return $response;
+
+       }catch(\Saloon\Exceptions\Request\Statuses\UnauthorizedException $e){
+
+            $this->appleId->cookieJar()->clear();
+            throw $e;
+       }
+
+        
     }
 }

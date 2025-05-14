@@ -13,7 +13,7 @@ trait ProvidesEventDispatcher
         return $this->eventDispatcher;
     }
 
-    public function withDispatcher(EventDispatcherInterface $eventDispatcher): static
+    public function withDispatcher(?EventDispatcherInterface $eventDispatcher): static
     {
         $this->eventDispatcher = $eventDispatcher;
         return $this;

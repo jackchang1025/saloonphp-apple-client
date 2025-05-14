@@ -31,6 +31,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Weijiajia\SaloonphpAppleClient\Exception\SignInException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentToBeTimeException;
 class AuthenticateResources extends BaseResource
 {
 
@@ -237,6 +238,11 @@ class AuthenticateResources extends BaseResource
 
             if ($response->status() === 423) {
                 throw new VerificationCodeSentTooManyTimesException($response->body());
+            }
+
+            $serviceErrors = $response->getFirstServiceError();
+            if($serviceErrors->getCode() === '-28248'){
+                throw new VerificationCodeSentToBeTimeException($response->body());
             }
 
             throw $e;

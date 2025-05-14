@@ -29,10 +29,9 @@ class AppleId implements AppleIdContract
     use ProvidesAppleIdCapabilities;
 
     public function __construct(
-        string $appleId,
-        ?string $password = null,
-    ) {
-        $this->appleId = $appleId;
-        $this->password = $password;
+       protected string $appleId,
+       protected ?string $password = null,
+    ) 
+    {
     }
 }

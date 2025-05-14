@@ -20,9 +20,9 @@ interface AppleId extends ConfigurableAppleId
 
     public function trustedPhoneNumbers(): Collection;
 
-    public function addTrustedPhoneNumber(Phone $phone): self;
+    public function addTrustedPhoneNumber(Phone $phone): static;
 
-    public function removeTrustedPhoneNumber(Phone $phone): self;
+    public function removeTrustedPhoneNumber(Phone $phone): static;
 
     public function hasTrustedPhoneNumber(Phone $phone): bool;
 

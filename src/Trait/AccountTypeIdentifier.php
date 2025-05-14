@@ -18,9 +18,9 @@ trait AccountTypeIdentifier
      *
      * @return bool
      */
-    public function isEmailIdentifier(): bool
+    public function isEmailIdentifier(string $identifier): bool
     {
-        return !empty($this->appleId()) && (new EmailValidator())->isValid($this->appleId(), new RFCValidation());
+        return (new EmailValidator())->isValid($identifier, new RFCValidation());
     }
 
     /**
@@ -30,9 +30,9 @@ trait AccountTypeIdentifier
      *
      * @return bool
      */
-    public function isPhoneIdentifier(): bool
+    public function isPhoneIdentifier(string $identifier): bool
     {
-        return !empty($this->appleId()) && !$this->isEmailIdentifier();
+        return !$this->isEmailIdentifier($identifier);
     }
 
     /**
@@ -40,12 +40,8 @@ trait AccountTypeIdentifier
      *
      * @return string 'email', 'phone', or 'unknown' if empty
      */
-    public function getIdentifierType(): string
+    public function getIdentifierType(string $identifier): string
     {
-        if (empty($this->appleId())) {
-            return 'unknown';
-        }
-
-        return $this->isEmailIdentifier() ? 'email' : 'phone';
+        return $this->isEmailIdentifier($identifier) ? 'email' : 'phone';
     }
 }

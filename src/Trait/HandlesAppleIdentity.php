@@ -4,10 +4,6 @@ namespace Weijiajia\SaloonphpAppleClient\Trait;
 
 trait HandlesAppleIdentity
 {
-    protected string $appleId;
-
-    protected string $password;
-
     public function appleId(): string
     {
         return $this->appleId;

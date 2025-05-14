@@ -2,7 +2,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Trait;
 use Illuminate\Support\Traits\Conditionable;
-use Illuminate\Support\Traits\Macroable;
 use Saloon\Traits\RequestProperties\HasConfig;
 use Saloon\Traits\RequestProperties\HasMiddleware;
 trait ProvidesAppleIdCapabilities
@@ -21,7 +20,6 @@ trait ProvidesAppleIdCapabilities
     use ProvidesAppleResources;
     use HasConfig;
     use Conditionable;
-    use Macroable;
     use HasMiddleware;
     use AccountTypeIdentifier;
     use HandlesPhoneNumbers;

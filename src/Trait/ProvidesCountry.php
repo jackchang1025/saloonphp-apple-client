@@ -6,14 +6,14 @@ use Weijiajia\SaloonphpAppleClient\Country as CountryContract;
 
 trait ProvidesCountry
 {
-    protected ?CountryContract $memoizedCountry = null;
+    protected ?CountryContract $country = null;
 
     /**
      * 获取国家/地区
      */
     public function country(): ?CountryContract
     {
-        return $this->memoizedCountry;
+        return $this->country;
     }
 
      /**
@@ -21,7 +21,7 @@ trait ProvidesCountry
       */
      public function withCountry(string|CountryContract $country): static
      {
-         $this->memoizedCountry = is_string($country) ? CountryContract::make(country: $country) : $country;
+         $this->country = is_string($country) ? CountryContract::make(country: $country) : $country;
          return $this;
      }
 }
