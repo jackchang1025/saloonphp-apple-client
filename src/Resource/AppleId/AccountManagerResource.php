@@ -94,7 +94,7 @@ class AccountManagerResource
                 countryDialCode: $countryDialCode
             );
 
-        } catch (RequestException $e) {
+        } catch (\Exception $e) {
 
             return $e instanceof StolenDeviceProtectionException;
         }
