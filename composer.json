@@ -35,7 +35,7 @@
         "spatie/laravel-data": "^4.13",
         "symfony/intl": "^7.2",
         "weijiajia/country-accept-language": "dev-main",
-        "weijiajia/saloonphp-cookie-plugin": "@dev",
+        "weijiajia/saloonphp-cookie-plugin": "dev-main",
         "weijiajia/saloonphp-header-synchronize-plugin": "@dev",
         "weijiajia/saloonphp-http-proxy-plugin": "dev-main",
         "weijiajia/saloonphp-logs-plugin": "dev-main"
