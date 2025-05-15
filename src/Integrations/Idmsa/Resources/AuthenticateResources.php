@@ -241,7 +241,7 @@ class AuthenticateResources extends BaseResource
             }
 
             $serviceErrors = $response->getFirstServiceError();
-            if($serviceErrors->getCode() === '-28248'){
+            if($serviceErrors?->getCode() === '-28248'){
                 throw new VerificationCodeSentToBeTimeException($response->body());
             }
 
