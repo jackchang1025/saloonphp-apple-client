@@ -68,16 +68,17 @@ class SecurityPhoneResources extends BaseResource
                 );
             }
 
-            //28248 验证码无法发送至该电话号码。请稍后重试。
+
             //21651 电话号码无效
-            if ($error?->getCode() === '-28248' || $error?->getCode() === '-21651') {
+            if ($error?->getCode() === '-21651') {
                 throw new PhoneException(
                     $response->body()
                 );
             }
 
             //24054 暂时无法使用此电话号码。请稍后再试
-            if ($error?->getCode() === '-22979' || $error?->getCode() === '-24054') {
+            //28248 验证码无法发送至该电话号码。请稍后重试。
+            if ($error?->getCode() === '-22979' || $error?->getCode() === '-24054' || $error?->getCode() === '-28248' ) {
                 throw new VerificationCodeSentTooManyTimesException(
                     $response->body()
                 );

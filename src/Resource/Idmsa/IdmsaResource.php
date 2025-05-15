@@ -44,11 +44,15 @@ abstract class IdmsaResource extends Resource
      * @throws FatalRequestException 请求失败异常
      * @throws RequestException 请求异常
      * @throws JsonException JSON 解析异常
-     * @throws SignInException
+     * @throws SignInException|\Throwable
      */
     public function signIn(): SignInCompleteResponse
     {
         try {
+
+            $this->appleId()->cookieJar()?->clear();
+            $this->appleId()->headerSynchronizeDriver()?->set([]);
+
             $account = $this->appleId();
 
             $initData = $this->appleAuthenticationConnector()
@@ -121,7 +125,7 @@ abstract class IdmsaResource extends Resource
      * @return SendPhoneVerificationCode 发送响应数据
      * @throws FatalRequestException 请求失败异常
      * @throws RequestException 请求异常
-     * @throws VerificationCodeSentTooManyTimesException 发送次数过多异常
+     * @throws VerificationCodeSentTooManyTimesException|\Throwable 发送次数过多异常
      */
     public function sendPhoneSecurityCode(int $id): SendPhoneVerificationCode
     {
@@ -149,7 +153,7 @@ abstract class IdmsaResource extends Resource
      *
      * @return SendDeviceSecurityCode 发送响应数据
      * @throws FatalRequestException 请求失败异常
-     * @throws RequestException 请求异常
+     * @throws RequestException|\Throwable 请求异常
      */
     public function sendVerificationCode(): SendDeviceSecurityCode
     {
@@ -174,12 +178,13 @@ abstract class IdmsaResource extends Resource
     /**
      * 验证手机验证码
      *
-     * @param int $id
+     * @param int|string $id
      * @param string $code 验证码
      * @return VerifyPhoneSecurityCode 验证响���数据
      * @throws FatalRequestException 请求失败异常
      * @throws RequestException 请求异常
      * @throws VerificationCodeException 验证码异常
+     * @throws \Throwable
      */
     public function verifyPhoneVerificationCode(int|string $id, string $code): VerifyPhoneSecurityCode
     {
@@ -205,7 +210,7 @@ abstract class IdmsaResource extends Resource
      *
      * @param string $code 安全码
      * @return NullData 验证响应数据
-     * @throws RequestException|FatalRequestException|JsonException|VerificationCodeException 请求异常
+     * @throws RequestException|FatalRequestException|JsonException|VerificationCodeException|\Throwable 请求异常
      */
     public function verifySecurityCode(string $code): NullData
     {

@@ -69,10 +69,8 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
                 $this->appleId->proxySplQueue(),
                 fn(AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
                     $proxySplQueue
-                )
+                ),fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
             )
-            ->withProxyEnabled(true)
-            ->withForceProxy(true)
             ->middleware()
             ->merge($this->appleId->middleware());
 

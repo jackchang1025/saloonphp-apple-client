@@ -1,15 +1,12 @@
 <?php
 
-namespace Modules\AppleClient\Events\Family;
+namespace Weijiajia\SaloonphpAppleClient\Events\Family;
 
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
-use Modules\AppleClient\Service\Integrations\Icloud\Dto\Response\FamilyInfo\FamilyInfo;
+
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyInfo\FamilyInfo;
 
 class FamilyCreatedEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(public FamilyInfo $familyInfo)
     {

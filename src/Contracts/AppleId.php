@@ -28,7 +28,7 @@ interface AppleId extends ConfigurableAppleId
 
     public function securityCode(): string;
 
-    public function country(): Country;
+    public function country(): ?Country;
 
     public function browser(): Browser;
 

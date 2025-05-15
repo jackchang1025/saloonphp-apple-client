@@ -2,7 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 
+use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
+use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\AccountManager;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Token\Token;
@@ -68,6 +72,11 @@ class AccountManagerResource
      * @param string $countryDialCode
      * @return SecurityVerifyPhone|bool
      * @throws FatalRequestException
+     * @throws StolenDeviceProtectionException
+     * @throws DescriptionNotAvailableException
+     * @throws PhoneException
+     * @throws PhoneNumberAlreadyExistsException
+     * @throws VerificationCodeSentTooManyTimesException
      */
     public function isStolenDeviceProtectionException(
         string $countryCode,

@@ -1,13 +1,12 @@
 <?php
 
-namespace Modules\AppleClient\Events\Family;
+namespace Weijiajia\SaloonphpAppleClient\Events\Family;
 
-use Illuminate\Foundation\Events\Dispatchable;
-use Modules\AppleClient\Service\Integrations\Icloud\Dto\Response\leaveFamily\leaveFamily;
+
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\leaveFamily\leaveFamily;
 
 class FamilyLeftEvent
 {
-    use Dispatchable;
 
     public function __construct(public leaveFamily $leaveFamily)
     {
