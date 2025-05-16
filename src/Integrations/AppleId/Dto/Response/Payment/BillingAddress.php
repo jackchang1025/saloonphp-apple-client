@@ -17,13 +17,13 @@ class BillingAddress extends Data
         public bool $shipping,
         public string $countryCode,
         public string $countryName,
-        #[DataCollectionOf(StateProvince::class)]
-        public DataCollection $stateProvinces,
         public bool $usa,
         public bool $canada,
         public bool $preferred,
         public string $fullAddress,
         public string $id,
+        #[DataCollectionOf(StateProvince::class)]
+        public ?DataCollection $stateProvinces = null,
         public ?string $stateProvinceCode = null,
         public ?string $line1 = null,
         public ?string $line2 = null,
