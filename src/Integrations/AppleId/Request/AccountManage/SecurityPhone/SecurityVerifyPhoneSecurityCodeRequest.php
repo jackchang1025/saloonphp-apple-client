@@ -62,6 +62,6 @@ class SecurityVerifyPhoneSecurityCodeRequest extends Request implements HasBody
 
     public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
     {
-        return new VerificationCodeException($response, $senderException?->getMessage());
+        return new VerificationCodeException($senderException?->getMessage());
     }
 }
