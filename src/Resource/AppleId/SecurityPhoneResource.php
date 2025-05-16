@@ -58,7 +58,7 @@ class SecurityPhoneResource
 
             $response = $e->getResponse();
 
-            if ($response->getStatusCode() == 451) {
+            if ($response->status() == 451) {
 
                 $this->getAppleIdResource()->getAccountManagerResource()->authenticatePassword();
 
