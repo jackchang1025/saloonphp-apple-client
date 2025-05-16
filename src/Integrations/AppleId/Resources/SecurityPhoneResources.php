@@ -17,6 +17,7 @@ use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\SecurityPhone\DeleteSecurityVerifyRequest;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 class SecurityPhoneResources extends BaseResource
 {
     /**
@@ -120,10 +121,26 @@ class SecurityPhoneResources extends BaseResource
         string $countryDialCode,
         string $code
     ): SecurityVerifyPhone {
-        return $this->getConnector()
-            ->send(
-                new SecurityVerifyPhoneSecurityCodeRequest($id, $phoneNumber, $countryCode, $countryDialCode, $code)
-            )->dto();
+
+        try {
+            return $this->getConnector()
+                ->send(
+                    new SecurityVerifyPhoneSecurityCodeRequest($id, $phoneNumber, $countryCode, $countryDialCode, $code)
+                )->dto();
+        } catch (RequestException $e) {
+
+            $validationErrors = $e->getResponse()->json('service_errors');
+
+            if (($validationErrors[0]['code'] ?? '') === '-22420') {
+                throw new DescriptionNotAvailableException(message: $e->getResponse()->body());
+            }
+
+            if (($validationErrors[0]['code'] ?? '') === '-21669') {
+                throw new VerificationCodeException(message: $e->getResponse()->body());
+            }
+
+            throw $e;
+        }
     }
 
     /**

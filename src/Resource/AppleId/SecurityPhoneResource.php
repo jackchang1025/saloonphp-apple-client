@@ -161,14 +161,14 @@ class SecurityPhoneResource
                 ?->dispatch(new VerifySecurityCodeSuccessEvent($this->getAppleIdResource()->appleId(), $response));
 
             return $response;
-        } catch (\Throwable $e) {
+        } catch (RequestException $e) {
 
             $this->getAppleIdResource()
                 ->appleId()
                 ->dispatcher()
                 ?->dispatch(new VerifySecurityCodeFailedEvent($this->getAppleIdResource()->appleId(), $e));
 
-            throw new VerificationCodeException($e->getMessage());
+            throw $e;
         }
     }
 
