@@ -10,6 +10,5 @@ class PhoneNumber extends Data
         public string $areaCode,
         public string $number,
         public string $countryCode,
-    ) {
-    }
+    ) {}
 }

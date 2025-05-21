@@ -2,10 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Response;
 
-
 use Illuminate\Support\Collection;
 use Weijiajia\SaloonphpAppleClient\Helpers\PlistXmlParser;
-
 
 trait XmlResponseHandler
 {

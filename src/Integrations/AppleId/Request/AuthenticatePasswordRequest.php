@@ -7,12 +7,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\ValidatePassword\ValidatePassword;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\ValidatePassword\ValidatePassword;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AuthenticatePasswordRequest extends Request implements HasBody
 {
@@ -20,9 +20,7 @@ class AuthenticatePasswordRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(protected string $password)
-    {
-    }
+    public function __construct(protected string $password) {}
 
     public function resolveEndpoint(): string
     {
@@ -36,7 +34,7 @@ class AuthenticatePasswordRequest extends Request implements HasBody
 
     public function hasRequestFailed(Response $response): bool
     {
-        if ($response->clientError() && $response->status() === 409) {
+        if ($response->clientError() && 409 === $response->status()) {
             return false;
         }
 

@@ -2,21 +2,22 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Resources;
 
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Request\AccountLogin\AccountLogin;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\AccountLogin\AccountLogin as AccountLoginResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Devices\Devices;
+use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Icloud\Icloud as IcloudResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\AccountLoginRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\GetDevicesRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Icloud;
-use Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Dto\Response\Icloud\Icloud as IcloudResponse;
+
 class AuthenticateResources extends BaseResource
 {
     /**
-     * @param AccountLogin $data
-     * @return AccountLoginResponse
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
-     * @throws \Saloon\Exceptions\Request\RequestException
+     * @throws FatalRequestException
+     * @throws RequestException
      */
     public function accountLogin(AccountLogin $data): AccountLoginResponse
     {
@@ -24,9 +25,8 @@ class AuthenticateResources extends BaseResource
     }
 
     /**
-     * @return Devices
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
-     * @throws \Saloon\Exceptions\Request\RequestException
+     * @throws FatalRequestException
+     * @throws RequestException
      */
     public function getDevices(): Devices
     {
@@ -35,8 +35,9 @@ class AuthenticateResources extends BaseResource
 
     /**
      * @return Response
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
-     * @throws \Saloon\Exceptions\Request\RequestException
+     *
+     * @throws FatalRequestException
+     * @throws RequestException
      */
     public function icloud(): IcloudResponse
     {

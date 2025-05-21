@@ -15,6 +15,5 @@ class AccountLogin extends Data
         public readonly bool $extended_login = false,
         public readonly ?string $dsid = null,
         public readonly ?string $trustToken = null,
-    ) {
-    }
+    ) {}
 }

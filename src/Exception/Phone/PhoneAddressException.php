@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception\Phone;
 
-class PhoneAddressException extends PhoneException
-{
-
-}
+class PhoneAddressException extends PhoneException {}

@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Account\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
-class SingIn extends Request 
+class SingIn extends Request
 {
     protected Method $method = Method::GET;
 

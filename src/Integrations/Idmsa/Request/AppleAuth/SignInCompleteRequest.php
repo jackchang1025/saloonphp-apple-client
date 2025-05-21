@@ -7,15 +7,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Throwable;
-use Weijiajia\SaloonphpAppleClient\Exception\SignInException;
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Request\SignIn\SignInComplete;
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SignIn\SignInComplete as SignInCompleteResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Request\SignIn\SignInComplete;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SignIn\SignInComplete as SignInCompleteResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SignInCompleteRequest extends Request implements HasBody
 {
@@ -25,8 +23,7 @@ class SignInCompleteRequest extends Request implements HasBody
 
     public function __construct(
         public SignInComplete $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -38,20 +35,19 @@ class SignInCompleteRequest extends Request implements HasBody
         return SignInCompleteResponse::from($response->json());
     }
 
-
     public function defaultBody(): array
     {
         return [
             'accountName' => $this->data->account,
-            'm1'          => $this->data->m1,
-            'm2'          => $this->data->m2,
-            'c'           => $this->data->c,
-            'rememberMe'  => $this->data->rememberMe,
+            'm1' => $this->data->m1,
+            'm2' => $this->data->m2,
+            'c' => $this->data->c,
+            'rememberMe' => $this->data->rememberMe,
         ];
     }
 
     public function hasRequestFailed(Response $response): ?bool
     {
-        return $response->status() !== 409;
+        return 409 !== $response->status();
     }
 }

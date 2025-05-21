@@ -2,13 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Saloon\Enums\Method;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate as ValidateDto;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Contracts\CalculateAppleHc;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate as ValidateDto;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasCalculateAppleHc;
-use Weijiajia\SaloonphpAppleClient\Contracts\CalculateAppleHc;
 
 class Validate extends BaseAccount implements HasBody, CalculateAppleHc
 {
@@ -23,8 +23,7 @@ class Validate extends BaseAccount implements HasBody, CalculateAppleHc
         public string $appleIdSessionId,
         public string $appleWidgetKey,
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

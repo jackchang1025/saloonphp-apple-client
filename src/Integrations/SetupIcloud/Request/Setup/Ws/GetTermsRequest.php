@@ -2,11 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\Setup\Ws;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\Setup\Ws\GetTerms;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasStringBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\Setup\Ws\GetTerms;
 
 class GetTermsRequest extends Request implements HasBody
 {
@@ -19,8 +19,7 @@ class GetTermsRequest extends Request implements HasBody
         public string $clientMasteringNumber,
         public string $clientId,
         public GetTerms $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -12,6 +12,5 @@ class SubscriptionInfo extends Data
         public ?bool $isContingentPricingTrunk = null,
         public ?bool $isContingentPricingBranch = null,
         public ?bool $shouldDisplayImpactReport = null,
-    ) {
-    }
+    ) {}
 }

@@ -15,6 +15,5 @@ class LocalizedContent extends Data
         public ?string $mediaType = null,
         public ?string $subscriptionCoverageDescription = null,
         public bool $complete = false,
-    ) {
-    }
+    ) {}
 }

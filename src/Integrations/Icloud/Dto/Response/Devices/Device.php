@@ -22,6 +22,5 @@ class Device extends Data
         public string $modelDisplayName,
         #[DataCollectionOf(PaymentMethod::class)]
         public ?DataCollection $paymentMethods = null,
-    ) {
-    }
+    ) {}
 }

@@ -8,7 +8,5 @@ class SecurityCode extends Data
 {
     public function __construct(
         public string $code,
-    )
-    {
-    }
+    ) {}
 }

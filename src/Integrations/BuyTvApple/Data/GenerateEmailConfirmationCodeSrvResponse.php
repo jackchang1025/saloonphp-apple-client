@@ -9,6 +9,5 @@ class GenerateEmailConfirmationCodeSrvResponse extends Data
     public function __construct(
         public string $clientToken,
         public int $status,
-    ) {
-    }
+    ) {}
 }

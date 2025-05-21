@@ -19,6 +19,5 @@ class Purchase extends Data
         public string $purchaseDate,
         public bool $isPendingPurchase,
         public ?string $estimatedTotalAmount,
-    ) {
-    }
+    ) {}
 }

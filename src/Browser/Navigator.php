@@ -1,48 +1,44 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Browser;
 
-
 class Navigator
 {
-
     public function __construct(
-        public string $appCodeName = "Mozilla",
-        public string $appName = "Netscape",
+        public string $appCodeName = 'Mozilla',
+        public string $appName = 'Netscape',
         public ?string $appVersion = null,
         public bool $cookieEnabled = true,
         public bool $onLine = true,
-        public string $productSub = "20030107",
+        public string $productSub = '20030107',
         public ?string $platform = null,
-        public string $language = "en-US",
+        public string $language = 'en-US',
         public array $plugins = [
-            ["name" => "PDF Viewer"],
-            ["name" => "Chrome PDF Viewer"],
-            ["name" => "Chromium PDF Viewer"],
-            ["name" => "Microsoft Edge PDF Viewer"],
-            ["name" => "WebKit built-in PDF"],
+            ['name' => 'PDF Viewer'],
+            ['name' => 'Chrome PDF Viewer'],
+            ['name' => 'Chromium PDF Viewer'],
+            ['name' => 'Microsoft Edge PDF Viewer'],
+            ['name' => 'WebKit built-in PDF'],
         ],
         public ?string $userAgent = null,
-    )
-    {
-
-    }
+    ) {}
 
     public function setup(string $userAgent): void
     {
         $this->userAgent = $userAgent;
         $mozillaPos = strpos($userAgent, 'Mozilla/');
-        if ($mozillaPos !== false) {
+        if (false !== $mozillaPos) {
             $this->appVersion = substr($userAgent, $mozillaPos + strlen('Mozilla/'));
         }
 
         if (str_contains($userAgent, 'Macintosh')) {
-            $this->platform = "MacIntel";
+            $this->platform = 'MacIntel';
         } elseif (str_contains($userAgent, 'Win32')) {
-            $this->platform = "Win32";
+            $this->platform = 'Win32';
         } elseif (str_contains($userAgent, 'Win64')) {
-            $this->platform = "Win64";
+            $this->platform = 'Win64';
         }
         // Consider adding logic for other platforms if needed
     }
@@ -69,4 +65,4 @@ class Navigator
             // 'systemLanguage' => $this->systemLanguage ?? 'undefined',
         ];
     }
-} 
+}

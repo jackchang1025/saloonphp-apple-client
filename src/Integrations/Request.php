@@ -9,6 +9,4 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations;
 
 use Saloon\Http\Request as SaloonRequest;
 
-abstract class Request extends SaloonRequest
-{
-}
+abstract class Request extends SaloonRequest {}

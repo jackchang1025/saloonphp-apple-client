@@ -35,6 +35,5 @@ class ShippingAddress extends Data
         public ?string $fullAddress = null,
         public ?string $id = null,
         public ?string $type = null,
-    ) {
-    }
-} 
+    ) {}
+}

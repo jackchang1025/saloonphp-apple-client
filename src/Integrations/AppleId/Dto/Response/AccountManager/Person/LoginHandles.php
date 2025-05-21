@@ -9,6 +9,5 @@ class LoginHandles extends Data
     public function __construct(
         public array $phoneLoginHandles = [],
         public array $emailLoginHandles = [],
-    ) {
-    }
+    ) {}
 }

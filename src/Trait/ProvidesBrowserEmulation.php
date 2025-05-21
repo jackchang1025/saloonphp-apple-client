@@ -16,7 +16,7 @@ trait ProvidesBrowserEmulation
     public function withBrowser(Browser $browser): static
     {
         $this->browser = $browser;
+
         return $this;
     }
-    
 }

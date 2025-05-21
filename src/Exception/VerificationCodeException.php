@@ -7,6 +7,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class VerificationCodeException extends AppleException
-{
-}
+class VerificationCodeException extends AppleException {}

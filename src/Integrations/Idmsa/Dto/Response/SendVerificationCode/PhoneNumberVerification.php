@@ -2,15 +2,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificationCode;
 
+use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\DataCollection;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\PhoneNumber;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\SecurityCode;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
-use Spatie\LaravelData\DataCollection;
 
 class PhoneNumberVerification extends Data
 {
-
     public function __construct(
         public string $aboutTwoFactorAuthenticationUrl,
         public string $authenticationType,
@@ -26,13 +25,12 @@ class PhoneNumberVerification extends Data
         public string $repairPhoneNumberWebUrl,
         public SecurityCode $securityCode,
         public PhoneNumber $trustedPhoneNumber,
-        //trustedPhoneNumbers
+        // trustedPhoneNumbers
         #[DataCollectionOf(PhoneNumber::class)]
         public DataCollection $trustedPhoneNumbers,
         public ?string $showAutoVerificationUI = null,
         public ?string $supportsCustodianRecovery = null,
         public bool $supervisedChangePasswordFlow = false,
         public bool $supportsRecovery = false,
-    ) {
-    }
+    ) {}
 }

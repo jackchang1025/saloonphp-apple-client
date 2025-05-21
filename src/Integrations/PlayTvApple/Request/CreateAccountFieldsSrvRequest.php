@@ -1,10 +1,11 @@
 <?php
+
 namespace Weijiajia\SaloonphpAppleClient\Integrations\PlayTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Integrations\PlayTvApple\Data\CreateAccountFieldsSrvResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class CreateAccountFieldsSrvRequest extends Request
 {
@@ -14,8 +15,7 @@ class CreateAccountFieldsSrvRequest extends Request
         public string $context = 'create',
         public bool $isVideoEverywhere = true,
         public string $restrictedAccountType = 'restrictedEmailOptimizedWeb',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -30,7 +30,7 @@ class CreateAccountFieldsSrvRequest extends Request
     protected function defaultHeaders(): array
     {
         return [
-            'Content-Type'                    => 'application/json',
+            'Content-Type' => 'application/json',
         ];
     }
 }

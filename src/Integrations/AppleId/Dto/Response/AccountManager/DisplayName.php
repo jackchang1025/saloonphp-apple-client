@@ -19,7 +19,7 @@ class DisplayName extends Data
         /** @var array 显示选项 */
         public array $displayOptions = [],
 
-        /** @var string|null 昵称 */
+        /** @var null|string 昵称 */
         public ?string $nickname = null,
 
         /** @var bool 是否显示在 iCloud 中 */
@@ -27,6 +27,5 @@ class DisplayName extends Data
 
         /** @var array 显示规则 */
         public array $displayRules = []
-    ) {
-    }
+    ) {}
 }

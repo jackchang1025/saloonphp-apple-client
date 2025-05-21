@@ -8,7 +8,6 @@ trait ProvidesProxySplQueue
 {
     protected ?ProxySplQueue $proxySplQueue = null;
 
-
     public function proxySplQueue(): ?ProxySplQueue
     {
         return $this->proxySplQueue;
@@ -17,7 +16,7 @@ trait ProvidesProxySplQueue
     public function withProxySplQueue(ProxySplQueue $proxySplQueue): static
     {
         $this->proxySplQueue = $proxySplQueue;
+
         return $this;
     }
-    
 }

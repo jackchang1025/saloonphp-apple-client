@@ -2,21 +2,18 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\Setup\Ws;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class ValidateRequest extends Request
 {
-
     protected Method $method = Method::POST;
 
     public function __construct(
         public string $clientBuildNumber,
         public string $clientMasteringNumber,
         public string $clientId,
-    ) {
-
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

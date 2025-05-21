@@ -2,6 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
@@ -11,8 +13,6 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountMana
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Token\Token;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\ValidatePassword\ValidatePassword;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
 
 class AccountManagerResource
 {
@@ -20,10 +20,7 @@ class AccountManagerResource
 
     protected ?Token $token = null;
 
-    public function __construct(protected AppleIdResource $appleIdResource)
-    {
-
-    }
+    public function __construct(protected AppleIdResource $appleIdResource) {}
 
     public function getAppleIdResource(): AppleIdResource
     {
@@ -33,44 +30,41 @@ class AccountManagerResource
     public function account(): AccountManager
     {
         return $this->getAppleIdResource()
-        ->appleIdConnector()
-        ->getAccountManagerResources()
-        ->account();
+            ->appleIdConnector()
+            ->getAccountManagerResources()
+            ->account()
+        ;
     }
 
     /**
-     * @return ValidatePassword
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
-     * @throws \Saloon\Exceptions\Request\RequestException
+     * @throws FatalRequestException
+     * @throws RequestException
      */
     public function authenticatePassword(): ValidatePassword
     {
         return $this->validatePassword ??= $this->getAppleIdResource()
-        ->appleIdConnector()
-        ->getAuthenticateResources()
-        ->authenticatePassword(
-            $this->getAppleIdResource()->appleId()->password()
-        );
+            ->appleIdConnector()
+            ->getAuthenticateResources()
+            ->authenticatePassword(
+                $this->getAppleIdResource()->appleId()->password()
+            )
+        ;
     }
 
     /**
-     * @return Token
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
-     * @throws \Saloon\Exceptions\Request\RequestException
+     * @throws FatalRequestException
+     * @throws RequestException
      */
     public function token(): Token
     {
         return $this->token ??= $this->getAppleIdResource()
-        ->appleIdConnector()
-        ->getAuthenticateResources()
-        ->token();
+            ->appleIdConnector()
+            ->getAuthenticateResources()
+            ->token()
+        ;
     }
 
     /**
-     * @param string $countryCode
-     * @param string $phoneNumber
-     * @param string $countryDialCode
-     * @return SecurityVerifyPhone|bool
      * @throws FatalRequestException
      * @throws StolenDeviceProtectionException
      * @throws DescriptionNotAvailableException
@@ -82,9 +76,8 @@ class AccountManagerResource
         string $countryCode,
         string $phoneNumber,
         string $countryDialCode,
-    ): SecurityVerifyPhone|bool {
+    ): bool|SecurityVerifyPhone {
         try {
-
             $this->token();
             $this->authenticatePassword();
 
@@ -93,9 +86,7 @@ class AccountManagerResource
                 phoneNumber: $phoneNumber,
                 countryDialCode: $countryDialCode
             );
-
         } catch (\Exception $e) {
-
             return $e instanceof StolenDeviceProtectionException;
         }
     }

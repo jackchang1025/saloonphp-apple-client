@@ -2,19 +2,23 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources;
 
-use JsonException;
 use Saloon\Exceptions\Request\ClientException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Exception\AccountAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\CaptchaException;
+use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
+use Weijiajia\SaloonphpAppleClient\Exception\PhoneFormatException;
 use Weijiajia\SaloonphpAppleClient\Exception\RegistrationException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentToBeTimeException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate as ValidateDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\VerificationEmail as VerificationEmailData;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Verification\SendVerificationEmail as SendVerificationEmailData;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Account;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Appleid;
@@ -27,22 +31,13 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Verifica
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\Widget\Account as WidgetAccount;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Captcha;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
-use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
-use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
-use Weijiajia\SaloonphpAppleClient\Exception\PhoneFormatException;
-use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentToBeTimeException;
 
 class AccountResource extends BaseResource
 {
     /**
-     * @param ValidateDto $validateDto
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws RegistrationException
      * @throws RequestException
      * @throws DescriptionNotAvailableException
@@ -50,18 +45,16 @@ class AccountResource extends BaseResource
     public function account(ValidateDto $validateDto, string $appleIdSessionId, string $appleWidgetKey): Response
     {
         try {
-
             return $this->connector->send(
                 new Account(data: $validateDto, appleIdSessionId: $appleIdSessionId, appleWidgetKey: $appleWidgetKey)
             );
         } catch (ClientException $e) {
-
-            //Could Not Create Account
+            // Could Not Create Account
             $validationErrors = $e->getResponse()->json('service_errors');
             if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
             }
-            //Error Description not available
+            // Error Description not available
             if (($validationErrors[0]['code'] ?? '') === '-27589') {
                 throw new DescriptionNotAvailableException($e->getResponse()->body());
             }
@@ -71,9 +64,6 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return CaptchaResponse
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -85,41 +75,33 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param ValidateDto $validateDto
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws AccountAlreadyExistsException
      * @throws CaptchaException
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
-     * @throws JsonException|RegistrationException|VerificationCodeSentTooManyTimesException
+     * @throws \JsonException|RegistrationException|VerificationCodeSentTooManyTimesException
      */
     public function validate(ValidateDto $validateDto, string $appleIdSessionId, string $appleWidgetKey): Response
     {
-
         try {
-
             return $this->connector->send(
                 new Validate(data: $validateDto, appleIdSessionId: $appleIdSessionId, appleWidgetKey: $appleWidgetKey)
             );
-
         } catch (ClientException  $e) {
-
             $validationErrors = $e->getResponse()->json('validationErrors');
 
-            //account already exists
+            // account already exists
             if (($validationErrors[0]['code'] ?? '') === 'SecurityQuestion.Default.values' || ($validationErrors[0]['code'] ?? '') === 'accountName.alreadyUsed') {
                 throw new AccountAlreadyExistsException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
-            //captcha answer invalid
+            // captcha answer invalid
             if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
-            //phone number invalid
+            // phone number invalid
             // "validationErrors": [
             //     {
             //         "code": "ExceedsLength",
@@ -133,13 +115,13 @@ class AccountResource extends BaseResource
                 throw new PhoneFormatException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
-            //Could Not Create Account
+            // Could Not Create Account
             $validationErrors = $e->getResponse()->json('service_errors');
             if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
             }
 
-            //Verification Code Sent Too Many Times
+            // Verification Code Sent Too Many Times
             if (($validationErrors[0]['code'] ?? '') === '-24059') {
                 throw new VerificationCodeSentTooManyTimesException($e->getResponse()->body());
             }
@@ -149,10 +131,6 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param SendVerificationEmailData $sendVerificationEmailData
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws FatalRequestException
      * @throws RequestException
      * @throws CaptchaException
@@ -165,9 +143,7 @@ class AccountResource extends BaseResource
         string $appleIdSessionId,
         string $appleWidgetKey
     ): Response {
-
         try {
-
             return $this->connector->send(
                 new SendVerificationEmail(
                     data: $sendVerificationEmailData,
@@ -175,30 +151,28 @@ class AccountResource extends BaseResource
                     appleWidgetKey: $appleWidgetKey
                 )
             );
-
         } catch (ClientException  $e) {
-
             $validationErrors = $e->getResponse()->json('validationErrors');
 
-            //captcha answer invalid
+            // captcha answer invalid
             if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
-            //Could Not Create Account
+            // Could Not Create Account
             $validationErrors = $e->getResponse()->json('service_errors');
 
             if (($validationErrors[0]['code'] ?? '') === '-34607001') {
                 throw new RegistrationException($e->getResponse()->body());
             }
 
-            //Error Description not available
+            // Error Description not available
             if (($validationErrors[0]['code'] ?? '') === '-27589') {
                 throw new DescriptionNotAvailableException($e->getResponse()->body());
             }
 
             if (($validationErrors[0]['code'] ?? '') === '-23590') {
-                //A new code can’t be sent at this time. Enter the last code you received or try again later.
+                // A new code can’t be sent at this time. Enter the last code you received or try again later.
                 throw new VerificationCodeSentToBeTimeException($e->getResponse()->body());
             }
 
@@ -207,15 +181,11 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param VerificationEmailData $verificationEmailData
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
      * @throws VerificationCodeException
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function verificationEmail(
         VerificationEmailData $verificationEmailData,
@@ -230,9 +200,7 @@ class AccountResource extends BaseResource
                     appleWidgetKey: $appleWidgetKey
                 )
             );
-
         } catch (ClientException  $e) {
-
             $validationErrors = $e->getResponse()->json('service_errors');
 
             if (($validationErrors[0]['code'] ?? '') === '-21418') {
@@ -244,17 +212,13 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param ValidateDto $validateDto
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws PhoneException
      * @throws RegistrationException
      * @throws RequestException
-     * @throws VerificationCodeSentTooManyTimesException|CaptchaException
+     * @throws CaptchaException|VerificationCodeSentTooManyTimesException
      */
     public function sendVerificationPhone(
         ValidateDto $validateDto,
@@ -262,7 +226,6 @@ class AccountResource extends BaseResource
         string $appleWidgetKey
     ): Response {
         try {
-
             return $this->connector->send(
                 new SendVerificationPhone(
                     data: $validateDto,
@@ -270,9 +233,7 @@ class AccountResource extends BaseResource
                     appleWidgetKey: $appleWidgetKey
                 )
             );
-
         } catch (ClientException  $e) {
-
             $validationErrors = $e->getResponse()->json('service_errors');
 
             if (($validationErrors[0]['code'] ?? '') === '-28248') {
@@ -287,12 +248,12 @@ class AccountResource extends BaseResource
                 throw new VerificationCodeSentTooManyTimesException(message: $e->getResponse()->body());
             }
 
-            if ($e->getResponse()->status() === 423) {
+            if (423 === $e->getResponse()->status()) {
                 throw new VerificationCodeSentTooManyTimesException(message: $e->getResponse()->body());
             }
 
             $validationErrors = $e->getResponse()->json('validationErrors');
-            //captcha answer invalid
+            // captcha answer invalid
             if (($validationErrors[0]['code'] ?? '') === 'captchaAnswer.Invalid') {
                 throw new CaptchaException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
@@ -302,15 +263,11 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param ValidateDto $validateDto
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws ClientException
      * @throws FatalRequestException
      * @throws RequestException
      * @throws VerificationCodeException
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function verificationPhone(
         ValidateDto $validateDto,
@@ -318,7 +275,6 @@ class AccountResource extends BaseResource
         string $appleWidgetKey
     ): Response {
         try {
-
             return $this->connector->send(
                 new VerificationPhone(
                     data: $validateDto,
@@ -326,13 +282,10 @@ class AccountResource extends BaseResource
                     appleWidgetKey: $appleWidgetKey
                 )
             );
-
         } catch (ClientException  $e) {
-
             $validationErrors = $e->getResponse()->json('service_errors');
 
             if (($validationErrors[0]['code'] ?? '') === '-21669') {
-
                 throw new VerificationCodeException(message: json_encode($validationErrors, JSON_THROW_ON_ERROR));
             }
 
@@ -341,14 +294,10 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param string $emailAddress
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @return Response
      * @throws AccountAlreadyExistsException
      * @throws FatalRequestException
      * @throws RequestException
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function appleid(string $emailAddress, string $appleIdSessionId, string $appleWidgetKey): Response
     {
@@ -360,7 +309,7 @@ class AccountResource extends BaseResource
             )
         );
 
-        if ($response->json('used') === true) {
+        if (true === $response->json('used')) {
             throw new AccountAlreadyExistsException($response->body());
         }
 
@@ -368,12 +317,6 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param string $accountName
-     * @param string $password
-     * @param string $appleIdSessionId
-     * @param string $appleWidgetKey
-     * @param bool $updating
-     * @return Response
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -396,11 +339,6 @@ class AccountResource extends BaseResource
     }
 
     /**
-     * @param string $widgetKey
-     * @param string $referer
-     * @param string $appContext
-     * @param string $lv
-     * @return AccountDto
      * @throws FatalRequestException
      * @throws RequestException
      */

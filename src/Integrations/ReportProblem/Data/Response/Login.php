@@ -22,6 +22,5 @@ class Login extends Data
         public string $mediaLinkTargetDsid,
         public array $dsidToPodMap,
         public array $enabledFeatures,
-    ) {
-    }
+    ) {}
 }

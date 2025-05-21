@@ -7,12 +7,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificationCode\SendPhoneVerificationCode;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificationCode\SendPhoneVerificationCode;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SendPhoneSecurityCodeRequest extends Request implements HasBody
 {
@@ -20,9 +20,7 @@ class SendPhoneSecurityCodeRequest extends Request implements HasBody
 
     protected Method $method = Method::PUT;
 
-    public function __construct(protected int $id)
-    {
-    }
+    public function __construct(protected int $id) {}
 
     public function createDtoFromResponse(Response $response): SendPhoneVerificationCode
     {
@@ -36,7 +34,7 @@ class SendPhoneSecurityCodeRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
-        return[
+        return [
             'phoneNumber' => [
                 'id' => $this->id,
             ],

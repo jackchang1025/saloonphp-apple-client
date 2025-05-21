@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Browser;
 
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\UriFactoryInterface; // Or use a specific implementation
-use GuzzleHttp\Psr7\Uri; // Example implementation
 
 class Location
 {
@@ -32,16 +32,16 @@ class Location
 
         $this->href = (string) $uri;
         $this->hash = $uri->getFragment() ?: null; // PHP returns empty string, map to null
-        $this->host = $uri->getHost() . ($uri->getPort() ? ':' . $uri->getPort() : '');
+        $this->host = $uri->getHost().($uri->getPort() ? ':'.$uri->getPort() : '');
         $this->hostname = $uri->getHost();
-        $this->origin = $uri->getScheme() . '://' . $uri->getAuthority();
+        $this->origin = $uri->getScheme().'://'.$uri->getAuthority();
         $this->pathname = $uri->getPath();
         $this->port = $uri->getPort(); // Already int|null
         $this->protocol = rtrim($uri->getScheme(), ':'); // Remove trailing colon
     }
 
     /**
-     * @return array<string, string|int|null>
+     * @return array<string, null|int|string>
      */
     public function toArray(): array
     {
@@ -56,4 +56,4 @@ class Location
             'protocol' => $this->protocol,
         ];
     }
-} 
+}

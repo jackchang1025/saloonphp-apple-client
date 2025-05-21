@@ -54,6 +54,5 @@ class PhoneNumber extends Data
 
         /** @var string 电话类型 (daytime等) */
         public string $type
-    ) {
-    }
+    ) {}
 }

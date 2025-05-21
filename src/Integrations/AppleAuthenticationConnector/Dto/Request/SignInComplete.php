@@ -14,6 +14,5 @@ class SignInComplete extends Data
         public string $password,
         public string $iteration = '20221',
         public string $protocol = 's2k',
-    ) {
-    }
+    ) {}
 }

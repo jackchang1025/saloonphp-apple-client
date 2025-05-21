@@ -7,7 +7,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-
-class BindPhoneException extends AppleException
-{
-}
+class BindPhoneException extends AppleException {}

@@ -2,11 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Verification\SendVerificationEmail as SendVerificationEmailData;
-use Saloon\Http\Response;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\SendVerificationEmail as SendVerificationEmailResponse;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
 
@@ -21,8 +21,7 @@ class SendVerificationEmail extends BaseAccount implements HasBody
         public string $appleIdSessionId,
         public string $appleWidgetKey,
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

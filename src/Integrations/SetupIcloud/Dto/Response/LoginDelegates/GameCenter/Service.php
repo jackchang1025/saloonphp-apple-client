@@ -2,10 +2,9 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\GameCenter;
 
-
+use Spatie\LaravelData\Attributes\MapName;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\Helpers\CustomSnakeCaseMapper;
-use Spatie\LaravelData\Attributes\MapName;
 
 #[MapName(CustomSnakeCaseMapper::class)]
 class Service extends Data
@@ -23,7 +22,5 @@ class Service extends Data
         public string $firstName,
         public string $env,
         public string $appleId,
-    ) {
-
-    }
+    ) {}
 }

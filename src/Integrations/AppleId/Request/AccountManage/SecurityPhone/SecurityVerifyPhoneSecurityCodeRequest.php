@@ -7,14 +7,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\SecurityPhone;
 
-use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
-use Throwable;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SecurityVerifyPhoneSecurityCodeRequest extends Request implements HasBody
 {
@@ -28,9 +26,7 @@ class SecurityVerifyPhoneSecurityCodeRequest extends Request implements HasBody
         protected string $countryCode,
         protected string $countryDialCode,
         protected string $code
-    ) {
-    }
-
+    ) {}
 
     public function createDtoFromResponse(Response $response): SecurityVerifyPhone
     {

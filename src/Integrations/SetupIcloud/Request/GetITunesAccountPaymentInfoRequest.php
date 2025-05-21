@@ -2,12 +2,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\ITunesAccountPaymentInfo\ITunesAccountPaymentInfo;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\ITunesAccountPaymentInfo\ITunesAccountPaymentInfo;
 
 class GetITunesAccountPaymentInfoRequest extends Request implements HasBody
 {
@@ -17,10 +17,9 @@ class GetITunesAccountPaymentInfoRequest extends Request implements HasBody
 
     public function __construct(
         public readonly string $organizerDSID,
-        public readonly string $userAction = "ADDING_FAMILY_MEMBER",
+        public readonly string $userAction = 'ADDING_FAMILY_MEMBER',
         public readonly bool $sendSMS = true,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -30,9 +29,9 @@ class GetITunesAccountPaymentInfoRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         return [
-            "organizerDSID" => $this->organizerDSID,
-            "userAction"    => $this->userAction,
-            "sendSMS"       => $this->sendSMS,
+            'organizerDSID' => $this->organizerDSID,
+            'userAction' => $this->userAction,
+            'sendSMS' => $this->sendSMS,
         ];
     }
 
@@ -41,9 +40,9 @@ class GetITunesAccountPaymentInfoRequest extends Request implements HasBody
         return ITunesAccountPaymentInfo::from($response->json());
     }
 
-    /**
+    /*
      * "{\"userAction\":\"ADDING_FAMILY_MEMBER\",\"status-message\":\"Success\",\"billingType\":\"Card\",\"creditCardImageUrl\":\"https://setup.icloud.com/resource/9b13a43759e5/imgs/family/MasterCard@2x.png\",
- * \"creditCardLastFourDigits\":\"3030\",\"verificationType\":\"CVV\",\"creditCardId\":\"MAST\",\"creditCardType\":\"MasterCard\",\"status\":0}"
+     * \"creditCardLastFourDigits\":\"3030\",\"verificationType\":\"CVV\",\"creditCardId\":\"MAST\",\"creditCardType\":\"MasterCard\",\"status\":0}"
      *
      * {"userAction":"ADDING_FAMILY_MEMBER","status-message":"Success","challengeReceipt":"+86130******21","billingType":"Card","creditCardImageUrl":"https://setup.icloud.com/resource/9b13a43759e5/imgs/family/WeChatPay@2x.png",
      * "PaymentCardDescription":"............",

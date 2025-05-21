@@ -7,6 +7,12 @@ use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 class CountryFeatures extends Data
 {
     public function __construct(
+        /** @var bool 是否显示性别选项 */
+        public bool $showGender = true,
+
+        /** @var bool 是否禁用支付管理 */
+        public bool $disablePaymentManagement = false,
+
         /** @var string 国家代码 */
         public string $country = '',
 
@@ -36,6 +42,5 @@ class CountryFeatures extends Data
 
         /** @var array 货币信息 */
         public array $currencyInfo = []
-    ) {
-    }
+    ) {}
 }

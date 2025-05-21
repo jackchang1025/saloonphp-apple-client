@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class LockedException extends AppleException
-{
-
-}
+class LockedException extends AppleException {}

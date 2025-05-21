@@ -6,7 +6,7 @@ use Saloon\Http\PendingRequest;
 
 trait HasRequestedWith
 {
-    public function bootHasRequestedWith(PendingRequest $pendingRequest):void
+    public function bootHasRequestedWith(PendingRequest $pendingRequest): void
     {
         $pendingRequest->headers()->add('X-Requested-With', 'XMLHttpRequest');
     }

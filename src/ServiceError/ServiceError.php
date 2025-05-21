@@ -9,9 +9,7 @@ namespace Weijiajia\SaloonphpAppleClient\ServiceError;
 
 class ServiceError
 {
-    public function __construct(protected readonly array $data)
-    {
-    }
+    public function __construct(protected array $data) {}
 
     public function getCode(): ?string
     {

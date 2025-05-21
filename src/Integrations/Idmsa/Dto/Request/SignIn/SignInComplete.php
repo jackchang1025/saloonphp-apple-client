@@ -12,6 +12,5 @@ class SignInComplete extends Data
         public string $m2,
         public string $c,
         public bool $rememberMe = false,
-    ) {
-    }
+    ) {}
 }

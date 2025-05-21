@@ -23,6 +23,5 @@ class FamilyMember extends Data
         public bool $hasSharePurchasesEnabled = false,
         public bool $hasShareMyLocationEnabled = false,
         public array $shareMyLocationEnabledFamilyMembers = [],
-    ) {
-    }
+    ) {}
 }

@@ -2,13 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\CreateFamily\CreateFamily;
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyInfo\FamilyInfo;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\CreateFamily\CreateFamily;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyInfo\FamilyInfo;
 
 class CreateFamilyRequest extends Request implements HasBody
 {
@@ -18,8 +18,7 @@ class CreateFamilyRequest extends Request implements HasBody
 
     public function __construct(
         public readonly CreateFamily $data
-    ) {
-    }
+    ) {}
 
     public function defaultHeaders(): array
     {

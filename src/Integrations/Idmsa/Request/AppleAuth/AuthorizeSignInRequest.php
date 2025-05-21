@@ -7,8 +7,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AuthorizeSignInRequest extends Request
 {
@@ -35,8 +35,7 @@ class AuthorizeSignInRequest extends Request
         public readonly string $language = 'en_CA',
         public readonly string $skVersion = '7',
         public readonly string $authVersion = 'latest',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

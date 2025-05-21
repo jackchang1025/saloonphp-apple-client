@@ -17,6 +17,5 @@ class BillingAddress extends Data
         public string $countryCode,
         public string $postalCode,
         public string $stateProvinceName,
-    ) {
-    }
+    ) {}
 }

@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class StolenDeviceProtectionException  extends AppleException
-{
-
-}
+class StolenDeviceProtectionException extends AppleException {}

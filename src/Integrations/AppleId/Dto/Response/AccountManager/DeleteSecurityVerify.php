@@ -4,6 +4,7 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Accou
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\PhoneNumber;
+
 class DeleteSecurityVerify extends Data
 {
     // {
@@ -44,6 +45,5 @@ class DeleteSecurityVerify extends Data
         public PhoneNumber $phoneNumber,
         public bool $allowPhoneNumberRemoval = false,
         public bool $nonFTEUEnabled = false,
-    ) {
-    }
+    ) {}
 }

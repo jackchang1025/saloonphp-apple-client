@@ -8,6 +8,5 @@
 namespace Weijiajia\SaloonphpAppleClient\Exception\Phone;
 
 use Weijiajia\SaloonphpAppleClient\Exception\AppleException;
-class PhoneException extends AppleException
-{
-}
+
+class PhoneException extends AppleException {}

@@ -2,9 +2,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-use Saloon\Exceptions\Request\ClientException ;
+use Saloon\Exceptions\Request\ClientException;
 
-class AppleClientException extends ClientException 
-{
-
-}
+class AppleClientException extends ClientException {}

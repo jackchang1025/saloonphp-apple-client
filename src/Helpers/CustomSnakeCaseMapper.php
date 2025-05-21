@@ -7,8 +7,7 @@ use Spatie\LaravelData\Mappers\NameMapper;
 
 class CustomSnakeCaseMapper implements NameMapper
 {
-
-    public function map(int|string $name): string|int
+    public function map(int|string $name): int|string
     {
         return Str::snake($name, '-');
     }

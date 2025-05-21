@@ -21,6 +21,5 @@ class PhoneNumberVerification extends Data
         public bool $changePhoneNumber,
         public bool $simSwapPhoneNumber,
         public bool $addDifferent
-    ) {
-    }
+    ) {}
 }

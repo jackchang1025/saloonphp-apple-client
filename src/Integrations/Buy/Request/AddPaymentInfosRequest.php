@@ -2,11 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Buy\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Buy\DTO\AddPaymentInfos;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Buy\DTO\AddPaymentInfos;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AddPaymentInfosRequest extends Request implements HasBody
 {
@@ -14,12 +14,9 @@ class AddPaymentInfosRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-
     public function __construct(
         public AddPaymentInfos $addPaymentInfosDto
-    ) {
-    }
-
+    ) {}
 
     public function resolveEndpoint(): string
     {

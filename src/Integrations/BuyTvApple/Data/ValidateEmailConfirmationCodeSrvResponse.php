@@ -10,6 +10,5 @@ class ValidateEmailConfirmationCodeSrvResponse extends Data
         public int $status,
         public ?string $pageUUID = null,
         public ?string $clientToken = null,
-    ) {
-    }
+    ) {}
 }

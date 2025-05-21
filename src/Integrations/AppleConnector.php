@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\ServerException;
+use Saloon\Exceptions\Request\Statuses\UnauthorizedException;
 use Saloon\Http\Connector;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Request;
@@ -49,31 +50,32 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public function __construct(protected AppleId $appleId)
     {
-        $this->when($this->appleId->debug(), fn(AppleConnector $connector) => $connector->debug())
+        $this->when($this->appleId->debug(), fn (AppleConnector $connector) => $connector->debug())
             ->when(
                 $this->appleId->headerSynchronizeDriver(),
-                fn(
+                fn (
                     AppleConnector $connector,
                     HeaderSynchronizeDriver $headerSynchronize
                 ) => $connector->withHeaderSynchronizeDriver($headerSynchronize)
             )
             ->when(
                 $this->appleId->cookieJar(),
-                fn(AppleConnector $connector, CookieJar $cookieJar) => $connector->withCookies($cookieJar)
+                fn (AppleConnector $connector, CookieJar $cookieJar) => $connector->withCookies($cookieJar)
             )
             ->when(
                 $this->appleId->logger(),
-                fn(AppleConnector $connector, LoggerInterface $logger) => $connector->withLogger($logger)
+                fn (AppleConnector $connector, LoggerInterface $logger) => $connector->withLogger($logger)
             )
             ->when(
                 $this->appleId->proxySplQueue(),
-                fn(AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
+                fn (AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
                     $proxySplQueue
-                ),fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
+                ),
+                fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
             )
             ->middleware()
-            ->merge($this->appleId->middleware());
-
+            ->merge($this->appleId->middleware())
+        ;
     }
 
     public function appleId(): AppleId
@@ -92,32 +94,20 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
     }
 
     /**
-     * @param Request $request
-     * @param MockClient|null $mockClient
-     * @param callable|null $handleRetry
-     *
-     * @return Response
      * @throws RequestException
-     *
      * @throws FatalRequestException
      */
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
-       try{
-
+        try {
             /**
              * @var Response $response
              */
-            $response = parent::send($request, $mockClient, $handleRetry);
-
-            return $response;
-
-       }catch(\Saloon\Exceptions\Request\Statuses\UnauthorizedException $e){
-
+            return parent::send($request, $mockClient, $handleRetry);
+        } catch (UnauthorizedException $e) {
             $this->appleId->cookieJar()->clear();
-            throw $e;
-       }
 
-        
+            throw $e;
+        }
     }
 }

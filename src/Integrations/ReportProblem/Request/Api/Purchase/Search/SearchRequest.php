@@ -2,12 +2,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Request\Api\Purchase\Search;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Search\SearchResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Search\SearchResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SearchRequest extends Request implements HasBody
 {
@@ -19,8 +19,7 @@ class SearchRequest extends Request implements HasBody
         protected string $dsid,
         protected string $xAppleXsrfToken,
         protected ?string $batchId = null
-    ) {
-    }
+    ) {}
 
     public function createDtoFromResponse(Response $response): SearchResponse
     {

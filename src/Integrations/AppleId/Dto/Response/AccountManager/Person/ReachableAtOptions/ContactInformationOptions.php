@@ -8,6 +8,5 @@ class ContactInformationOptions extends Data
 {
     public function __construct(
         public array $options = [],
-    ) {
-    }
+    ) {}
 }

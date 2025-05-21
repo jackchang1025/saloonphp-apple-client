@@ -11,6 +11,5 @@ class VettingStatus extends Data
         public bool $vetted,
         public bool $notVetted,
         public bool $pending,
-    ) {
-    }
+    ) {}
 }

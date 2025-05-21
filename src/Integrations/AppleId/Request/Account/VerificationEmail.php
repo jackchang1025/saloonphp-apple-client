@@ -2,12 +2,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\VerificationEmail as VerificationEmailDto;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
+
 class VerificationEmail extends BaseAccount implements HasBody
 {
     use HasJsonBody;
@@ -19,8 +19,7 @@ class VerificationEmail extends BaseAccount implements HasBody
         public string $appleIdSessionId,
         public string $appleWidgetKey,
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -40,7 +39,4 @@ class VerificationEmail extends BaseAccount implements HasBody
             'X-Apple-Request-Context' => $this->appleRequestContext,
         ];
     }
-
-    
-    
 }

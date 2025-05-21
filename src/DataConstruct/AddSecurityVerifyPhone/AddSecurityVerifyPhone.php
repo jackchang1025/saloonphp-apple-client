@@ -11,8 +11,7 @@ class AddSecurityVerifyPhone extends Data implements AddSecurityVerifyPhoneInter
         public string $phoneNumber,
         public string $countryDialCode,
         public string $phoneAddress,
-    ) {
-    }
+    ) {}
 
     public function getCountryCode(): string
     {

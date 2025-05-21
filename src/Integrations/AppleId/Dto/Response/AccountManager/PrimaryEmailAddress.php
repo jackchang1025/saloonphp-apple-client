@@ -24,6 +24,5 @@ class PrimaryEmailAddress extends Data
 
         /** @var array 邮箱选项 */
         public array $options = []
-    ) {
-    }
+    ) {}
 }

@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\Setup\Ws;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasStringBody;
-use Saloon\Contracts\Body\HasBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\Setup\Ws\CreateLiteAccount;
 
 class CreateLiteAccountRequest extends Request implements HasBody
@@ -19,8 +19,7 @@ class CreateLiteAccountRequest extends Request implements HasBody
         public string $clientMasteringNumber,
         public string $clientId,
         public CreateLiteAccount $data,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

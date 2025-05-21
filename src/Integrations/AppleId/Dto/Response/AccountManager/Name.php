@@ -13,16 +13,16 @@ class Name extends Data
         /** @var string 姓氏 */
         public string $lastName = '',
 
-        /** @var string|null 中间名 */
+        /** @var null|string 中间名 */
         public ?string $middleName = null,
 
         /** @var string 全名 */
         public string $fullName = '',
 
-        /** @var string|null 名字前缀 */
+        /** @var null|string 名字前缀 */
         public ?string $prefix = null,
 
-        /** @var string|null 名字后缀 */
+        /** @var null|string 名字后缀 */
         public ?string $suffix = null,
 
         /** @var string 名字顺序 */
@@ -33,6 +33,5 @@ class Name extends Data
 
         /** @var array 发音信息 */
         public array $pronunciation = []
-    ) {
-    }
+    ) {}
 }

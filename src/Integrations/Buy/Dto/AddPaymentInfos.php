@@ -22,7 +22,7 @@ class AddPaymentInfos extends Data
      * "creditCardExpirationMonth": "12",
      * "creditCardExpirationYear": "2027",
      * "creditVerificationNumber": "061",
-     * "creditCardType": "MasterCard"
+     * "creditCardType": "MasterCard".
      */
     public function __construct(
         public string $paymentMethodType,
@@ -40,6 +40,5 @@ class AddPaymentInfos extends Data
         public string $creditCardExpirationMonth,
         public string $creditCardExpirationYear,
         public string $creditVerificationNumber,
-    ) {
-    }
+    ) {}
 }

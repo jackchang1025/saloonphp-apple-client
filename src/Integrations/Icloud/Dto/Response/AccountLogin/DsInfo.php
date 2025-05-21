@@ -20,6 +20,5 @@ class DsInfo extends Data
         public array $appleIdEntries,
         public array $mailFlags,
         public array $beneficiaryInfo,
-    ) {
-    }
+    ) {}
 }

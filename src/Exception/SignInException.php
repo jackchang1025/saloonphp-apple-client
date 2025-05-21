@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class SignInException extends AppleException
-{
-}
+class SignInException extends AppleException {}

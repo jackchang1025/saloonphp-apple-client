@@ -7,8 +7,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class Bootstrap extends Request
 {

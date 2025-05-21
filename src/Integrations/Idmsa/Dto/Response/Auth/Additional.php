@@ -11,6 +11,5 @@ class Additional extends Data
      */
     public function __construct(
         public bool $canRoute2sv
-    ) {
-    }
+    ) {}
 }

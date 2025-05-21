@@ -2,11 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyDetails;
 
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
-use Weijiajia\SaloonphpAppleClient\Helpers\CustomSnakeCaseMapper;
 use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Attributes\MapName;
-use Spatie\LaravelData\Mappers\CamelCaseMapper;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
+use Weijiajia\SaloonphpAppleClient\Helpers\CustomSnakeCaseMapper;
 
 #[MapName(CustomSnakeCaseMapper::class)]
 class FamilyMember extends Data
@@ -34,6 +33,5 @@ class FamilyMember extends Data
         public string $memberLastName,
         public bool $isAskToBuyEnabled,
         public string $linkedItunesAccountAppleid
-    ) {
-    }
+    ) {}
 }

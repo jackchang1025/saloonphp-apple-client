@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class CaptchaException extends AppleException
-{
-}
+class CaptchaException extends AppleException {}

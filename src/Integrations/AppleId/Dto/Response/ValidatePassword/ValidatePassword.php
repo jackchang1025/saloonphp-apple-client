@@ -7,11 +7,10 @@ use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class ValidatePassword extends Data
 {
-
     public function __construct(public bool $hasValidatePassword = false, public ?Carbon $updateAt = null)
     {
-        if ($this->updateAt === null) {
-            $this->updateAt = now();
+        if (null === $this->updateAt) {
+            $this->updateAt = Carbon::now();
         }
     }
 }

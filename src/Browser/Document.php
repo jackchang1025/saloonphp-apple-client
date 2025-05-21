@@ -1,12 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Browser;
 
 class Document
 {
-    public string $referer = "";
-    public string $domain = "";
+    public string $referer = '';
+    public string $domain = '';
 
     public function __construct()
     {
@@ -23,4 +24,4 @@ class Document
             'domain' => $this->domain,
         ];
     }
-} 
+}

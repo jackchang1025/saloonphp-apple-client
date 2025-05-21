@@ -1,12 +1,14 @@
 <?php
 
 declare(strict_types=1);
-namespace Weijiajia\SaloonphpAppleClient\Helpers;
-class Fingerprint {
 
+namespace Weijiajia\SaloonphpAppleClient\Helpers;
+
+class Fingerprint
+{
     // 静态属性 $y, $A, $w 保持不变...
-    private static $y = ["%20", ";;;", "%3B", "%2C", "und", "fin", "ed;", "%28", "%29", "%3A", "/53", "ike", "Web", "0;", ".0", "e;", "on", "il", "ck", "01", "in", "Mo", "fa", "00", "32", "la", ".1", "ri", "it", "%u", "le"];
-    private static $A = ".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+    private static $y = ['%20', ';;;', '%3B', '%2C', 'und', 'fin', 'ed;', '%28', '%29', '%3A', '/53', 'ike', 'Web', '0;', '.0', 'e;', 'on', 'il', 'ck', '01', 'in', 'Mo', 'fa', '00', '32', 'la', '.1', 'ri', 'it', '%u', 'le'];
+    private static $A = '.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
     private static $w = [
         1 => [4, 15], 110 => [8, 239], 74 => [8, 238], 57 => [7, 118], 56 => [7, 117],
         71 => [8, 233], 25 => [8, 232], 101 => [5, 28], 104 => [7, 111], 4 => [7, 110],
@@ -28,49 +30,12 @@ class Fingerprint {
         120 => [8, 65], 66 => [8, 64], 21 => [7, 31], 106 => [7, 30], 47 => [6, 14],
         53 => [5, 6], 49 => [5, 5], 86 => [8, 39], 85 => [8, 38], 23 => [7, 18],
         75 => [7, 17], 20 => [7, 16], 2 => [5, 3], 73 => [8, 23], 43 => [9, 45],
-        87 => [9, 44], 70 => [7, 10], 3 => [6, 4], 52 => [5, 1], 54 => [5, 0]
+        87 => [9, 44], 70 => [7, 10], 3 => [6, 4], 52 => [5, 1], 54 => [5, 0],
     ];
 
-    // 私有方法 t() 和 mainEncode() 保持不变...
-    private static function t(int &$r, int &$o, array $input_tuple, string &$n): void {
-        list($shift, $value) = $input_tuple;
-        $r = ($r << $shift) | $value;
-        $o += $shift;
-        while ($o >= 6) {
-            $e = ($r >> ($o - 6)) & 63;
-            $n .= self::$A[$e];
-            $r ^= ($e << ($o - 6));
-            $o -= 6;
-        }
-    }
-
-    private static function mainEncode(string $e): string {
-        $n = ""; $r = 0; $o = 0;
-        $len_e = strlen($e);
-        self::t($r, $o, [6, (7 & $len_e) << 3 | 0], $n);
-        self::t($r, $o, [6, 56 & $len_e | 1], $n);
-
-        $length = strlen($e);
-        for ($i = 0; $i < $length; $i++) {
-            $char = $e[$i];
-            $charCode = ord($char);
-            if (!isset(self::$w[$charCode])) {
-                // Consider throwing an exception for invalid input
-                // throw new \InvalidArgumentException("Invalid character for encoding: " . $char);
-                return ""; // Or return empty string as per original logic
-            }
-            self::t($r, $o, self::$w[$charCode], $n);
-        }
-
-        self::t($r, $o, self::$w[0], $n);
-        if ($o > 0) {
-            self::t($r, $o, [6 - $o, 0], $n);
-        }
-        return $n;
-    }
-
     // 公有方法 encode() 保持不变...
-    public static function encode(string $e): string {
+    public static function encode(string $e): string
+    {
         $n = $e;
         foreach (self::$y as $r => $rep) {
             $n = str_replace($rep, chr($r + 1), $n);
@@ -78,16 +43,16 @@ class Fingerprint {
 
         $n_val = 65535;
         $length = strlen($e); // Use original $e length for checksum
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $charCode = ord($e[$i]);
-            $n_val = ((($n_val >> 8) | ($n_val << 8))) & 0xFFFF;
+            $n_val = (($n_val >> 8) | ($n_val << 8)) & 0xFFFF;
             $n_val ^= $charCode;
             $n_val &= 0xFFFF;
             $n_val ^= (($n_val & 0xFF) >> 4);
             $n_val &= 0xFFFF;
             $n_val ^= ($n_val << 12);
             $n_val &= 0xFFFF;
-            $n_val ^= ((($n_val & 0xFF) << 5));
+            $n_val ^= (($n_val & 0xFF) << 5);
             $n_val &= 0xFFFF;
         }
         $n_val &= 0xFFFF;
@@ -98,39 +63,30 @@ class Fingerprint {
         $idx3 = $n_val & 63;
         // Basic check - can be removed if confident about indices
         if ($idx1 < 0 || $idx1 >= strlen(self::$A) || $idx2 < 0 || $idx2 >= strlen(self::$A) || $idx3 < 0 || $idx3 >= strlen(self::$A)) {
-             throw new \RangeException("Checksum calculation resulted in invalid index for alphabet A.");
+            throw new \RangeException('Checksum calculation resulted in invalid index for alphabet A.');
         }
 
-        $checksum = self::$A[$idx1] . self::$A[$idx2] . self::$A[$idx3];
+        $checksum = self::$A[$idx1].self::$A[$idx2].self::$A[$idx3];
 
-        return self::mainEncode($n) . $checksum;
+        return self::mainEncode($n).$checksum;
     }
-
-
-    // 辅助函数 getTimezoneOffsetMinutes() 和 isDst() 保持不变...
-    private static function getTimezoneOffsetMinutes(\DateTimeInterface $date): int {
-        return -($date->getOffset() / 60);
-    }
-
-    private static function isDst(\DateTimeInterface $date, int $t1_offset_min, int $t2_offset_min): bool {
-         $base_is_dst = abs($t1_offset_min - $t2_offset_min) !== 0;
-         return $base_is_dst && self::getTimezoneOffsetMinutes($date) == min($t1_offset_min, $t2_offset_min);
-    }
-
 
     /**
-     * 生成用于编码的原始指纹字符串
+     * 生成用于编码的原始指纹字符串.
      *
      * @param string $timezoneId IANA 时区标识符 (例如 'America/Los_Angeles', 'Asia/Shanghai')
+     *
      * @return string 原始指纹字符串
+     *
      * @throws \Exception 如果时区标识符无效
      */
-    public static function generate(string $timezoneId = 'America/Los_Angeles'): string {
+    public static function generate(string $timezoneId = 'America/Los_Angeles'): string
+    {
         try {
             $tz = new \DateTimeZone($timezoneId);
         } catch (\Exception $ex) {
             // 重新抛出异常，指明是时区问题
-            throw new \InvalidArgumentException("Invalid timezone identifier provided: " . $timezoneId, 0, $ex);
+            throw new \InvalidArgumentException('Invalid timezone identifier provided: '.$timezoneId, 0, $ex);
         }
 
         // 使用传入的时区创建日期对象
@@ -140,17 +96,16 @@ class Fingerprint {
             $date_t2 = new \DateTime('2005-07-15', $tz);
             $currentTime = new \DateTime('now', $tz);
             // Python 用了 2005-06-07 21:33:44.888
-            $localeDate = new \DateTime('2005-06-07 21:33:44', $tz); //忽略毫秒，因 PHP format 不直接支持
+            $localeDate = new \DateTime('2005-06-07 21:33:44', $tz); // 忽略毫秒，因 PHP format 不直接支持
         } catch (\Exception $ex) {
             // DateTime 创建不太可能失败，除非系统时间有问题，但以防万一
-             throw new \RuntimeException("Failed to create DateTime objects: " . $ex->getMessage(), 0, $ex);
+            throw new \RuntimeException('Failed to create DateTime objects: '.$ex->getMessage(), 0, $ex);
         }
-
 
         $t1_offset_min = self::getTimezoneOffsetMinutes($date_t1);
         $t2_offset_min = self::getTimezoneOffsetMinutes($date_t2);
 
-        $base_is_dst = abs($t1_offset_min - $t2_offset_min) !== 0;
+        $base_is_dst = 0 !== abs($t1_offset_min - $t2_offset_min);
         $base_is_dst_str = $base_is_dst ? 'true' : 'false';
 
         $is_dst_now = self::isDst($currentTime, $t1_offset_min, $t2_offset_min);
@@ -159,7 +114,7 @@ class Fingerprint {
         $currentOffsetMinutes = self::getTimezoneOffsetMinutes($currentTime);
         $offset_diff_abs = abs($t2_offset_min - $t1_offset_min);
         // 注意：这里计算的是小时偏移量，Python 代码似乎也是这样
-        $calculated_offset_hours = -(int)(($currentOffsetMinutes + $offset_diff_abs * ($is_dst_now ? 1: 0)) / 60);
+        $calculated_offset_hours = -(int) (($currentOffsetMinutes + $offset_diff_abs * ($is_dst_now ? 1 : 0)) / 60);
 
         // PHP format: 'm/d/Y, h:i:s A'
         $localeString = rawurlencode($localeDate->format('m/d/Y, h:i:s'));
@@ -173,35 +128,92 @@ class Fingerprint {
 
         // "TF1;020;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;true;true;@UTC@;-8;6/7/2005%2C%209%3A33%3A44%20PM;;;;;;;;;@CT@;480;420;4/16/2025%2C%209%3A18%3A55%20PM;;;;;;;;;;;;;;;;;;;;;;;;25;;;;;;;;;;;;;;;5.6.1-0;"
         // 组合指纹字符串 (保持和之前一致的结构)
-        $fingerprintString = "TF1;020;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" .
-                             $base_is_dst_str . ";" .
-                             $is_dst_now_str . ";" .
-                             $timestampMs . ";" .
-                             $calculated_offset_hours . ";" .
-                             $localeString . ";;;;;;;;;;" .
-                             $randomInt . ";" .
-                             $t1_offset_min . ";" .
-                             $t2_offset_min . ";" .
-                             $currentLocaleString . ";;;;;;;;;;;;;;;;;;;;;;;;" .
-                             "25;;;;;;;;;;;;;;;" .
-                             "5.6.1-0;;";
-
-        return $fingerprintString;
+        return 'TF1;020;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;'
+                             .$base_is_dst_str.';'
+                             .$is_dst_now_str.';'
+                             .$timestampMs.';'
+                             .$calculated_offset_hours.';'
+                             .$localeString.';;;;;;;;;;'
+                             .$randomInt.';'
+                             .$t1_offset_min.';'
+                             .$t2_offset_min.';'
+                             .$currentLocaleString.';;;;;;;;;;;;;;;;;;;;;;;;'
+                             .'25;;;;;;;;;;;;;;;'
+                             .'5.6.1-0;;';
     }
 
     /**
-     * 创建最终的编码指纹
+     * 创建最终的编码指纹.
      *
      * @param string $timezoneId IANA 时区标识符 (例如 'America/Los_Angeles', 'Asia/Shanghai')
-     *                           默认为 'America/Los_Angeles' 以保持原行为。
+     *                           默认为 'America/Los_Angeles' 以保持原行为
+     *
      * @return string 编码后的指纹字符串
+     *
      * @throws \Exception 如果时区标识符无效 (来自 generate 方法)
      */
-    public static function createFingerprint(string $timezoneId = 'America/Los_Angeles'): string {
+    public static function createFingerprint(string $timezoneId = 'America/Los_Angeles'): string
+    {
         // 调用 generate 并传入时区
         $generated = self::generate($timezoneId);
 
         // 调用 encode 进行编码
         return self::encode($generated);
+    }
+
+    // 私有方法 t() 和 mainEncode() 保持不变...
+    private static function t(int &$r, int &$o, array $input_tuple, string &$n): void
+    {
+        list($shift, $value) = $input_tuple;
+        $r = ($r << $shift) | $value;
+        $o += $shift;
+        while ($o >= 6) {
+            $e = ($r >> ($o - 6)) & 63;
+            $n .= self::$A[$e];
+            $r ^= ($e << ($o - 6));
+            $o -= 6;
+        }
+    }
+
+    private static function mainEncode(string $e): string
+    {
+        $n = '';
+        $r = 0;
+        $o = 0;
+        $len_e = strlen($e);
+        self::t($r, $o, [6, (7 & $len_e) << 3 | 0], $n);
+        self::t($r, $o, [6, 56 & $len_e | 1], $n);
+
+        $length = strlen($e);
+        for ($i = 0; $i < $length; ++$i) {
+            $char = $e[$i];
+            $charCode = ord($char);
+            if (!isset(self::$w[$charCode])) {
+                // Consider throwing an exception for invalid input
+                // throw new \InvalidArgumentException("Invalid character for encoding: " . $char);
+                return ''; // Or return empty string as per original logic
+            }
+            self::t($r, $o, self::$w[$charCode], $n);
+        }
+
+        self::t($r, $o, self::$w[0], $n);
+        if ($o > 0) {
+            self::t($r, $o, [6 - $o, 0], $n);
+        }
+
+        return $n;
+    }
+
+    // 辅助函数 getTimezoneOffsetMinutes() 和 isDst() 保持不变...
+    private static function getTimezoneOffsetMinutes(\DateTimeInterface $date): int
+    {
+        return -($date->getOffset() / 60);
+    }
+
+    private static function isDst(\DateTimeInterface $date, int $t1_offset_min, int $t2_offset_min): bool
+    {
+        $base_is_dst = 0 !== abs($t1_offset_min - $t2_offset_min);
+
+        return $base_is_dst && self::getTimezoneOffsetMinutes($date) == min($t1_offset_min, $t2_offset_min);
     }
 }

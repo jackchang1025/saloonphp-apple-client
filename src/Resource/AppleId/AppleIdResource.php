@@ -23,8 +23,8 @@ class AppleIdResource extends IdmsaResource
     }
 
     public function idmsaConnector(): IdmsaConnector
-    {        
-        return $this->idmsaConnector ?? new IdmsaConnector($this->appleId(),'af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3','https://account.apple.com');
+    {
+        return $this->idmsaConnector ?? new IdmsaConnector($this->appleId(), 'af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3', 'https://account.apple.com');
     }
 
     public function appleIdConnector(): AppleIdConnector
@@ -59,6 +59,3 @@ class AppleIdResource extends IdmsaResource
         return $this->reportProblemResource ??= new ReportProblemResource($this);
     }
 }
-
-
-

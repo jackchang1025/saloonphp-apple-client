@@ -10,11 +10,11 @@ class SecChHeadersService
     /**
      * 支持的浏览器列表
      */
-    private const array SUPPORTED_BROWSERS = [
+    private const  SUPPORTED_BROWSERS = [
         'Chrome', 'Edge', 'Opera', 'Chromium', 'Microsoft Edge', 'Chrome Mobile', 'CriOS'
     ];
 
-    private const array FAKE_BRAND_VERSIONS = [
+    private const FAKE_BRAND_VERSIONS = [
         'chrome_134_plus' => ['"Not:A-Brand"', '24'],
         'chrome_131_133' => ['"Not(A:Brand"', '99'],
         'chrome_121_130' => ['"Not_A Brand"', '24'],
@@ -22,7 +22,7 @@ class SecChHeadersService
         'chrome_default' => ['"Not A;Brand"', '99'],
     ];
 
-    private const array PLATFORM_MAPPING = [
+    private const  PLATFORM_MAPPING = [
         'Windows' => '"Windows"',
         'Mac' => '"macOS"',
         'iOS' => '"iOS"',

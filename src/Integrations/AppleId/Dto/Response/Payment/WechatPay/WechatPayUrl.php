@@ -6,8 +6,5 @@ use Spatie\LaravelData\Data;
 
 class WechatPayUrl extends Data
 {
-
-    public function __construct(public ?string $partnerToken = null, public ?string $url = null)
-    {
-    }
+    public function __construct(public ?string $partnerToken = null, public ?string $url = null) {}
 }

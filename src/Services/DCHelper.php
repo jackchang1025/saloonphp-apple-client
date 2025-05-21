@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Services;
 
-use DateTime;
-use DateTimeZone;
 use Exception;
 use Weijiajia\SaloonphpAppleClient\Browser\Browser;
-
 
 class DCHelper
 {
@@ -16,6 +14,7 @@ class DCHelper
 
     /** @var array<int, array{0: int, 1: int}> */
     private array $charMap;
+
     /** @var string[] */
     private array $specialChars;
     private string $encodingChars;
@@ -25,14 +24,14 @@ class DCHelper
     private int $transformN = 0;
     private int $transformA = 0;
 
-    public function __construct(Browser $browser /*, ?LoggerInterface $logger = null*/) // Inject DeviceID or create it
+    public function __construct(Browser $browser /* , ?LoggerInterface $logger = null */) // Inject DeviceID or create it
     {
         $this->browser = $browser;
         $this->deviceID = new DeviceID($browser); // Create DeviceID instance
         // $this->logger = $logger;
 
         // Initialize mappings and character sets
-        $this->encodingChars = ".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+        $this->encodingChars = '.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
         $this->charMap = [
             1 => [4, 15], 110 => [8, 239], 74 => [8, 238], 57 => [7, 118], 56 => [7, 117],
             71 => [8, 233], 25 => [8, 232], 101 => [5, 28], 104 => [7, 111], 4 => [7, 110],
@@ -57,9 +56,9 @@ class DCHelper
             87 => [9, 44], 70 => [7, 10], 3 => [6, 4], 52 => [5, 1], 54 => [5, 0],
         ];
         $this->specialChars = [
-            "%20", ";;;", "%3B", "%2C", "und", "fin", "ed;", "%28", "%29", "%3A", "/53",
-            "ike", "Web", "0;", ".0", "e;", "on", "il", "ck", "01", "in", "Mo", "fa",
-            "00", "32", "la", ".1", "ri", "it", "%u", "le",
+            '%20', ';;;', '%3B', '%2C', 'und', 'fin', 'ed;', '%28', '%29', '%3A', '/53',
+            'ike', 'Web', '0;', '.0', 'e;', 'on', 'il', 'ck', '01', 'in', 'Mo', 'fa',
+            '00', '32', 'la', '.1', 'ri', 'it', '%u', 'le',
         ];
     }
 
@@ -67,22 +66,23 @@ class DCHelper
      * Generates the final data structure to be JSON encoded.
      *
      * @return string JSON encoded string
-     * @throws Exception
+     *
+     * @throws \Exception
      */
     public function getData(): string
     {
         $data = [
-            "U" => $this->browser->navigator->userAgent ?? '',
-            "L" => $this->browser->navigator->language ?? 'en-US',
-            "Z" => $this->getGMTTimezone(),
-            "V" => "1.1",
-            "F" => $this->validate()
+            'U' => $this->browser->navigator->userAgent ?? '',
+            'L' => $this->browser->navigator->language ?? 'en-US',
+            'Z' => $this->getGMTTimezone(),
+            'V' => '1.1',
+            'F' => $this->validate(),
         ];
 
         $dataStr = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        if ($dataStr === false) {
+        if (false === $dataStr) {
             // $this->logger?->error("JSON encoding failed for FD client data");
-            throw new Exception("JSON encoding failed for FD client data");
+            throw new \Exception('JSON encoding failed for FD client data');
         }
 
         // $this->logger?->info(sprintf("FD client data: %s", $dataStr));
@@ -93,19 +93,20 @@ class DCHelper
      * Generates the encoded device fingerprint string (value F in getData).
      *
      * @return string Encoded fingerprint
-     * @throws Exception
+     *
+     * @throws \Exception
      */
     public function validate(): string
     {
-        $tz = new DateTimeZone($this->browser->timezone);
-        $dateTimeValue = new DateTime('now', $tz);
+        $tz = new \DateTimeZone($this->browser->timezone);
+        $dateTimeValue = new \DateTime('now', $tz);
 
         // $this->deviceID->getPluginVersions(); // Ensure plugins are loaded (likely done in constructor)
         $windowData = $this->browser->window->toArray();
 
         $attributesToRead = [
-            "TF1",
-            "020", // Different version from DeviceID?
+            'TF1',
+            '020', // Different version from DeviceID?
             $this->deviceID->scriptEngineMajorVersion(),
             $this->deviceID->scriptEngineMinorVersion(),
             $this->deviceID->scriptEngineBuildVersion(),
@@ -127,48 +128,48 @@ class DCHelper
             $this->deviceID->getCompVer('{44BBA840-CC51-11CF-AAFA-00AA00B6015C}'),
             $this->deviceID->getCompVer('{CC2A9BA0-3BDD-11D0-821E-444553540000}'),
             $this->deviceID->getCompVer('{08B0E5C0-4FCB-11CF-AAA5-00401C608500}'),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->findVariable(['navigator.productSub', 'navigator.appMinorVersion'], $windowData),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->findVariable(['navigator.oscpu', 'navigator.cpuClass'], $windowData),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->findVariable(['navigator.language', 'navigator.userLanguage'], $windowData),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->deviceID->isDSTSupported() ? 'true' : 'false',
             $this->deviceID->isDSTActive($dateTimeValue) ? 'true' : 'false',
-            "@UTC@",
-            (string)$this->deviceID->getTimezoneOffsetInHours($dateTimeValue),
+            '@UTC@',
+            (string) $this->deviceID->getTimezoneOffsetInHours($dateTimeValue),
             $this->deviceID->getLocalPastDate($tz),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->deviceID->plugins['Acrobat'] ?? '',
             $this->deviceID->plugins['Flash'] ?? '',
             $this->deviceID->plugins['QuickTime'] ?? '',
             $this->deviceID->plugins['Java Plug-in'] ?? '',
             $this->deviceID->plugins['Director'] ?? '',
             $this->deviceID->plugins['Office'] ?? '',
-            "@CT@", // Placeholder for calculation time
-            (string)$this->deviceID->winterTimezoneOffset,
-            (string)$this->deviceID->summerTimezoneOffset,
+            '@CT@', // Placeholder for calculation time
+            (string) $this->deviceID->winterTimezoneOffset,
+            (string) $this->deviceID->summerTimezoneOffset,
             // $dateTimeValue->format('d/m/Y, H:i:s'),
             $dateTimeValue->format('n/j/Y, g:i:s A'),
             // $this->deviceID->getLocalPastDateLocaleAware($tz,'now'),
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
-            "", // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
+            '', // Empty in DCHelper
             $this->deviceID->getPluginName('Acrobat'),
             $this->deviceID->getPluginName('Adobe SVG'),
             $this->deviceID->getPluginName('Authorware'),
@@ -187,26 +188,106 @@ class DCHelper
             $this->deviceID->getPluginName('Windows Media'),
             $this->deviceID->getPluginName('iPIX'),
             $this->deviceID->getPluginName('nppdf.so'),
-            (string)$this->deviceID->getFontHeight(),
-            "", "", "", "", "", "", "", "", "", "", "", "", "", "", // 14 Empty strings
-            "5.6.1-0", // Hardcoded version?
-            "", // Empty trailer
+            (string) $this->deviceID->getFontHeight(),
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', // 14 Empty strings
+            '5.6.1-0', // Hardcoded version?
+            '', // Empty trailer
         ];
 
-
         $quoted = array_map('rawurlencode', $attributesToRead);
-        $rslt = implode(";", $quoted) . ";";
+        $rslt = implode(';', $quoted).';';
 
         $utcTimestampMs = intval(floor(microtime(true) * 1000));
         $ctValue = $utcTimestampMs - intval(floor($dateTimeValue->getTimestamp() * 1000));
 
+        $rslt = str_replace(rawurlencode('@UTC@'), (string) $utcTimestampMs, $rslt);
+        $rslt = str_replace(rawurlencode('@CT@'), (string) $ctValue, $rslt);
 
-        $rslt = str_replace(rawurlencode("@UTC@"), (string) $utcTimestampMs, $rslt);
-        $rslt = str_replace(rawurlencode("@CT@"), (string) $ctValue, $rslt);
+        return $this->encode($rslt);
+    }
 
-        $encoded = $this->encode($rslt);
+    /**
+     * Encodes the semi-colon separated, URL-encoded string.
+     *
+     * @param string $clientId Raw string from validate()
+     *
+     * @return string Encoded string
+     */
+    public function encode(string $clientId): string
+    {
+        // 1. Replace special characters with control characters
+        $transformedStr = $clientId;
+        foreach ($this->specialChars as $i => $char) {
+            // Use chr(i + 1) as in Python
+            $transformedStr = str_replace($char, chr($i + 1), $transformedStr);
+        }
 
-        return $encoded;
+        // 2. Transform the string using bitwise logic
+        $baseEncoded = $this->transform($transformedStr);
+        if (null === $baseEncoded) {
+            // If transform fails, return the original (or partially transformed)
+            // Python returns original clientId here, let's stick to that.
+            // $this->logger?->warning("Transform failed, returning original Client ID");
+            return $clientId;
+        }
+
+        // 3. Calculate checksum
+        $checksum = 0xFFFF; // 65535
+        $clientIdLen = strlen($clientId);
+        for ($i = 0; $i < $clientIdLen; ++$i) {
+            $charCode = ord($clientId[$i]);
+            // Simulate 16-bit operations using & 0xFFFF
+            $checksum = (($checksum >> 8) | ($checksum << 8)) & 0xFFFF;
+            $checksum ^= ($charCode & 0xFF);
+            $checksum ^= (($checksum & 0xFF) >> 4);
+            $checksum ^= ($checksum << 12) & 0xFFFF;
+            $checksum ^= (($checksum & 0xFF) << 5) & 0xFFFF;
+        }
+        $checksum &= 0xFFFF;
+
+        // 4. Append checksum characters
+        $result = $baseEncoded;
+        $result .= $this->encodingChars[$checksum >> 12] ?? '_'; // Check bounds
+        $result .= $this->encodingChars[($checksum >> 6) & 63] ?? '_'; // Check bounds
+        $result .= $this->encodingChars[$checksum & 63] ?? '_'; // Check bounds
+
+        return $result;
+    }
+
+    /**
+     * Formats the timezone offset string like "GMT+HH:MM" or "GMT-HH:MM".
+     */
+    public function getGMTTimezone(): string
+    {
+        // Use the offset calculation from DeviceID
+        $now = new \DateTime('now', new \DateTimeZone($this->browser->timezone));
+        $offsetMinutesTotal = $this->deviceID->getTimezoneOffset($now);
+
+        // Python's getTimezoneOffset is negative for positive offsets (e.g., -480 for GMT+8)
+        // PHP's getOffset gives seconds (negative west, positive east)
+        // We need to match the GMT+/-HH:MM format based on the raw offset from UTC.
+
+        $offsetSeconds = -$offsetMinutesTotal * 60; // Convert back to seconds, invert sign
+
+        $sign = ($offsetSeconds < 0) ? '-' : '+';
+        $offsetHours = floor(abs($offsetSeconds) / 3600);
+        $offsetMinutes = floor((abs($offsetSeconds) % 3600) / 60);
+
+        return sprintf('GMT%s%02d:%02d', $sign, $offsetHours, $offsetMinutes);
+    }
+
+    /**
+     * Helper function to find variables, simplified in DCHelper to return empty string.
+     * (Kept for structural similarity, but DeviceID->findVariable is the one used).
+     *
+     * @param string[] $possibles
+     *
+     * @return string Always empty string
+     */
+    public function findVariable(array $possibles, array $windowData): string
+    {
+        // DCHelper version always returns empty string according to the Python code provided.
+        return '';
     }
 
     /**
@@ -237,8 +318,7 @@ class DCHelper
     /**
      * Transforms the input string using bitwise operations and charMap.
      *
-     * @param string $inputStr
-     * @return string|null Transformed string or null on error
+     * @return null|string Transformed string or null on error
      */
     private function transform(string $inputStr): ?string
     {
@@ -251,10 +331,10 @@ class DCHelper
         $this->processTransformPair([6, (7 & $len) << 3]);
         $this->processTransformPair([6, (56 & $len) >> 3 | 1]); // Adjusted shift and OR based on Python logic
 
-        for ($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; ++$i) {
             $charCode = ord($inputStr[$i]);
             if (!isset($this->charMap[$charCode])) {
-                 // $this->logger?->error(sprintf("Character code %d not found in charMap", $charCode));
+                // $this->logger?->error(sprintf("Character code %d not found in charMap", $charCode));
                 return null; // Character not in map, cannot transform
             }
             $this->processTransformPair($this->charMap[$charCode]);
@@ -262,7 +342,7 @@ class DCHelper
 
         // Process the final padding character (index 0)
         if (isset($this->charMap[0])) {
-             $this->processTransformPair($this->charMap[0]);
+            $this->processTransformPair($this->charMap[0]);
         }
 
         // Handle remaining bits
@@ -272,89 +352,4 @@ class DCHelper
 
         return $this->transformR;
     }
-
-    /**
-     * Encodes the semi-colon separated, URL-encoded string.
-     *
-     * @param string $clientId Raw string from validate()
-     * @return string Encoded string
-     */
-    public function encode(string $clientId): string
-    {
-        // 1. Replace special characters with control characters
-        $transformedStr = $clientId;
-        foreach ($this->specialChars as $i => $char) {
-            // Use chr(i + 1) as in Python
-            $transformedStr = str_replace($char, chr($i + 1), $transformedStr);
-        }
-
-        // 2. Transform the string using bitwise logic
-        $baseEncoded = $this->transform($transformedStr);
-        if ($baseEncoded === null) {
-            // If transform fails, return the original (or partially transformed)
-            // Python returns original clientId here, let's stick to that.
-            // $this->logger?->warning("Transform failed, returning original Client ID");
-            return $clientId;
-        }
-
-        // 3. Calculate checksum
-        $checksum = 0xFFFF; // 65535
-        $clientIdLen = strlen($clientId);
-        for ($i = 0; $i < $clientIdLen; $i++) {
-            $charCode = ord($clientId[$i]);
-            // Simulate 16-bit operations using & 0xFFFF
-            $checksum = (($checksum >> 8) | ($checksum << 8)) & 0xFFFF;
-            $checksum ^= ($charCode & 0xFF);
-            $checksum ^= (($checksum & 0xFF) >> 4);
-            $checksum ^= ($checksum << 12) & 0xFFFF;
-            $checksum ^= (($checksum & 0xFF) << 5) & 0xFFFF;
-        }
-        $checksum &= 0xFFFF;
-
-        // 4. Append checksum characters
-        $result = $baseEncoded;
-        $result .= $this->encodingChars[$checksum >> 12] ?? '_'; // Check bounds
-        $result .= $this->encodingChars[($checksum >> 6) & 63] ?? '_'; // Check bounds
-        $result .= $this->encodingChars[$checksum & 63] ?? '_'; // Check bounds
-
-        return $result;
-    }
-
-    /**
-     * Formats the timezone offset string like "GMT+HH:MM" or "GMT-HH:MM".
-     *
-     * @return string
-     */
-    public function getGMTTimezone(): string
-    {
-        // Use the offset calculation from DeviceID
-        $now = new DateTime("now", new DateTimeZone($this->browser->timezone));
-        $offsetMinutesTotal = $this->deviceID->getTimezoneOffset($now);
-
-        // Python's getTimezoneOffset is negative for positive offsets (e.g., -480 for GMT+8)
-        // PHP's getOffset gives seconds (negative west, positive east)
-        // We need to match the GMT+/-HH:MM format based on the raw offset from UTC.
-
-        $offsetSeconds = -$offsetMinutesTotal * 60; // Convert back to seconds, invert sign
-
-        $sign = ($offsetSeconds < 0) ? '-' : '+';
-        $offsetHours = floor(abs($offsetSeconds) / 3600);
-        $offsetMinutes = floor((abs($offsetSeconds) % 3600) / 60);
-
-        return sprintf("GMT%s%02d:%02d", $sign, $offsetHours, $offsetMinutes);
-    }
-
-    /**
-     * Helper function to find variables, simplified in DCHelper to return empty string.
-     * (Kept for structural similarity, but DeviceID->findVariable is the one used)
-     *
-     * @param string[] $possibles
-     * @param array $windowData
-     * @return string Always empty string
-     */
-    public function findVariable(array $possibles, array $windowData): string
-    {
-        // DCHelper version always returns empty string according to the Python code provided.
-        return "";
-    }
-} 
+}

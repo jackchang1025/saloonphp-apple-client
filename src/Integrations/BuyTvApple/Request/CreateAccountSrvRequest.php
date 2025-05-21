@@ -1,27 +1,27 @@
 <?php
+
 namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasFormBody;
-use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrvResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrvData;
-use Saloon\Http\Auth\TokenAuthenticator;
+use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\CreateAccountSrvResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class CreateAccountSrvRequest extends Request implements HasBody
 {
     use HasFormBody;
-    
+
     protected Method $method = Method::POST;
 
     public function __construct(
         public string $token,
         public CreateAccountSrvData $data,
         public bool $isTVPlus = true,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

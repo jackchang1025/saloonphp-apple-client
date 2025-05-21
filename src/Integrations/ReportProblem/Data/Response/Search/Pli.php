@@ -20,6 +20,5 @@ class Pli extends Data
         public ?string $title = null,
         public ?LocalizedContent $localizedContent = null,
         public ?SubscriptionInfo $subscriptionInfo = null,
-    ) {
-    }
+    ) {}
 }

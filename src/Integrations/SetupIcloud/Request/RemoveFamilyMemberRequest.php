@@ -2,12 +2,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyInfo\FamilyInfo;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyInfo\FamilyInfo;
 
 class RemoveFamilyMemberRequest extends Request implements HasBody
 {
@@ -16,9 +16,8 @@ class RemoveFamilyMemberRequest extends Request implements HasBody
     protected Method $method = Method::POST;
 
     public function __construct(
-        public readonly string|int $dsid
-    ) {
-    }
+        public readonly int|string $dsid
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -33,8 +32,7 @@ class RemoveFamilyMemberRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         return [
-            "dsid" => $this->dsid,
+            'dsid' => $this->dsid,
         ];
     }
-
 }

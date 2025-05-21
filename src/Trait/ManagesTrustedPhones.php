@@ -4,6 +4,7 @@ namespace Weijiajia\SaloonphpAppleClient\Trait;
 
 use Illuminate\Support\Collection;
 use Weijiajia\SaloonphpAppleClient\Contracts\Phone;
+
 trait ManagesTrustedPhones
 {
     protected ?Collection $memoizedTrustedPhones = null;
@@ -16,16 +17,18 @@ trait ManagesTrustedPhones
     public function addTrustedPhoneNumber(Phone $phone): static
     {
         $this->memoizedTrustedPhones?->push($phone); // 更新缓存
+
         return $this;
     }
 
     public function removeTrustedPhoneNumber(Phone $phone): static
     {
         if ($this->memoizedTrustedPhones) {
-             $this->memoizedTrustedPhones = $this->memoizedTrustedPhones->reject(function ($item) use ($phone) {
-                 return $item->phone() === $phone->phone();
-             });
+            $this->memoizedTrustedPhones = $this->memoizedTrustedPhones->reject(function ($item) use ($phone) {
+                return $item->phone() === $phone->phone();
+            });
         }
+
         return $this;
     }
 
@@ -35,8 +38,7 @@ trait ManagesTrustedPhones
     public function hasTrustedPhoneNumber(Phone $phone): bool
     {
         return $this->trustedPhoneNumbers()->contains(function ($item) use ($phone) {
-             return $item->phone() === $phone->phone();
+            return $item->phone() === $phone->phone();
         });
     }
 }
-

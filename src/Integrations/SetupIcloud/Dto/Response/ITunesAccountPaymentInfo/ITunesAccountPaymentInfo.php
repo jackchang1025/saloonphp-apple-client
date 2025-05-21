@@ -1,26 +1,14 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\ITunesAccountPaymentInfo;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
+
 use Spatie\LaravelData\Attributes\MapName;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class ITunesAccountPaymentInfo extends Data
 {
-
     /**
-     * @param string $statusMessage
-     * @param int $status
-     * @param string|null $userAction
-     * @param string|null $billingType
-     * @param string|null $creditCardImageUrl
-     * @param string|null $creditCardLastFourDigits
-     * @param string|null $verificationType
-     * @param string|null $creditCardId
-     * @param string|null $creditCardType {
-     * @param string|null $challengeReceipt
-     * @param string|null $PaymentCardDescription
-     * @param string|null $partnerLogin
-     * @param string|null $smsSessionID
+     * @param null|string $creditCardType {
      */
     public function __construct(
         #[MapName('status-message')]
@@ -37,7 +25,5 @@ class ITunesAccountPaymentInfo extends Data
         public ?string $PaymentCardDescription = null,
         public ?string $partnerLogin = null,
         public ?string $smsSessionID = null,
-
-    ) {
-    }
+    ) {}
 }

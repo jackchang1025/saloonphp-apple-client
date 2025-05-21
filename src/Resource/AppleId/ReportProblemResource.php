@@ -3,11 +3,11 @@
 namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 
 use Illuminate\Support\Collection;
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Login;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Search\SearchResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\ReportProblemConnector;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
 
 class ReportProblemResource
 {
@@ -24,16 +24,15 @@ class ReportProblemResource
     protected ?Collection $searchCollection = null;
 
     // 构造函数，接收一个AppleIdResource实例并将其绑定到当前实例
-    public function __construct(protected AppleIdResource $appleIdResource)
-    {
-
-    }
+    public function __construct(protected AppleIdResource $appleIdResource) {}
 
     /**
-     * 执行搜索操作
+     * 执行搜索操作.
      *
      * @param ?string $batchId 批次ID，用于指定特定的搜索批次
+     *
      * @return SearchResponse 返回一个SearchResponse实例，包含搜索结果
+     *
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -46,11 +45,12 @@ class ReportProblemResource
                 $this->login()->dsid,
                 $this->login()->token,
                 $batchId
-            );
+            )
+        ;
     }
 
     /**
-     * 获取报告问题的连接器实例
+     * 获取报告问题的连接器实例.
      *
      * @return ReportProblemConnector 返回一个ReportProblemConnector实例
      */
@@ -64,7 +64,7 @@ class ReportProblemResource
     }
 
     /**
-     * 获取AppleId资源实例
+     * 获取AppleId资源实例.
      *
      * @return AppleIdResource 返回一个AppleIdResource实例
      */
@@ -75,9 +75,10 @@ class ReportProblemResource
     }
 
     /**
-     * 执行登录操作
+     * 执行登录操作.
      *
      * @return Login 返回一个Login实例，包含登录相关信息
+     *
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -87,20 +88,21 @@ class ReportProblemResource
             return $this->login;
         }
 
-        //清除 cookie 信息
+        // 清除 cookie 信息
         $this->getAppleIdResource()->appleId()
-             ->cookieJar()
-            ->clearCookiesByName(['selfserv_toru', 'selfserv_tahi', 'dqsid', 'user-context']);
-
+            ->cookieJar()
+            ->clearCookiesByName(['selfserv_toru', 'selfserv_tahi', 'dqsid', 'user-context'])
+        ;
 
         // 如果login属性尚未初始化，则执行登录操作并缓存结果
         return $this->login = $this->getReportProblemConnector()->getResources()->login();
     }
 
     /**
-     * 获取搜索集合
+     * 获取搜索集合.
      *
      * @return Collection 返回一个Collection实例，包含搜索集合结果
+     *
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -112,6 +114,7 @@ class ReportProblemResource
             ->searchCollection(
                 $this->login()->dsid,
                 $this->login()->token
-            );
+            )
+        ;
     }
 }

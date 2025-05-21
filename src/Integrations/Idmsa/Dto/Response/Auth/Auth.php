@@ -2,22 +2,22 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\Auth;
 
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\PhoneNumber;
+use Illuminate\Support\Collection;
 use Saloon\Http\Response;
 use Spatie\LaravelData\DataCollection;
-use Illuminate\Support\Collection;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\PhoneNumber;
+
 class Auth extends Data
 {
     /**
-     * @param Direct $direct 直接相关的数据
+     * @param Direct     $direct     直接相关的数据
      * @param Additional $additional 额外的数据
      */
     public function __construct(
         public Direct $direct,
         public Additional $additional
-    ) {
-    }
+    ) {}
 
     public function getTrustedPhoneNumbers(): DataCollection
     {
@@ -48,7 +48,7 @@ class Auth extends Data
 
     public function filterTrustedPhoneById(int $id): ?PhoneNumber
     {
-        return collect($this->getTrustedPhoneNumbers()->all())->first(fn($phone) => $id === $phone->id);
+        return collect($this->getTrustedPhoneNumbers()->all())->first(fn ($phone) => $id === $phone->id);
     }
 
     public function getTrustedPhoneNumber(): PhoneNumber

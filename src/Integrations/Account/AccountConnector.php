@@ -7,14 +7,19 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Account;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\Account\Resources\Resources;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 
 class AccountConnector extends AppleConnector
 {
     public function resolveBaseUrl(): string
     {
         return 'https://account.apple.com';
+    }
+
+    public function getResources(): Resources
+    {
+        return new Resources($this);
     }
 
     protected function defaultHeaders(): array
@@ -29,10 +34,5 @@ class AccountConnector extends AppleConnector
             'Host' => 'account.apple.com',
             'User-Agent' => $this->appleId()->browser()->userAgent,
         ];
-    }
-
-    public function getResources(): Resources
-    {
-        return new Resources($this);
     }
 }

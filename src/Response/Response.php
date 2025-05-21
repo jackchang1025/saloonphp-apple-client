@@ -7,7 +7,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Response;
 
-
 class Response extends \Saloon\Http\Response
 {
     use HasServiceError;

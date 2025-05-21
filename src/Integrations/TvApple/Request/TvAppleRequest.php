@@ -2,8 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\TvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class TvAppleRequest extends Request
 {
@@ -13,5 +13,4 @@ class TvAppleRequest extends Request
     {
         return '/';
     }
-    
 }

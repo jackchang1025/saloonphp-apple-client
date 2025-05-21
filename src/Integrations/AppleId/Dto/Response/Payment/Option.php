@@ -10,9 +10,7 @@ class Option extends Data
         /** @var string 支付方式名称 */
         public string $name,
 
-        /** @var string|null 支付方式显示名称 */
+        /** @var null|string 支付方式显示名称 */
         public ?string $displayName = null
-    ) {
-    }
-
+    ) {}
 }

@@ -2,12 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\AccountNameValidateResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+
 class AccountNameValidateRequest extends Request implements HasBody
 {
     use HasJsonBody;
@@ -17,8 +18,7 @@ class AccountNameValidateRequest extends Request implements HasBody
     public function __construct(
         public string $accountName,
         public string $pageUUID,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

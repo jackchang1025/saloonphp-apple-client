@@ -2,13 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request;
 
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account\BaseAccount;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
 
 class Captcha extends BaseAccount implements HasBody
 {
@@ -22,8 +22,7 @@ class Captcha extends BaseAccount implements HasBody
         public string $appleWidgetKey,
         public string $type = 'IMAGE',
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -2,17 +2,17 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
+
 class Password extends BaseAccount implements HasBody
 {
     use HasJsonBody;
     use HasAcceptsJson;
     protected Method $method = Method::POST;
 
- 
     public function __construct(
         public string $accountName,
         public string $password,
@@ -20,8 +20,7 @@ class Password extends BaseAccount implements HasBody
         public string $appleWidgetKey,
         public bool $updating = false,
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -45,5 +44,4 @@ class Password extends BaseAccount implements HasBody
             'X-Apple-Request-Context' => $this->appleRequestContext,
         ];
     }
-
 }

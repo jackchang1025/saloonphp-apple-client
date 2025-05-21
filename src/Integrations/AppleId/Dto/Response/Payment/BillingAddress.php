@@ -1,9 +1,10 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Payment;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
+
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\DataCollection;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class BillingAddress extends Data
 {
@@ -31,6 +32,5 @@ class BillingAddress extends Data
         public ?string $stateProvinceName = null,
         public ?string $postalCode = null,
         public ?array $stateProvince = null,
-    ) {
-    }
+    ) {}
 }

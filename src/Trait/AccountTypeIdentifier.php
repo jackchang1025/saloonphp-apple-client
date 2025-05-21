@@ -14,9 +14,8 @@ trait AccountTypeIdentifier
     /**
      * 检查标识符是否为有效的邮箱格式。
      * 使用 egulias/email-validator 进行 RFC 标准验证。
-     * @see https://packagist.org/packages/egulias/email-validator
      *
-     * @return bool
+     * @see https://packagist.org/packages/egulias/email-validator
      */
     public function isEmailIdentifier(string $identifier): bool
     {
@@ -27,8 +26,6 @@ trait AccountTypeIdentifier
      * 检查标识符是否被视为手机号码。
      * 注意：这基于"不是有效邮箱格式就是手机号"的简化假设。
      * 对于更准确的手机号验证，应使用专门的库（如 libphonenumber）。
-     *
-     * @return bool
      */
     public function isPhoneIdentifier(string $identifier): bool
     {

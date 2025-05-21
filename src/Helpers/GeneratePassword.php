@@ -2,16 +2,20 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Helpers;
 
+use Random\RandomException;
+
 class GeneratePassword
 {
-     /**
-     * Generate a secure random password with specific requirements
+    /**
+     * Generate a secure random password with specific requirements.
      *
      * @param int $minLength Minimum password length (must be at least 4)
      * @param int $maxLength Maximum password length
+     *
      * @return string The generated password
+     *
      * @throws \InvalidArgumentException If invalid length parameters are provided
-     * @throws \Random\RandomException If random_int fails
+     * @throws RandomException           If random_int fails
      */
     public static function generatePassword(int $minLength = 8, int $maxLength = 20): string
     {
@@ -27,8 +31,8 @@ class GeneratePassword
         $charSets = [
             'uppercase' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
             'lowercase' => 'abcdefghijklmnopqrstuvwxyz',
-            'numbers'   => '0123456789',
-            'special'   => '!@#$%^&*()_+-=[]{}|;:,.<>?'
+            'numbers' => '0123456789',
+            'special' => '!@#$%^&*()_+-=[]{}|;:,.<>?',
         ];
 
         // Determine password length
@@ -55,5 +59,4 @@ class GeneratePassword
         // Shuffle the password to avoid predictable patterns
         return str_shuffle($password);
     }
-
 }

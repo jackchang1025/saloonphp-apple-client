@@ -14,6 +14,5 @@ class SearchResponse extends Data
         public SearchQuery $query,
         #[DataCollectionOf(Purchase::class)]
         public DataCollection $purchases,
-    ) {
-    }
+    ) {}
 }

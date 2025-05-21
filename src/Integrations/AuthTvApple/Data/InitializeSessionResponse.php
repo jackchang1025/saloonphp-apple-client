@@ -8,6 +8,5 @@ class InitializeSessionResponse extends Data
 {
     public function __construct(
         public string $pageUUID,
-    ) {
-    }
+    ) {}
 }

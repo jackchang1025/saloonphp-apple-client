@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\Devices;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Device\Devices;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Device\Devices;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class DevicesRequest extends Request
 {

@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class MaxRetryAttemptsException extends AppleException
-{
-
-}
+class MaxRetryAttemptsException extends AppleException {}

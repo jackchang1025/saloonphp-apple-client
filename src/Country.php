@@ -12,18 +12,18 @@ class Country
 
     public function __construct(string $country)
     {
-
         $this->country = strtoupper($country);
 
-        if(!Countries::exists(strtoupper($country))){
-
-            if(Countries::alpha3CodeExists($country)){
+        if (!Countries::exists(strtoupper($country))) {
+            if (Countries::alpha3CodeExists($country)) {
                 $this->country = Countries::getAlpha2Code($country);
+
                 return;
             }
 
-            if(Countries::numericCodeExists($country)){
+            if (Countries::numericCodeExists($country)) {
                 $this->country = Countries::getAlpha2FromNumeric($country);
+
                 return;
             }
 
@@ -31,14 +31,14 @@ class Country
 
             $countryCode = array_search(mb_strtolower($country), array_map('mb_strtolower', $countryNames), true);
 
-            if($countryCode === false){
+            if (false === $countryCode) {
                 throw new \RuntimeException("国家未找到: {$country}");
             }
             $this->country = $countryCode;
         }
     }
 
-    public static function make(string $country):static
+    public static function make(string $country): static
     {
         return new static($country);
     }
@@ -55,18 +55,18 @@ class Country
 
     public static function labels(?string $displayLocale = null): array
     {
-
         $countries = Countries::getCountryCodes();
         $labels = [];
         foreach ($countries as $code) {
             $labels[$code] = Countries::getName($code, $displayLocale);
         }
+
         return $labels;
     }
 
-    public  function getAlpha2Code(): ?string
+    public function getAlpha2Code(): ?string
     {
-        if (strlen($this->country) === 2) {
+        if (2 === strlen($this->country)) {
             return strtoupper($this->country);
         }
 
@@ -75,7 +75,7 @@ class Country
 
     public function getAlpha3Code(): ?string
     {
-        if (strlen($this->country) === 3) {
+        if (3 === strlen($this->country)) {
             return strtoupper($this->country);
         }
 

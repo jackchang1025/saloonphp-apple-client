@@ -2,11 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates;
 
+use Spatie\LaravelData\Attributes\MapName;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\GameCenter\GameCenter;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\Ids\Ids;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\MobileMe\MobileMe;
-use Spatie\LaravelData\Attributes\MapName;
 
 class Delegate extends Data
 {
@@ -18,6 +18,5 @@ class Delegate extends Data
         #[MapName('com.apple.private.ids')]
         public ?Ids $idsService = null,
         public int $status = 0,
-    ) {
-    }
+    ) {}
 }

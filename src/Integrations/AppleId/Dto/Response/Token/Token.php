@@ -7,10 +7,9 @@ use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class Token extends Data
 {
-
     public function __construct(public bool $hasToken = false, public ?Carbon $updateAt = null)
     {
-        if ($this->updateAt === null) {
+        if (null === $this->updateAt) {
             $this->updateAt = now();
         }
     }

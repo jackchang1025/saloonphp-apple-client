@@ -8,8 +8,8 @@ use Propaganistas\LaravelPhone\PhoneNumber;
 
 trait HandlesPhoneNumbers
 {
-   public function makePhoneNumber(string $number, array|string|null $country = null): PhoneNumber
-   {
+    public function makePhoneNumber(string $number, null|array|string $country = null): PhoneNumber
+    {
         return new PhoneNumber($number, $country);
-   }
+    }
 }

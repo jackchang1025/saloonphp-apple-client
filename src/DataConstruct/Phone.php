@@ -9,9 +9,7 @@ namespace Weijiajia\SaloonphpAppleClient\DataConstruct;
 
 readonly class Phone
 {
-    public function __construct(private array $data)
-    {
-    }
+    public function __construct(private array $data) {}
 
     /**
      * 获取电话号码 ID.

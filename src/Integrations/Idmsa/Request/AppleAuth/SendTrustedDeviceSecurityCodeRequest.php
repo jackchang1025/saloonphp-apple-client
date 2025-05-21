@@ -7,10 +7,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificationCode\SendDeviceSecurityCode;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SendVerificationCode\SendDeviceSecurityCode;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SendTrustedDeviceSecurityCodeRequest extends Request
 {
@@ -28,7 +28,7 @@ class SendTrustedDeviceSecurityCodeRequest extends Request
 
     public function hasRequestFailed(Response $response): ?bool
     {
-        if ($response->clientError() && $response->status() === 412) {
+        if ($response->clientError() && 412 === $response->status()) {
             return false;
         }
 

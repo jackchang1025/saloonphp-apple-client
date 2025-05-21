@@ -2,12 +2,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\GenerateEmailConfirmationCodeSrvResponse;
-use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class GenerateEmailConfirmationCodeSrvRequest extends Request implements HasBody
 {
@@ -17,8 +17,7 @@ class GenerateEmailConfirmationCodeSrvRequest extends Request implements HasBody
 
     public function __construct(
         public string $email,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -36,6 +35,4 @@ class GenerateEmailConfirmationCodeSrvRequest extends Request implements HasBody
     {
         return GenerateEmailConfirmationCodeSrvResponse::from($response->json());
     }
-    
-    
 }

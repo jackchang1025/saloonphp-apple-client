@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Payment;
 
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\DataCollection;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class PaymentConfig extends Data
 {
@@ -60,9 +60,7 @@ class PaymentConfig extends Data
         /** @var string 主卡3倍图片路径 */
         public string $primaryCardImagePath3x,
 
-        /** @var ShippingAddress|null 默认配送地址 */
+        /** @var null|ShippingAddress 默认配送地址 */
         public ?ShippingAddress $defaultShippingAddress = null,
-    )
-    {
-    }
+    ) {}
 }

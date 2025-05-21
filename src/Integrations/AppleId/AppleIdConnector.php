@@ -9,19 +9,16 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId;
 
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountManagerResource;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AuthenticateResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\BootstrapResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\PaymentResources;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\RepairResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityDevicesResources;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\SecurityPhoneResources;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\AccountResource;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Resources\RepairResource;
-
 
 class AppleIdConnector extends AppleConnector
 {
-    
-
     public function resolveBaseUrl(): string
     {
         return 'https://appleid.apple.com';
@@ -29,22 +26,7 @@ class AppleIdConnector extends AppleConnector
 
     public function defaultHeaderSynchronizes(): array
     {
-        return ['scnt','X-Apple-OAuth-Context','X-Apple-Session-Token'];
-    }
-
-    protected function defaultHeaders(): array
-    {
-        return [
-            'Connection' => 'Keep-Alive',
-            'Accept' => 'application/json, text/plain, */*',
-            'Accept-Encoding' => 'gzip, deflate, br, zstd',
-            'Referer' => $this->resolveBaseUrl(),
-            'Origin' => $this->resolveBaseUrl(),
-            'Host' => 'appleid.apple.com',
-            'User-Agent' => $this->appleId()->browser()->userAgent,
-            'Accept-Language' => $this->appleId()->browser()->language,
-            "X-Apple-I-Timezone" => $this->appleId()->browser()->timezone,
-        ];
+        return ['scnt', 'X-Apple-OAuth-Context', 'X-Apple-Session-Token'];
     }
 
     public function getPaymentResources(): PaymentResources
@@ -85,5 +67,20 @@ class AppleIdConnector extends AppleConnector
     public function getRepairResource(): RepairResource
     {
         return new RepairResource($this);
+    }
+
+    protected function defaultHeaders(): array
+    {
+        return [
+            'Connection' => 'Keep-Alive',
+            'Accept' => 'application/json, text/plain, */*',
+            'Accept-Encoding' => 'gzip, deflate, br, zstd',
+            'Referer' => $this->resolveBaseUrl(),
+            'Origin' => $this->resolveBaseUrl(),
+            'Host' => 'appleid.apple.com',
+            'User-Agent' => $this->appleId()->browser()->userAgent,
+            'Accept-Language' => $this->appleId()->browser()->language,
+            'X-Apple-I-Timezone' => $this->appleId()->browser()->timezone,
+        ];
     }
 }

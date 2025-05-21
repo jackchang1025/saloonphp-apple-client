@@ -2,19 +2,17 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\Locales;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
-class JsRequest extends Request 
+class JsRequest extends Request
 {
-
     protected Method $method = Method::GET;
 
     public function __construct(
         public string $path,
         public string $referer,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

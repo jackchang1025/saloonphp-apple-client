@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Browser;
@@ -8,8 +9,9 @@ class Screen
     public int $colorDepth = 24;
     public int $height = 1692;
     public int $width = 3008;
+
     /** @var array{angle: int} */
-    public array $orientation = ["angle" => 0];
+    public array $orientation = ['angle' => 0];
     public int $availWidth = 3008;
     public int $availHeight = 1692;
     public int $availLeft = 0;
@@ -18,7 +20,7 @@ class Screen
     // Add methods if needed, e.g., a constructor or getters
 
     /**
-     * @return array<string, int|array{angle: int}>
+     * @return array<string, array{angle: int}|int>
      */
     public function toArray(): array
     {
@@ -38,4 +40,4 @@ class Screen
             // 'updateInterval' => $this->updateInterval ?? 'undefined',
         ];
     }
-} 
+}

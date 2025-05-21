@@ -13,7 +13,6 @@ use Weijiajia\SaloonphpAppleClient\ServiceError\ServiceError;
 
 trait HasServiceError
 {
-
     /**
      * @return Collection<int,ServiceError>
      */
@@ -21,26 +20,12 @@ trait HasServiceError
     {
         return collect(ErrorType::cases())
             ->flatMap(fn (ErrorType $errorType) => $this->getErrorsForType($errorType))
-            ->filter();
+            ->filter()
+        ;
     }
-
-    /**
-     * @param ErrorType $errorType
-     * @return array
-     * @throws \JsonException
-     */
-    private function getErrorsForType(ErrorType $errorType): array
-    {
-        $data = $this->json($errorType->value);
-        return empty($data) ? [] : $errorType->getServiceErrors($data);
-    }
-
 
     /**
      * Get the first service error.
-     *
-     *
-     * @return ServiceError|null
      */
     public function getFirstServiceError(): ?ServiceError
     {
@@ -50,27 +35,36 @@ trait HasServiceError
     /**
      * Get authentication service errors.
      *
-     * @throws \JsonException
-     *
      * @return Collection<int,ServiceError>
+     *
+     * @throws \JsonException
      */
     public function getAuthServiceErrors(): Collection
     {
         $errors = data_get($this->authorizeSing(), 'direct.twoSV.phoneNumberVerification.serviceErrors', []);
 
         return collect($errors)
-            ->map(fn (array $serviceError) => new ServiceError($serviceError));
+            ->map(fn (array $serviceError) => new ServiceError($serviceError))
+        ;
     }
 
     /**
      * Get the first authentication service error.
      *
      * @throws \JsonException
-     *
-     * @return ServiceError|null
      */
     public function getFirstAuthServiceError(): ?ServiceError
     {
         return $this->getAuthServiceErrors()->first();
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    private function getErrorsForType(ErrorType $errorType): array
+    {
+        $data = $this->json($errorType->value);
+
+        return empty($data) ? [] : $errorType->getServiceErrors($data);
     }
 }

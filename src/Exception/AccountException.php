@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class AccountException extends AppleException
-{
-
-}
+class AccountException extends AppleException {}

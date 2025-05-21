@@ -39,6 +39,5 @@ class LoginConfig extends Data
         public bool $enableShowTotalAmount,
         public int $postFetchPLIBatchSize,
         public bool $enableRefundDecisionTimelineText,
-    ) {
-    }
+    ) {}
 }

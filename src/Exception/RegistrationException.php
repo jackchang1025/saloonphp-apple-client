@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class RegistrationException extends AppleException
-{
-}
+class RegistrationException extends AppleException {}

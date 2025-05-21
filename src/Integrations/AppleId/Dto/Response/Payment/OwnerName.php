@@ -24,6 +24,5 @@ class OwnerName extends Data
 
         /** @var string 完整名称 */
         public string $fullName
-    ) {
-    }
+    ) {}
 }

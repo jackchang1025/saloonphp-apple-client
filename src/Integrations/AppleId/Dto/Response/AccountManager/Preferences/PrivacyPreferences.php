@@ -15,6 +15,5 @@ class PrivacyPreferences extends Data
 
         /** @var bool 是否允许与第三方开发者共享数据 */
         public bool $allowShareThirdPartyDevelopers
-    ) {
-    }
+    ) {}
 }

@@ -2,6 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Resources;
 
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\Integrations\BaseResource;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\AddFamilyMember\AddFamilyMember;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Request\CreateFamily\CreateFamily;
@@ -19,13 +21,10 @@ use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\GetMaxFamily
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\LeaveFamilyRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\RemoveFamilyMemberRequest;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request\VerifyCVVRequest;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
 
 class FamilyResources extends BaseResource
 {
     /**
-     * @return FamilyDetails
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -33,12 +32,11 @@ class FamilyResources extends BaseResource
     {
         return $this->getConnector()
             ->send(new GetFamilyDetailsRequest())
-            ->dto();
+            ->dto()
+        ;
     }
 
     /**
-     * @param CreateFamily $createFamilyRequestData
-     * @return FamilyInfo
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -46,11 +44,11 @@ class FamilyResources extends BaseResource
     {
         return $this->getConnector()
             ->send(new CreateFamilyRequest($createFamilyRequestData))
-            ->dto();
+            ->dto()
+        ;
     }
 
     /**
-     * @return leaveFamily
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -58,7 +56,8 @@ class FamilyResources extends BaseResource
     {
         return $this->getConnector()
             ->send(new LeaveFamilyRequest())
-            ->dto();
+            ->dto()
+        ;
     }
 
     /**
@@ -68,7 +67,9 @@ class FamilyResources extends BaseResource
      * 以及两个可选的布尔参数，用于控制新成员是否默认启用位置共享和购买内容共享
      *
      * @param AddFamilyMember $data 包含家庭成员Apple ID、密码和验证令牌的AddFamilyMemberData对象
+     *
      * @return FamilyInfo 返回发送请求后的响应对象
+     *
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -77,20 +78,20 @@ class FamilyResources extends BaseResource
         return $this->getConnector()
             ->send(
                 new AddFamilyMemberRequest($data)
-            )->dto();
+            )->dto()
+        ;
     }
 
-    public function removeFamilyMemberRequest(string|int $dsid): FamilyInfo
+    public function removeFamilyMemberRequest(int|string $dsid): FamilyInfo
     {
         return $this->getConnector()
             ->send(
                 new RemoveFamilyMemberRequest($dsid)
-            )->dto();
+            )->dto()
+        ;
     }
 
     /**
-     * @param VerifyCVV $data
-     * @return VerifyCVVResponse
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -99,11 +100,11 @@ class FamilyResources extends BaseResource
         return $this->getConnector()
             ->send(
                 new VerifyCVVRequest($data)
-            )->dto();
+            )->dto()
+        ;
     }
 
     /**
-     * @return FamilyInfo
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -112,23 +113,19 @@ class FamilyResources extends BaseResource
         return $this->getConnector()
             ->send(
                 new GetMaxFamilyDetailsRequest()
-            )->dto();
+            )->dto()
+        ;
     }
 
     /**
-     * @param string $organizerDSID
-     * @param string $userAction
-     * @param bool $sendSMS
-     * @return ITunesAccountPaymentInfo
      * @throws FatalRequestException
      * @throws RequestException
      */
     public function getITunesAccountPaymentInfoRequest(
         string $organizerDSID,
-        string $userAction = "ADDING_FAMILY_MEMBER",
+        string $userAction = 'ADDING_FAMILY_MEMBER',
         bool $sendSMS = true
-    ): ITunesAccountPaymentInfo
-    {
+    ): ITunesAccountPaymentInfo {
         return $this->getConnector()->send(
             new GetITunesAccountPaymentInfoRequest($organizerDSID, $userAction, $sendSMS)
         )->dto();

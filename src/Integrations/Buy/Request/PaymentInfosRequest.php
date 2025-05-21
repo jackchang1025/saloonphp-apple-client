@@ -2,16 +2,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Buy\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class PaymentInfosRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(public string $context = 'CWA', public bool $isVideoEverywhere = true)
-    {
-    }
+    public function __construct(public string $context = 'CWA', public bool $isVideoEverywhere = true) {}
 
     public function resolveEndpoint(): string
     {
@@ -21,7 +19,7 @@ class PaymentInfosRequest extends Request
     public function defaultQuery(): array
     {
         return [
-            'context'           => $this->context,
+            'context' => $this->context,
             'isVideoEverywhere' => $this->isVideoEverywhere,
         ];
     }
@@ -29,8 +27,8 @@ class PaymentInfosRequest extends Request
     public function defaultHeaders(): array
     {
         return [
-            'Host'    => 'buy.apps.apple.com',
-            'Origin'  => 'https://apps.apple.com',
+            'Host' => 'buy.apps.apple.com',
+            'Origin' => 'https://apps.apple.com',
             'Referer' => 'https://apps.apple.com/',
         ];
     }

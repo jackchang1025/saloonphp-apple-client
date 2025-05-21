@@ -4,7 +4,6 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Accou
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
-
 class VerificationPhone extends Data
 {
     // {

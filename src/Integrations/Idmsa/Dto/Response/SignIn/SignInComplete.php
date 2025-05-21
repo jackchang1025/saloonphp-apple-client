@@ -3,8 +3,8 @@
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SignIn;
 
 use Illuminate\Support\Carbon;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class SignInComplete extends Data
 {
@@ -12,7 +12,7 @@ class SignInComplete extends Data
         public string $authType,
         public ?Carbon $expiresAt = null
     ) {
-        if ($this->expiresAt === null) {
+        if (null === $this->expiresAt) {
             $this->expiresAt = Carbon::now()->addSeconds(30);
         }
     }

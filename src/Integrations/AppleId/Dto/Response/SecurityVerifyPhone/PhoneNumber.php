@@ -34,6 +34,5 @@ class PhoneNumber extends Data
         public ?int $id = null,
         public ?string $createDate = null,
         public ?string $updateDate = null,
-    ) {
-    }
+    ) {}
 }

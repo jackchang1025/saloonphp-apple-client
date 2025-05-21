@@ -2,14 +2,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Account;
 
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
+use Saloon\Enums\Method;
 use Saloon\Http\Response;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\VerificationPhone as VerificationPhoneResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate;
-use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
+use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Contracts\CalculateAppleHc;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\VerificationPhone as VerificationPhoneResponse;
+use Weijiajia\SaloonphpAppleClient\Plugins\HasAcceptsJson;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasCalculateAppleHc;
 
 class VerificationPhone extends BaseAccount implements HasBody, CalculateAppleHc
@@ -24,8 +24,7 @@ class VerificationPhone extends BaseAccount implements HasBody, CalculateAppleHc
         public string $appleIdSessionId,
         public string $appleWidgetKey,
         public string $appleRequestContext = 'create',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

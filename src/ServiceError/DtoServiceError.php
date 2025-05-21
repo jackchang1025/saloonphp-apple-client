@@ -9,7 +9,6 @@ namespace Weijiajia\SaloonphpAppleClient\ServiceError;
 
 class DtoServiceError extends ServiceError
 {
-
     public function getTitle(): ?string
     {
         return $this->data['errorTitle'] ?? null;

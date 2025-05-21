@@ -1,6 +1,7 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\Repair;
+
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class Repair extends Data

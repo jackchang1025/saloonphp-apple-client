@@ -10,6 +10,5 @@ class ValidateAccountFieldsSrvResponse extends Data
         public array $validationResults,
         public int $status,
         public string $pageUUID,
-    ) {
-    }
+    ) {}
 }

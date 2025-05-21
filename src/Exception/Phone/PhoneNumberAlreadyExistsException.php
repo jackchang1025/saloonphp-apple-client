@@ -7,6 +7,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception\Phone;
 
-class PhoneNumberAlreadyExistsException extends PhoneException
-{
-}
+class PhoneNumberAlreadyExistsException extends PhoneException {}

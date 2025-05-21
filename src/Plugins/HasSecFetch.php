@@ -8,7 +8,7 @@ trait HasSecFetch
 {
     public function bootHasSecFetch(PendingRequest $pendingRequest): void
     {
-        /**
+        /*
          * Sec-Fetch-Dest: 'empty'表示请求的目标类型
          * 'empty' 值表示这是一个不针对特定资源类型的请求，通常用于API调用或XHR请求
          * Sec-Fetch-Mode: 'cors'指定请求的模式

@@ -39,10 +39,7 @@ class PhoneNumber extends Data
 
         /** @var string 电话类型 */
         public string $type,
-
         public ?string $number = null,
-
         public ?string $numberWithoutAreaCode = null,
-    ) {
-    }
+    ) {}
 }

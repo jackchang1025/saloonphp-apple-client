@@ -2,14 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
-use Saloon\Traits\Body\HasJsonBody;
-use Saloon\Contracts\Body\HasBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class PodRequest extends Request
 {
-
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
@@ -20,8 +17,7 @@ class PodRequest extends Request
     protected function defaultHeaders(): array
     {
         return [
-            'Content-Type'                    => 'application/json',
+            'Content-Type' => 'application/json',
         ];
     }
-    
 }

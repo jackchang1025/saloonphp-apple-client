@@ -10,6 +10,12 @@ class Preferences extends Data
         /** @var string 首选语言 */
         public string $preferredLanguage = '',
 
+        /** @var MarketingPreferences 营销偏好设置 */
+        public ?MarketingPreferences $marketingPreferences = null,
+
+        /** @var PrivacyPreferences 隐私偏好设置 */
+        public ?PrivacyPreferences $privacyPreferences = null,
+
         /** @var string 时区 */
         public string $timeZone = '',
 
@@ -30,6 +36,5 @@ class Preferences extends Data
 
         /** @var string 时间格式 */
         public string $timeFormat = ''
-    ) {
-    }
+    ) {}
 }

@@ -2,7 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-
-class VerificationCodeSentToBeTimeException extends AppleException
-{
-}
+class VerificationCodeSentToBeTimeException extends AppleException {}

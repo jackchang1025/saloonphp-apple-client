@@ -10,17 +10,16 @@ class FeedBackWsIcloudConnector extends AppleConnector
     public function defaultHeaders(): array
     {
         return [
-            'Accept'                 => '*/*',
-            'Content-Type'           => 'text/plain;charset=UTF-8',
-            'Host'                   => 'feedbackws.icloud.com',
-            'Accept-Encoding'        => 'gzip, deflate, br, zstd',
-            'Referer'                => 'https://www.icloud.com',
-            'User-Agent'             => $this->appleId()->browser()->userAgent,
-            'Origin'                 => 'https://www.icloud.com',
-            'Connection'             => 'keep-alive',
-            'Cache-Control'          => 'no-cache',
-            'Pragma'                 => 'no-cache',
-
+            'Accept' => '*/*',
+            'Content-Type' => 'text/plain;charset=UTF-8',
+            'Host' => 'feedbackws.icloud.com',
+            'Accept-Encoding' => 'gzip, deflate, br, zstd',
+            'Referer' => 'https://www.icloud.com',
+            'User-Agent' => $this->appleId()->browser()->userAgent,
+            'Origin' => 'https://www.icloud.com',
+            'Connection' => 'keep-alive',
+            'Cache-Control' => 'no-cache',
+            'Pragma' => 'no-cache',
         ];
     }
 
@@ -28,7 +27,6 @@ class FeedBackWsIcloudConnector extends AppleConnector
     {
         return 'https://feedbackws.icloud.com';
     }
-
 
     public function resources(): Resources
     {

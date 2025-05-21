@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class InvalidArgumentException extends AppleException
-{
-}
+class InvalidArgumentException extends AppleException {}

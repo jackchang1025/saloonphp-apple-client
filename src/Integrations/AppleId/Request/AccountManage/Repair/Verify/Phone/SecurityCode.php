@@ -2,13 +2,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\Repair\Verify\Phone;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
+use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Repair\Verify\Phone\SecurityCode as SecurityCodeData;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\Repair\Repair;
-use Saloon\Contracts\Body\HasBody;
-use Saloon\Traits\Body\HasJsonBody;
-use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SecurityCode extends Request implements HasBody
 {
@@ -16,9 +16,7 @@ class SecurityCode extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(public SecurityCodeData $data,public string $widgetKey,public string $sessionId)
-    {
-    }
+    public function __construct(public SecurityCodeData $data, public string $widgetKey, public string $sessionId) {}
 
     public function resolveEndpoint(): string
     {

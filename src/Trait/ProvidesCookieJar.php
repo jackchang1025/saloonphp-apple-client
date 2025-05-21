@@ -2,8 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Trait;
 
-use GuzzleHttp\Cookie\CookieJarInterface;
 use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\Cookie\CookieJarInterface;
 
 trait ProvidesCookieJar
 {
@@ -17,6 +17,7 @@ trait ProvidesCookieJar
     public function withCookieJar(CookieJarInterface $cookieJar): static
     {
         $this->cookieJar = $cookieJar;
+
         return $this;
     }
 }

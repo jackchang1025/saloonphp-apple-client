@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Request\Api;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Login;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\ReportProblem\Data\Response\Login;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class LoginRequest extends Request
 {

@@ -3,10 +3,10 @@
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\Payment\AliPay;
 
 use Modules\AppleClient\app\Service\Integrations\AppleId\Dto\Request\Payment\AliPay\AddAliPay;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AddAliPayRequest extends Request implements HasBody
 {
@@ -16,8 +16,7 @@ class AddAliPayRequest extends Request implements HasBody
 
     public function __construct(
         public AddAliPay $dto,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

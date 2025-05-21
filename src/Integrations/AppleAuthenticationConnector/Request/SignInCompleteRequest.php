@@ -7,13 +7,13 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Dto\Request\SignInComplete;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Dto\Response\SignInComplete as SignInCompleteData;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Dto\Request\SignInComplete;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleAuthenticationConnector\Dto\Response\SignInComplete as SignInCompleteData;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SignInCompleteRequest extends Request implements HasBody
 {
@@ -23,8 +23,7 @@ class SignInCompleteRequest extends Request implements HasBody
 
     public function __construct(
         protected SignInComplete $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -39,14 +38,14 @@ class SignInCompleteRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         return [
-            'key'   => $this->data->key,
+            'key' => $this->data->key,
             'value' => [
-                'b'         => $this->data->b,
-                'c'         => $this->data->c,
-                'salt'      => $this->data->salt,
-                'password'  => $this->data->password,
+                'b' => $this->data->b,
+                'c' => $this->data->c,
+                'salt' => $this->data->salt,
+                'password' => $this->data->password,
                 'iteration' => $this->data->iteration,
-                'protocol'  => $this->data->protocol,
+                'protocol' => $this->data->protocol,
             ],
         ];
     }

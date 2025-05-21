@@ -14,6 +14,5 @@ class VerifyCVV extends Data
         public ?string $partnerLogin = null,
         public ?string $smsSessionID = null,
         public string $billingType = 'Card',
-    ) {
-    }
+    ) {}
 }

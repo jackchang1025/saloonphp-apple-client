@@ -7,7 +7,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-
-class AccountLockoutException extends AppleException
-{
-}
+class AccountLockoutException extends AppleException {}

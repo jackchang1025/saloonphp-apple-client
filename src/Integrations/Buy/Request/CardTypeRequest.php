@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Buy\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class CardTypeRequest extends Request implements HasBody
 {
@@ -16,9 +16,7 @@ class CardTypeRequest extends Request implements HasBody
     public function __construct(
         public string $ccNumber,
         public string $iso3CountryCode,
-    ) {
-    }
-
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -28,12 +26,12 @@ class CardTypeRequest extends Request implements HasBody
     public function defaultBody(): array
     {
         return [
-            "ccNumber"        => $this->ccNumber,
-            "iso3CountryCode" => $this->iso3CountryCode,
+            'ccNumber' => $this->ccNumber,
+            'iso3CountryCode' => $this->iso3CountryCode,
         ];
     }
 
-    /**
+    /*
      * {cardType: "4", cardName: "MasterCard", cardCategoriesCsv: "L3,CREDIT,PIN_CAPABLE,FLEET,CORPORATE",…}
      * cardCategoriesCsv
      * :
@@ -48,5 +46,4 @@ class CardTypeRequest extends Request implements HasBody
      * :
      * 0
      */
-
 }

@@ -7,15 +7,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Token\Token;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Token\Token;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class TokenRequest extends Request
 {
     protected Method $method = Method::GET;
-
 
     public function createDtoFromResponse(Response $response): Token
     {

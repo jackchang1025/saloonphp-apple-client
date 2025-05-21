@@ -2,18 +2,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Icloud\Request\System;
 
-
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class MainJs extends Request
 {
-
     protected Method $method = Method::GET;
 
-    public function __construct(public string $version)
-    {
-    }
+    public function __construct(public string $version) {}
 
     public function resolveEndpoint(): string
     {

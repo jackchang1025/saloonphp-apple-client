@@ -2,9 +2,9 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\Ids;
 
+use Spatie\LaravelData\Attributes\MapName;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Weijiajia\SaloonphpAppleClient\Helpers\CustomSnakeCaseMapper;
-use Spatie\LaravelData\Attributes\MapName;
 
 #[MapName(CustomSnakeCaseMapper::class)]
 class Ids extends Data
@@ -15,6 +15,5 @@ class Ids extends Data
         public ?Alert $alert = null,
         public ?string $message = null,
         public bool $accountExists = false
-    ) {
-    }
+    ) {}
 }

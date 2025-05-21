@@ -8,8 +8,8 @@ class NullData extends Data
 {
     public function __construct(public ?Carbon $updateAt = null)
     {
-        if ($this->updateAt === null) {
-            $this->updateAt = now();
+        if (null === $this->updateAt) {
+            $this->updateAt = Carbon::now();
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
-use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\InitializeSessionResponse;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\AuthTvApple\Data\InitializeSessionResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class InitializeSessionRequest extends Request
 {
@@ -24,7 +24,7 @@ class InitializeSessionRequest extends Request
     protected function defaultHeaders(): array
     {
         return [
-            'Content-Type'                    => 'application/json',
+            'Content-Type' => 'application/json',
         ];
     }
 }

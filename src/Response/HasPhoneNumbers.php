@@ -14,12 +14,10 @@ trait HasPhoneNumbers
 {
     /**
      * @throws \JsonException
-     *
-     * @return Phone|null
      */
     public function getTrustedPhoneNumber(): ?Phone
     {
-        $data =  data_get($this->authorizeSing(), 'direct.twoSV.phoneNumberVerification.trustedPhoneNumber');
+        $data = data_get($this->authorizeSing(), 'direct.twoSV.phoneNumberVerification.trustedPhoneNumber');
 
         return $data ? new Phone($data) : null;
     }
@@ -27,22 +25,21 @@ trait HasPhoneNumbers
     /**
      * 获取所有信任的电话号码
      *
-     * @throws \JsonException
-     *
      * @return Collection<int,Phone>
+     *
+     * @throws \JsonException
      */
     public function getTrustedPhoneNumbers(): Collection
     {
         return collect(data_get($this->authorizeSing(), 'direct.twoSV.phoneNumberVerification.trustedPhoneNumbers', []))
-            ->map(fn (array $phone) => new Phone($phone));
+            ->map(fn (array $phone) => new Phone($phone))
+        ;
     }
 
     /**
      * 获取电话号码验证信息.
      *
      * @throws \JsonException
-     *
-     * @return array|null
      */
     public function phoneNumberVerification(): ?array
     {

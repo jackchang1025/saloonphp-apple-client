@@ -7,16 +7,15 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class RepairOptions extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected string $xAppleWidgetKey)
-    {
-    }
+    public function __construct(protected string $xAppleWidgetKey) {}
+
     public function resolveEndpoint(): string
     {
         return '/account/manage/repair/options';

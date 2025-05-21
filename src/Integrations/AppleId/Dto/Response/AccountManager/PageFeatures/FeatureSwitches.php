@@ -273,70 +273,69 @@ class FeatureSwitches extends Data
 
         /** @var bool 是否启用账户回收转换到 MAID */
         public bool $reclaimAccountConversionToMaidEnabled
-    ) {
-    }
+    ) {}
 
     /**
-     * 获取安全相关的功能开关
+     * 获取安全相关的功能开关.
      */
     public function getSecurityFeatures(): array
     {
         return [
-            'hsa'            => [
-                'allowHSA2CreateOnWeb'                      => $this->allowHSA2CreateOnWeb,
-                'disableHSA1Enrollment'                     => $this->disableHSA1Enrollment,
-                'hsa2EnrollmentOnWebEnabled'                => $this->hsa2EnrollmentOnWebEnabled,
+            'hsa' => [
+                'allowHSA2CreateOnWeb' => $this->allowHSA2CreateOnWeb,
+                'disableHSA1Enrollment' => $this->disableHSA1Enrollment,
+                'hsa2EnrollmentOnWebEnabled' => $this->hsa2EnrollmentOnWebEnabled,
                 'useEnhancedSecurityChallengeForHSA1Enroll' => $this->useEnhancedSecurityChallengeForHSA1Enroll,
             ],
             'authentication' => [
-                'enableNonPhishable'              => $this->enableNonPhishable,
-                'deviceAttestation'               => $this->deviceAttestation,
+                'enableNonPhishable' => $this->enableNonPhishable,
+                'deviceAttestation' => $this->deviceAttestation,
                 'enableAuthenticIdentityRedesign' => $this->enableAuthenticIdentityRedesign,
             ],
         ];
     }
 
     /**
-     * 获取UI相关的功能开关
+     * 获取UI相关的功能开关.
      */
     public function getUIFeatures(): array
     {
         return [
             'graphite' => [
-                'useNewGraphiteContactTab'       => $this->useNewGraphiteContactTab,
-                'useNewGraphiteSecurityTab'      => $this->useNewGraphiteSecurityTab,
-                'useNewGraphitePaymentTab'       => $this->useNewGraphitePaymentTab,
+                'useNewGraphiteContactTab' => $this->useNewGraphiteContactTab,
+                'useNewGraphiteSecurityTab' => $this->useNewGraphiteSecurityTab,
+                'useNewGraphitePaymentTab' => $this->useNewGraphitePaymentTab,
                 'useExperimentalGraphiteBundles' => $this->useExperimentalGraphiteBundles,
             ],
-            'display'  => [
+            'display' => [
                 'shouldShowRichAnimations' => $this->shouldShowRichAnimations,
-                'enableCautionImages'      => $this->enableCautionImages,
-                'showEyebrowForms'         => $this->showEyebrowForms,
+                'enableCautionImages' => $this->enableCautionImages,
+                'showEyebrowForms' => $this->showEyebrowForms,
             ],
         ];
     }
 
     /**
-     * 获取隐私相关的功能开关
+     * 获取隐私相关的功能开关.
      */
     public function getPrivacyFeatures(): array
     {
         return [
-            'gdpr'    => [
-                'enableGdprParentalConsent'       => $this->enableGdprParentalConsent,
-                'enableGdprParentalConsentCBXX'   => $this->enableGdprParentalConsentCBXX,
+            'gdpr' => [
+                'enableGdprParentalConsent' => $this->enableGdprParentalConsent,
+                'enableGdprParentalConsentCBXX' => $this->enableGdprParentalConsentCBXX,
                 'enableGdprParentalConsentPayPal' => $this->enableGdprParentalConsentPayPal,
             ],
             'privacy' => [
-                'privacyGatewayEnabled'     => $this->privacyGatewayEnabled,
-                'showPrivacySection'        => $this->showPrivacySection,
+                'privacyGatewayEnabled' => $this->privacyGatewayEnabled,
+                'showPrivacySection' => $this->showPrivacySection,
                 'showPrivacyManageSettings' => $this->showPrivacyManageSettings,
             ],
         ];
     }
 
     /**
-     * 检查是否启用了新的用户体验功能
+     * 检查是否启用了新的用户体验功能.
      */
     public function hasNewExperienceEnabled(): bool
     {
@@ -346,7 +345,7 @@ class FeatureSwitches extends Data
     }
 
     /**
-     * 检查是否启用了特定平台的功能
+     * 检查是否启用了特定平台的功能.
      */
     public function isPlatformFeatureEnabled(string $platform): bool
     {

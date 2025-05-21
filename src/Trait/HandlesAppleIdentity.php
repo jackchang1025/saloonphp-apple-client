@@ -15,14 +15,14 @@ trait HandlesAppleIdentity
     }
 
     public function getSessionId(): string
-     {
-         return md5($this->appleId());
-     }
+    {
+        return md5($this->appleId());
+    }
 
-     public function securityCode(): string
-     {
-         // Default implementation or throw exception if not specifically handled
-         // by the class using the Trait.
-         throw new \LogicException('Security code handling is not implemented by default in ProvidesAppleIdCapabilities.');
-     }
+    public function securityCode(): string
+    {
+        // Default implementation or throw exception if not specifically handled
+        // by the class using the Trait.
+        throw new \LogicException('Security code handling is not implemented by default in ProvidesAppleIdCapabilities.');
+    }
 }

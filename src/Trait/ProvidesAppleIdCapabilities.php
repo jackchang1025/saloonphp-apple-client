@@ -1,6 +1,7 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Trait;
+
 use Illuminate\Support\Traits\Conditionable;
 use Saloon\Traits\RequestProperties\HasConfig;
 

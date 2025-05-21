@@ -15,6 +15,5 @@ abstract class AddPayment extends Data
         public PhoneNumber $phoneNumber,
         public BillingAddress $billingAddress,
         public int $id,
-    ) {
-    }
+    ) {}
 }

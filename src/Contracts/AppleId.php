@@ -1,16 +1,17 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Contracts;
-use Illuminate\Support\Collection;
-use Weijiajia\SaloonphpAppleClient\Country;
-use Psr\Log\LoggerInterface;
+
 use GuzzleHttp\Cookie\CookieJarInterface;
-use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
-use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver;
-use Weijiajia\SaloonphpAppleClient\Browser\Browser;
-use Saloon\Helpers\MiddlewarePipeline;
-use Saloon\Contracts\ArrayStore as ArrayStoreContract;
+use Illuminate\Support\Collection;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
+use Saloon\Contracts\ArrayStore as ArrayStoreContract;
+use Saloon\Helpers\MiddlewarePipeline;
+use Weijiajia\SaloonphpAppleClient\Browser\Browser;
+use Weijiajia\SaloonphpAppleClient\Country;
+use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver;
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 
 interface AppleId extends ConfigurableAppleId
 {
@@ -47,5 +48,4 @@ interface AppleId extends ConfigurableAppleId
     public function config(): ArrayStoreContract;
 
     public function dispatcher(): ?EventDispatcherInterface;
-    
 }

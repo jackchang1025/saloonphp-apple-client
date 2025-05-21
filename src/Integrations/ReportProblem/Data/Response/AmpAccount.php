@@ -9,6 +9,5 @@ class AmpAccount extends Data
     public function __construct(
         public string $countryCodeISO2A,
         public string $countryCodeISO3A,
-    ) {
-    }
+    ) {}
 }

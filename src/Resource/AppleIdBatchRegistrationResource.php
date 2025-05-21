@@ -2,26 +2,25 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource;
 
-use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\AppleIdConnector;
-use JsonException;
 use Saloon\Exceptions\Request\ClientException;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Contracts\AppleId;
 use Weijiajia\SaloonphpAppleClient\Exception\AccountAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\CaptchaException;
+use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\RegistrationException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\AppleIdConnector;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\Validate;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Validate\VerificationEmail;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Verification\SendVerificationEmail;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Account\Widget\Account as AccountDto;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Account\Verification\SendVerificationEmail as SendVerificationEmailResponse;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Captcha\Captcha as CaptchaResponse;
-use Weijiajia\SaloonphpAppleClient\Contracts\AppleId;
 
 class AppleIdBatchRegistrationResource extends Resource
 {
@@ -55,7 +54,6 @@ class AppleIdBatchRegistrationResource extends Resource
     }
 
     /**
-     * @return AccountDto
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -77,12 +75,9 @@ class AppleIdBatchRegistrationResource extends Resource
     /**
      * 验证邮箱和密码
      *
-     * @param string $name
-     * @param string $password
-     * @return void
      * @throws AccountAlreadyExistsException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws RequestException
      */
     public function validateEmailAndPassword(string $name, string $password): void
@@ -105,12 +100,13 @@ class AppleIdBatchRegistrationResource extends Resource
      * 验证验证码
      *
      * @return Response 验证响应
+     *
      * @throws AccountAlreadyExistsException
      * @throws CaptchaException
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
-     * @throws RequestException|RegistrationException|VerificationCodeSentTooManyTimesException
+     * @throws \JsonException
+     * @throws RegistrationException|RequestException|VerificationCodeSentTooManyTimesException
      */
     public function validateCaptcha(Validate $validate): Response
     {
@@ -122,8 +118,6 @@ class AppleIdBatchRegistrationResource extends Resource
     }
 
     /**
-     * @param SendVerificationEmail $sendVerificationEmail
-     * @return SendVerificationEmailResponse
      * @throws FatalRequestException
      * @throws RequestException
      * @throws CaptchaException
@@ -138,16 +132,18 @@ class AppleIdBatchRegistrationResource extends Resource
                 $this->widgetAccount()->appleSessionId(),
                 $this->widgetKey()
             )
-            ->dto();
+            ->dto()
+        ;
     }
 
     /**
      * 验证邮箱验证码
      *
      * @return Response 验证响应
+     *
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws RequestException|VerificationCodeException
      */
     public function verifyEmailCode(VerificationEmail $verificationEmail): Response
@@ -163,18 +159,20 @@ class AppleIdBatchRegistrationResource extends Resource
      * 发送手机验证码
      *
      * @param int $attempts 尝试次数
+     *
      * @return Response 发送响应
+     *
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws PhoneException
      * @throws RegistrationException
      * @throws RequestException
-     * @throws VerificationCodeSentTooManyTimesException|CaptchaException
+     * @throws CaptchaException|VerificationCodeSentTooManyTimesException
      */
     public function attemptSendPhoneVerificationCode(Validate $validate, int $attempts = 5): Response
     {
-        for ($i = 0; $i < $attempts; $i++) {
+        for ($i = 0; $i < $attempts; ++$i) {
             try {
                 return $this->appleIdConnector()
                     ->getAccountResource()
@@ -182,23 +180,23 @@ class AppleIdBatchRegistrationResource extends Resource
                         $validate,
                         $this->widgetAccount()->appleSessionId(),
                         $this->widgetKey()
-                    );
+                    )
+                ;
             } catch (PhoneException $e) {
-
             }
         }
 
         throw new PhoneException("发送手机验证码失败，已尝试 {$attempts} 次");
     }
 
-
     /**
      * 验证手机验证码
      *
      * @return Response 验证响应
+     *
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws RequestException|VerificationCodeException
      */
     public function verifyPhoneCode(Validate $validate): Response
@@ -211,13 +209,13 @@ class AppleIdBatchRegistrationResource extends Resource
     }
 
     /**
-     * 创建账号
+     * 创建账号.
      *
-     * @param Validate $validate
      * @return Response 创建响应
+     *
      * @throws ClientException
      * @throws FatalRequestException
-     * @throws JsonException
+     * @throws \JsonException
      * @throws RegistrationException
      * @throws RequestException
      * @throws DescriptionNotAvailableException

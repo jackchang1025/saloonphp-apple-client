@@ -1,13 +1,14 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Resource\SetupIcloud;
+
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\Auth\BasicAuthenticator;
 use Weijiajia\SaloonphpAppleClient\Events\Authenticated\AuthenticatedEvent;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\Authenticate\Authenticate;
-use Weijiajia\SaloonphpAppleClient\Resource\Resource;
 use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\SetupIcloudConnector;
+use Weijiajia\SaloonphpAppleClient\Resource\Resource;
 
 class SetupIcloudResource extends Resource
 {
@@ -24,8 +25,7 @@ class SetupIcloudResource extends Resource
         return $this->authenticate;
     }
 
-       /**
-     * @return Authenticate
+    /**
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -36,12 +36,11 @@ class SetupIcloudResource extends Resource
             ->authenticate(
                 appleId: $this->appleId()->appleId(),
                 password: $this->appleId()->password(),
-            );
+            )
+        ;
     }
 
     /**
-     * @param string $code
-     * @return Authenticate
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -53,7 +52,8 @@ class SetupIcloudResource extends Resource
                 appleId: $this->appleId()->appleId(),
                 password: $this->appleId()->password(),
                 authCode: $code,
-            );
+            )
+        ;
 
         $this->setupIcloudConnector()->authenticate(
             new BasicAuthenticator($this->authenticate->appleAccountInfo->dsid, $this->authenticate->tokens->mmeAuthToken)

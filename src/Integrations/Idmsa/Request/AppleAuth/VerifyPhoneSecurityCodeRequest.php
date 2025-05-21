@@ -7,12 +7,12 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\VerifyPhoneSecurityCode\VerifyPhoneSecurityCode;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\VerifyPhoneSecurityCode\VerifyPhoneSecurityCode;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class VerifyPhoneSecurityCodeRequest extends Request implements HasBody
 {
@@ -23,8 +23,7 @@ class VerifyPhoneSecurityCodeRequest extends Request implements HasBody
     public function __construct(
         protected string $id,
         protected string $code
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -38,7 +37,7 @@ class VerifyPhoneSecurityCodeRequest extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return[
+        return [
             'phoneNumber' => [
                 'id' => $this->id,
             ],

@@ -10,6 +10,5 @@ class AccountNameValidateResponse extends Data
         public bool $accountNameAvailable,
         public bool $email,
         public string $pageUUID,
-    ) {
-    }
+    ) {}
 }

@@ -25,11 +25,10 @@ class AlternateEmail extends Data
         /** @var array 邮箱验证历史 */
         public array $verificationHistory = [],
 
-        /** @var string|null 添加时间 */
+        /** @var null|string 添加时间 */
         public ?string $dateAdded = null,
 
         /** @var array 邮箱用途 */
         public array $purposes = []
-    ) {
-    }
+    ) {}
 }

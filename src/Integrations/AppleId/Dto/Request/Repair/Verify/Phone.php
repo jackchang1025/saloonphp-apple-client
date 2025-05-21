@@ -4,7 +4,6 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\Repair
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
-
 class Phone extends Data
 {
     // {
@@ -35,6 +34,5 @@ class Phone extends Data
         public array $completedSteps = [],
         public array $requiredSteps = ['phoneNumber', 'phoneNumberVerification', 'privacyConsent'],
         public array $repairContext = ['repairType' => 'restricted_account_conversion', 'repairItems' => ['phoneNumber', 'privacyConsent']],
-    ) {
-    }
+    ) {}
 }

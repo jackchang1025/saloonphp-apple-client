@@ -2,22 +2,21 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Contracts;
 
-
 interface Phone
 {
-    public function phone():string;
+    public function phone(): string;
 
-    public function phoneUri():?string;
+    public function phoneUri(): ?string;
 
-    public function countryCode():string;
+    public function countryCode(): string;
 
-    public function countryCodeAlpha3():string;
+    public function countryCodeAlpha3(): string;
 
-    public function countryDialCode():string;
+    public function countryDialCode(): string;
 
-    public function format(null|string|int $format = null):string;
+    public function format(null|int|string $format = null): string;
 
-    public function id():?string;
+    public function id(): ?string;
 
     public function attemptMobileVerificationCode(int $attempts = 5): ?string;
 
@@ -26,5 +25,4 @@ interface Phone
     public function banMobile();
 
     public function finishMobile();
-
 }

@@ -1,16 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Browser;
-
-// Assuming a PSR-4 autoloader and potentially a PSR-11 container or similar for logging
-// use Psr\Log\LoggerInterface;
-
-// Use statements for the dependent classes in the same namespace
-use Weijiajia\SaloonphpAppleClient\Browser\Document;
-use Weijiajia\SaloonphpAppleClient\Browser\Location;
-use Weijiajia\SaloonphpAppleClient\Browser\Navigator;
-use Weijiajia\SaloonphpAppleClient\Browser\Screen;
 
 class Window
 {
@@ -46,7 +38,7 @@ class Window
         $screenArray = $this->screen ? $this->screen->toArray() : null;
         $locationArray = $this->location ? $this->location->toArray() : null;
 
-        $ret = [
+        return [
             'innerHeight' => $this->innerHeight,
             'innerWidth' => $this->innerWidth,
             'outerHeight' => $this->outerHeight,
@@ -63,7 +55,5 @@ class Window
         // if ($this->logger) {
         //     $this->logger->warning('Window data: ', $ret);
         // }
-
-        return $ret;
     }
-} 
+}

@@ -11,12 +11,13 @@ trait ProvidesHeaderSynchronizeDriver
 
     public function headerSynchronizeDriver(): HeaderSynchronizeDriver
     {
-        return $this->headerSynchronizeDriver ??= new ArrayStoreHeaderSynchronize();;
+        return $this->headerSynchronizeDriver ??= new ArrayStoreHeaderSynchronize();
     }
 
     public function withHeaderSynchronizeDriver(HeaderSynchronizeDriver $headerSynchronizeDriver): static
     {
         $this->headerSynchronizeDriver = $headerSynchronizeDriver;
+
         return $this;
     }
 }

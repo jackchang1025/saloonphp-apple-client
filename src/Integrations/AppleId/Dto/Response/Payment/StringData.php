@@ -8,6 +8,5 @@ class StringData extends Data
 {
     public function __construct(
         public string $value
-    ) {
-    }
+    ) {}
 }

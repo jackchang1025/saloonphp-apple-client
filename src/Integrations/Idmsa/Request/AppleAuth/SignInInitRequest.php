@@ -7,18 +7,16 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SignIn\SignInInit;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+use Saloon\CachePlugin\Contracts\Driver;
+use Saloon\CachePlugin\Drivers\FlysystemDriver;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
-use Saloon\CachePlugin\Contracts\Driver;
-use Saloon\CachePlugin\Traits\HasCaching;
-use Saloon\CachePlugin\Contracts\Cacheable;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Local\LocalFilesystemAdapter;
-use Saloon\CachePlugin\Drivers\FlysystemDriver;
+use Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Response\SignIn\SignInInit;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class SignInInitRequest extends Request implements HasBody
 {
@@ -26,9 +24,7 @@ class SignInInitRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(protected string $a, protected string $account)
-    {
-    }
+    public function __construct(protected string $a, protected string $account) {}
 
     // public function resolveCacheDriver(): Driver
     // {
@@ -52,10 +48,10 @@ class SignInInitRequest extends Request implements HasBody
 
     public function defaultBody(): array
     {
-        return[
+        return [
             'a' => $this->a,
             'accountName' => $this->account,
-            'protocols' => ['s2k','s2k_fo'],
+            'protocols' => ['s2k', 's2k_fo'],
         ];
     }
 

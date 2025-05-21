@@ -4,7 +4,7 @@ namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Dto\Request\AppleAut
 
 use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
-class JsLog extends Data 
+class JsLog extends Data
 {
     // {
     //     "type": "INFO",
@@ -19,6 +19,5 @@ class JsLog extends Data
         public string $message,
         public string $iframeId,
         public string $details,
-    ) {
-    }
+    ) {}
 }

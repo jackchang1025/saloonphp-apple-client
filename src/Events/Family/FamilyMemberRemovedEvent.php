@@ -6,8 +6,5 @@ use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\FamilyI
 
 class FamilyMemberRemovedEvent
 {
-
-    public function __construct(public FamilyInfo $familyInfo)
-    {
-    }
+    public function __construct(public FamilyInfo $familyInfo) {}
 }

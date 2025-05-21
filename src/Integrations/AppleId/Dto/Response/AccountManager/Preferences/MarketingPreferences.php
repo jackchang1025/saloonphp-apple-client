@@ -18,6 +18,5 @@ class MarketingPreferences extends Data
 
         /** @var bool 是否接收 Apple Music 通知 */
         public bool $appleMusic
-    ) {
-    }
+    ) {}
 }

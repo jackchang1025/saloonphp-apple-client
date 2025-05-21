@@ -2,10 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\Payment\WechatPay;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Payment\WechatPay\WechatPayUrl as WechatPayUrlResponse;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Payment\WechatPay\WechatPayUrl as WechatPayUrlResponse;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class WechatPayUrl extends Request
 {
@@ -13,8 +13,7 @@ class WechatPayUrl extends Request
 
     public function __construct(
         public string $countryCode = 'CHN',
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

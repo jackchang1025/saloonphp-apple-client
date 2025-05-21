@@ -16,7 +16,7 @@ trait ProvidesLogger
     public function withLogger(LoggerInterface $logger): static
     {
         $this->logger = $logger;
+
         return $this;
     }
-    
 }

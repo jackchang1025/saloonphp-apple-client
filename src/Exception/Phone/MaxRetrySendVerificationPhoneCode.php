@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception\Phone;
 
-class MaxRetrySendVerificationPhoneCode extends PhoneException
-{
-}
+class MaxRetrySendVerificationPhoneCode extends PhoneException {}

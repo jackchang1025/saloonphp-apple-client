@@ -2,9 +2,9 @@
 
 namespace Weijiajia\SaloonphpAppleClient\DataConstruct;
 
-use Spatie\LaravelData\Data as BaseData;
-use Saloon\Traits\Responses\HasResponse;
 use Saloon\Contracts\DataObjects\WithResponse;
+use Saloon\Traits\Responses\HasResponse;
+use Spatie\LaravelData\Data as BaseData;
 
 class Data extends BaseData implements WithResponse
 {
@@ -12,6 +12,6 @@ class Data extends BaseData implements WithResponse
 
     public function isSuccess(): bool
     {
-        return isset($this->status) && $this->status === 0;
+        return isset($this->status) && 0 === $this->status;
     }
 }

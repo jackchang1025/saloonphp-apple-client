@@ -7,10 +7,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\Idmsa\Request\AppleAuth;
 
-use Weijiajia\SaloonphpAppleClient\DataConstruct\NullData;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\NullData;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AuthRepairCompleteRequest extends Request
 {

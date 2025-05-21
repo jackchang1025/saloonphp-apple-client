@@ -8,6 +8,5 @@ class Tokens extends Data
 {
     public function __construct(
         public string $mmeAuthToken,
-    ) {
-    }
+    ) {}
 }

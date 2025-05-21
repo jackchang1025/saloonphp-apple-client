@@ -2,8 +2,7 @@
 
 namespace Weijiajia\SaloonphpAppleClient\ServiceError;
 
-
-enum ErrorType:string
+enum ErrorType: string
 {
     case DTO = 'dtoErrorInfo';
     case SERVICE = 'service_errors';
@@ -12,7 +11,7 @@ enum ErrorType:string
 
     public function getErrorClass(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DTO => DtoServiceError::class,
             default => ServiceError::class,
         };
@@ -20,7 +19,7 @@ enum ErrorType:string
 
     public function getServiceErrors(array $errors): array
     {
-        return match($this) {
+        return match ($this) {
             self::DTO => [new DtoServiceError($errors)],
             default => array_map(fn (array $error) => new ServiceError($error), $errors),
         };

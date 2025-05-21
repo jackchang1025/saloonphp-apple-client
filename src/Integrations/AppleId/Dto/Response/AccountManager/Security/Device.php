@@ -27,6 +27,5 @@ class Device extends Data
 
         /** @var string 设备类型 */
         public string $type
-    ) {
-    }
+    ) {}
 }

@@ -13,6 +13,5 @@ class Token extends Data
         public string $cloudKitToken,
         public string $mmeAuthToken,
         public string $mmeFMFToken,
-    ) {
-    }
+    ) {}
 }

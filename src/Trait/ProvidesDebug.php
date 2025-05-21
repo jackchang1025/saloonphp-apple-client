@@ -14,6 +14,7 @@ trait ProvidesDebug
     public function withDebug(bool $debug = true): static
     {
         $this->debug = $debug;
+
         return $this;
     }
 }

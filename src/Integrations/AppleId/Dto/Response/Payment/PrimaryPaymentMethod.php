@@ -2,11 +2,10 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Payment;
 
-use App\Models\Payment;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 #[MapOutputName(SnakeCaseMapper::class)]
 class PrimaryPaymentMethod extends Data
@@ -56,21 +55,12 @@ class PrimaryPaymentMethod extends Data
 
         /** @var bool 是否为卡支付 */
         public bool $card,
-
         public bool $weChatPay,
-
         #[MapName('id')]
         public int $paymentId,
-
         public ?string $type = null,
-
         public ?string $paymentMethodDetail = null,
-
         public ?string $partnerLogin = null,
-
         public ?string $partnerLoginTest = null,
-
-    )
-    {
-    }
+    ) {}
 }

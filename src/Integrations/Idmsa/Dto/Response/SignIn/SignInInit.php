@@ -12,6 +12,5 @@ class SignInInit extends Data
         public string $c,
         public int|string $iteration,
         public string $protocol
-    ) {
-    }
+    ) {}
 }

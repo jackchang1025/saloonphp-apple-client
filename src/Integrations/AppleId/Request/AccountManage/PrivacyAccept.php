@@ -7,16 +7,14 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class PrivacyAccept extends Request
 {
     protected Method $method = Method::OPTIONS;
 
-    public function __construct(protected string $xAppleWidgetKey)
-    {
-    }
+    public function __construct(protected string $xAppleWidgetKey) {}
 
     public function resolveEndpoint(): string
     {
@@ -32,6 +30,6 @@ class PrivacyAccept extends Request
 
     public function persistentHeaders(): array
     {
-        return ['X-Apple-ID-Session-Id','X-Apple-OAuth-Context','X-Apple-Session-Token'];
+        return ['X-Apple-ID-Session-Id', 'X-Apple-OAuth-Context', 'X-Apple-Session-Token'];
     }
 }

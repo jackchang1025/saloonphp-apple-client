@@ -16,6 +16,5 @@ class SearchQuery extends Data
         public ?string $weborder,
         public ?array $plis,
         public ?array $adamIds,
-    ) {
-    }
+    ) {}
 }

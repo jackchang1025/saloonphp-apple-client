@@ -2,11 +2,11 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\AccountManage\Payment\Card;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\AddPayment\Card\AddCardPayment;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Request\AddPayment\Card\AddCardPayment;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 
 class AddCardRequest extends Request implements HasBody
 {
@@ -16,8 +16,7 @@ class AddCardRequest extends Request implements HasBody
 
     public function __construct(
         public AddCardPayment $dto,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

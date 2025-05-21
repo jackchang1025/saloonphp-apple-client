@@ -35,6 +35,5 @@ class ShippingAddress extends Data
         public bool $preferred,
         public string $id,
         public string $type,
-    ) {
-    }
+    ) {}
 }

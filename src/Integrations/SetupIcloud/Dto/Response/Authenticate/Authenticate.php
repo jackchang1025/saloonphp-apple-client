@@ -13,11 +13,10 @@ class Authenticate extends Data
         public ?string $title = null,
         public ?string $localizedError = null,
         public ?string $message = null
-    ) {
-    }
+    ) {}
 
     public function isisVerification(): bool
     {
-        return $this->title === 'Verification Required';
+        return 'Verification Required' === $this->title;
     }
 }

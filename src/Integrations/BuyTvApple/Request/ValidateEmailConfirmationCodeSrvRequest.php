@@ -2,25 +2,24 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Request;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
-use Saloon\Enums\Method;
 use Saloon\Contracts\Body\HasBody;
+use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 use Weijiajia\SaloonphpAppleClient\Integrations\BuyTvApple\Data\ValidateEmailConfirmationCodeSrvResponse;
-use Saloon\Http\Response;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+
 class ValidateEmailConfirmationCodeSrvRequest extends Request implements HasBody
 {
     use HasJsonBody;
 
     protected Method $method = Method::POST;
 
-
     public function __construct(
         public string $email,
         public string $clientToken,
         public string $secretCode,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

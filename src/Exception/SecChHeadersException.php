@@ -2,6 +2,4 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Exception;
 
-class SecChHeadersException extends AppleException
-{
-}
+class SecChHeadersException extends AppleException {}

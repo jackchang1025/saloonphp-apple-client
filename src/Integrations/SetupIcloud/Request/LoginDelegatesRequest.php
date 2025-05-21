@@ -2,16 +2,15 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Request;
 
-use Weijiajia\SaloonphpAppleClient\Exception\AppleRequestException\LoginRequestException;
-use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
-use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\LoginDelegates;
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Auth\BasicAuthenticator;
 use Saloon\Http\Response;
 use Saloon\Traits\Body\HasXmlBody;
-use Throwable;
+use Weijiajia\SaloonphpAppleClient\Exception\LoginRequestException;
+use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
+use Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\LoginDelegates\LoginDelegates;
 
 class LoginDelegatesRequest extends Request implements HasBody
 {
@@ -19,24 +18,17 @@ class LoginDelegatesRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
+    public function __construct(
+        public string $appleId,
+        public string $password,
+        public ?string $authCode = null,
+        public string $protocolVersion = '4',
+        public string $clientId = '67BDADCA-6E66-7ED7-A01A-5EB3C5D95CE3',
+    ) {}
+
     public function resolveEndpoint(): string
     {
         return '/setup/iosbuddy/loginDelegates';
-    }
-
-    public function __construct(
-        protected readonly string $appleId,
-        protected readonly string $password,
-        protected readonly ?string $authCode = null,
-        protected readonly string $protocolVersion = '4',
-        protected readonly string $clientId = '67BDADCA-6E66-7ED7-A01A-5EB3C5D95CE3',
-    ) {
-
-    }
-
-    protected function defaultAuth(): BasicAuthenticator
-    {
-        return new BasicAuthenticator($this->appleId, $this->password);
     }
 
     public function hasRequestFailed(Response $response): ?bool
@@ -48,7 +40,7 @@ class LoginDelegatesRequest extends Request implements HasBody
         return null;
     }
 
-    public function getRequestException(Response $response, ?Throwable $senderException): ?Throwable
+    public function getRequestException(Response $response, ?\Throwable $senderException): ?\Throwable
     {
         if (!$response->ok()) {
             return null;
@@ -64,14 +56,12 @@ class LoginDelegatesRequest extends Request implements HasBody
 
         if ($this->authCode) {
             return new VerificationCodeException(
-                response: $response,
                 message: $data->statusMessage,
                 previous: $senderException
             );
         }
 
         return new LoginRequestException(
-            response: $response,
             message: $data->statusMessage,
             previous: $senderException
         );
@@ -80,25 +70,26 @@ class LoginDelegatesRequest extends Request implements HasBody
     public function defaultHeaders(): array
     {
         return [
-            "accept-language"   => "zh-cn",
-            "user-agent"        => "Accounts/113 CFNetwork/711.2.23 Darwin/14.0.0",
-            "accept"            => "*/*",
-            "connection"        => "keep-alive",
-            "x-mme-client-info" => "<iPhone7,1> <iPhone OS;8.1;12B411> <com.apple.AppleAccount/1.0 (com.apple.Accounts/113)>",
-            "proxy-connection"  => "keep-alive",
-            "x-mme-country"     => "CN",
-            "Accept-Encoding"   => "gzip, deflate",
-            "Host"              => "setup.icloud.com",
+            'accept-language' => 'zh-cn',
+            'user-agent' => 'Accounts/113 CFNetwork/711.2.23 Darwin/14.0.0',
+            'accept' => '*/*',
+            'connection' => 'keep-alive',
+            'x-mme-client-info' => '<iPhone7,1> <iPhone OS;8.1;12B411> <com.apple.AppleAccount/1.0 (com.apple.Accounts/113)>',
+            'proxy-connection' => 'keep-alive',
+            'x-mme-country' => 'CN',
+            'Accept-Encoding' => 'gzip, deflate',
+            'Host' => 'setup.icloud.com',
         ];
     }
 
-    /**
-     * @param Response $response
-     * @return LoginDelegates
-     */
     public function createDtoFromResponse(Response $response): LoginDelegates
     {
-        return loginDelegates::from($response->xmlToCollection()->toArray());
+        return LoginDelegates::from($response->xmlToCollection()->toArray());
+    }
+
+    protected function defaultAuth(): BasicAuthenticator
+    {
+        return new BasicAuthenticator($this->appleId, $this->password);
     }
 
     protected function defaultBody(): string

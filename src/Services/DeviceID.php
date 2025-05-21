@@ -1,26 +1,27 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Weijiajia\SaloonphpAppleClient\Services;
 
 use DateTime;
-use DateTimeZone;
-use DateInterval;
-use Weijiajia\SaloonphpAppleClient\Browser\Browser; // Assuming Browser class is in the root namespace
-use IntlDateFormatter; // 需要 intl 扩展
-use IntlException; // 需要 intl 扩展
+use IntlDateFormatter; // Assuming Browser class is in the root namespace
+use Weijiajia\SaloonphpAppleClient\Browser\Browser; // 需要 intl 扩展
+
+// 需要 intl 扩展
 
 class DeviceID
 {
     public int $winterTimezoneOffset;
     public int $summerTimezoneOffset;
+
     /** @var array<string, string> */
     public array $plugins = [];
 
     private Browser $browser;
     // private ?LoggerInterface $logger;
 
-    public function __construct(Browser $browser /*, ?LoggerInterface $logger = null*/)
+    public function __construct(Browser $browser /* , ?LoggerInterface $logger = null */)
     {
         $this->browser = $browser;
         // $this->logger = $logger;
@@ -30,8 +31,8 @@ class DeviceID
         // The concept of fixed winter/summer offsets might differ slightly in implementation
         // compared to Python's manual check if not using a timezone database.
         // We'll calculate based on specific dates as in the Python code.
-        $this->winterTimezoneOffset = $this->getTimezoneOffset(new DateTime("2005-01-15", new DateTimeZone($this->browser->timezone)));
-        $this->summerTimezoneOffset = $this->getTimezoneOffset(new DateTime("2005-07-15", new DateTimeZone($this->browser->timezone)));
+        $this->winterTimezoneOffset = $this->getTimezoneOffset(new \DateTime('2005-01-15', new \DateTimeZone($this->browser->timezone)));
+        $this->summerTimezoneOffset = $this->getTimezoneOffset(new \DateTime('2005-07-15', new \DateTimeZone($this->browser->timezone)));
 
         // Initialize plugins (can be done here or lazily)
         $this->getPluginVersions(); // Populate plugin versions on construction
@@ -40,14 +41,13 @@ class DeviceID
     /**
      * Generates the raw Device ID string (before encoding).
      *
-     * @return string
      * @throws \Exception
      */
     public function validate(): string
     {
         // Use the browser's configured timezone
-        $tz = new DateTimeZone($this->browser->timezone);
-        $dateTimeValue = new DateTime('now', $tz);
+        $tz = new \DateTimeZone($this->browser->timezone);
+        $dateTimeValue = new \DateTime('now', $tz);
 
         // Ensure plugin versions are loaded if not done in constructor
         // $this->getPluginVersions();
@@ -58,8 +58,8 @@ class DeviceID
         $documentData = $windowData['document'] ?? [];
 
         $attributesToRead = [
-            "TF1",
-            "015", // Version identifier?
+            'TF1',
+            '015', // Version identifier?
             $this->scriptEngineMajorVersion(),
             $this->scriptEngineMinorVersion(),
             $this->scriptEngineBuildVersion(),
@@ -101,26 +101,26 @@ class DeviceID
             $screenData['updateInterval'] ?? 'undefined',     // Need to check if Screen class has this
             $this->isDSTSupported() ? 'true' : 'false',
             $this->isDSTActive($dateTimeValue) ? 'true' : 'false',
-            "@UTC@", // Placeholder for UTC timestamp
-            (string)$this->getTimezoneOffsetInHours($dateTimeValue),
+            '@UTC@', // Placeholder for UTC timestamp
+            (string) $this->getTimezoneOffsetInHours($dateTimeValue),
             $this->getLocalPastDate($tz), // Pass timezone
-            (string)($screenData['width'] ?? ''),
-            (string)($screenData['height'] ?? ''),
+            (string) ($screenData['width'] ?? ''),
+            (string) ($screenData['height'] ?? ''),
             $this->plugins['Acrobat'] ?? '',
             $this->plugins['Flash'] ?? '',
             $this->plugins['QuickTime'] ?? '',
             $this->plugins['Java Plug-in'] ?? '', // Key adjusted for consistency
             $this->plugins['Director'] ?? '',
             $this->plugins['Office'] ?? '',
-            "", // Placeholder for "(new Date().getTime()) - str.getTime()"
-            (string)$this->winterTimezoneOffset,
-            (string)$this->summerTimezoneOffset,
+            '', // Placeholder for "(new Date().getTime()) - str.getTime()"
+            (string) $this->winterTimezoneOffset,
+            (string) $this->summerTimezoneOffset,
             $dateTimeValue->format('n/j/Y, g:i:s A'), // PHP format codes for m/d/Y, I:M:S p
-            (string)($screenData['colorDepth'] ?? ''),
-            (string)($screenData['availWidth'] ?? ''),
-            (string)($screenData['availHeight'] ?? ''),
-            (string)($screenData['availLeft'] ?? '0'), // Default to 0 if not present
-            (string)($screenData['availTop'] ?? '0'),  // Default to 0 if not present
+            (string) ($screenData['colorDepth'] ?? ''),
+            (string) ($screenData['availWidth'] ?? ''),
+            (string) ($screenData['availHeight'] ?? ''),
+            (string) ($screenData['availLeft'] ?? '0'), // Default to 0 if not present
+            (string) ($screenData['availTop'] ?? '0'),  // Default to 0 if not present
             $this->getPluginName('Acrobat'),
             $this->getPluginName('Adobe SVG'),
             $this->getPluginName('Authorware'),
@@ -139,61 +139,77 @@ class DeviceID
             $this->getPluginName('Windows Media'),
             $this->getPluginName('iPIX'),
             $this->getPluginName('nppdf.so'), // Linux PDF plugin?
-            (string)$this->getFontHeight(),
+            (string) $this->getFontHeight(),
         ];
 
         $quoted = array_map('rawurlencode', $attributesToRead);
 
-        $rslt = implode(";", $quoted) . ";";
+        $rslt = implode(';', $quoted).';';
 
         // Replace timestamp placeholder with current UTC milliseconds
-        $utcTimestamp = (string)floor(microtime(true) * 1000);
-        $rslt = str_replace(rawurlencode("@UTC@"), $utcTimestamp, $rslt);
+        $utcTimestamp = (string) floor(microtime(true) * 1000);
 
+        return str_replace(rawurlencode('@UTC@'), $utcTimestamp, $rslt);
         // Log if needed
         // $this->logger?->warning(sprintf("Device ID Raw: %s", $rslt));
-
-        return $rslt;
     }
 
     // --- Helper methods corresponding to Python class ---
 
-    public function scriptEngineMajorVersion(): string { return ""; } // Placeholder
-    public function scriptEngineMinorVersion(): string { return ""; } // Placeholder
-    public function scriptEngineBuildVersion(): string { return ""; } // Placeholder
-    public function getCompVer(string $val): string { return ""; } // Placeholder
+    public function scriptEngineMajorVersion(): string
+    {
+        return '';
+    } // Placeholder
+
+    public function scriptEngineMinorVersion(): string
+    {
+        return '';
+    } // Placeholder
+
+    public function scriptEngineBuildVersion(): string
+    {
+        return '';
+    } // Placeholder
+
+    public function getCompVer(string $val): string
+    {
+        return '';
+    } // Placeholder
 
     /**
      * Finds the first available variable value from a list of possible paths.
      *
-     * @param string[] $possibles Array of paths like ['navigator.productSub', 'navigator.appMinorVersion']
-     * @param array $windowData Pre-fetched window data array
+     * @param string[] $possibles  Array of paths like ['navigator.productSub', 'navigator.appMinorVersion']
+     * @param array    $windowData Pre-fetched window data array
+     *
      * @return string Found value or empty string
      */
     public function findVariable(array $possibles, array $windowData): string
     {
         foreach ($possibles as $possible) {
             $items = explode('.', $possible);
-            if (count($items) === 2) {
+            if (2 === count($items)) {
                 $component = $items[0]; // e.g., 'navigator'
                 $property = $items[1]; // e.g., 'productSub'
                 // Access the data using array keys from the pre-fetched windowData
-                if (isset($windowData[$component]) && isset($windowData[$component][$property])) {
+                if (isset($windowData[$component], $windowData[$component][$property])) {
                     $value = $windowData[$component][$property];
                     // Return the value if it's considered non-empty/valid
-                    if ($value !== null && $value !== '') {
+                    if (null !== $value && '' !== $value) {
                         return (string) $value;
                     }
                 }
             }
         }
-        return ""; // Return empty string if no value found
+
+        return ''; // Return empty string if no value found
     }
 
     /**
      * Gets the name (or version string) of a browser plugin.
      *
      * @param string $name Plugin name fragment to search for
+     *
      * @return string Found plugin name string or empty string
      */
     public function getPluginVersion(string $name): string
@@ -205,7 +221,8 @@ class DeviceID
                 return $plugin['name']; // Return the full name
             }
         }
-        return "";
+
+        return '';
     }
 
     /**
@@ -213,7 +230,7 @@ class DeviceID
      */
     public function getPluginVersions(): void
     {
-        $pluginNames = ["Acrobat", "Flash", "QuickTime", "Java Plug-in", "Director", "Office"];
+        $pluginNames = ['Acrobat', 'Flash', 'QuickTime', 'Java Plug-in', 'Director', 'Office'];
         $this->plugins = []; // Reset before populating
         foreach ($pluginNames as $pluginName) {
             $this->plugins[$pluginName] = $this->getPluginVersion($pluginName);
@@ -232,24 +249,20 @@ class DeviceID
 
     /**
      * Checks if Daylight Saving Time is likely supported based on offset differences.
-     *
-     * @return bool
      */
     public function isDSTSupported(): bool
     {
-        return $this->getDSTOffset() !== 0;
+        return 0 !== $this->getDSTOffset();
     }
 
     /**
      * Checks if Daylight Saving Time is active for a given date.
-     *
-     * @param DateTime $time
-     * @return bool
      */
-    public function isDSTActive(DateTime $time): bool
+    public function isDSTActive(\DateTime $time): bool
     {
         // Determine the offset for the minimum of the two fixed dates (more reliable DST check)
         $minOffset = min($this->winterTimezoneOffset, $this->summerTimezoneOffset);
+
         // Check if DST is supported and the current time's offset matches the minimum offset
         return $this->isDSTSupported() && $this->getTimezoneOffset($time) === $minOffset;
     }
@@ -257,10 +270,9 @@ class DeviceID
     /**
      * Gets the timezone offset in hours relative to GMT, adjusting for DST.
      *
-     * @param DateTime $time
      * @return int Offset in hours
      */
-    public function getTimezoneOffsetInHours(DateTime $time): int
+    public function getTimezoneOffsetInHours(\DateTime $time): int
     {
         $dstAdjustment = 0;
         if ($this->isDSTActive($time)) {
@@ -270,7 +282,8 @@ class DeviceID
         // We need to invert the sign and divide by 60.
         // The Python code adds the DST offset before dividing, let's replicate that.
         $totalOffsetMinutes = $this->getTimezoneOffset($time) + $dstAdjustment;
-        return (int)(-($totalOffsetMinutes) / 60);
+
+        return (int) (-$totalOffsetMinutes / 60);
     }
 
     /**
@@ -278,41 +291,41 @@ class DeviceID
      * Note: The original Python code used a hardcoded local time.
      * For consistency, we format a specific UTC time into the target timezone.
      *
-     * @param DateTimeZone $tz The target timezone
-     * @return string
+     * @param \DateTimeZone $tz The target timezone
      */
-    public function getLocalPastDate(DateTimeZone $tz): string
+    public function getLocalPastDate(\DateTimeZone $tz): string
     {
         // Define the date/time in UTC corresponding to the original example if possible,
         // or just use the exact date/time values given.
         // Using the literal values: 2005-06-07 21:33:44
-        $pastDate = new DateTime("2005-06-07 21:33:44", $tz); // Assume the time was local to the target timezone
+        $pastDate = new \DateTime('2005-06-07 21:33:44', $tz); // Assume the time was local to the target timezone
+
         // Original Python format: '%-m/%-d/%Y, %-I:%-M:%-S %p'
         // PHP equivalent: 'n/j/Y, g:i:s A'
         return $pastDate->format('n/j/Y, g:i:s A');
     }
 
-    public function getLocalPastDateLocaleAware(DateTimeZone $tz, string $dateTime = "now",string $locale = 'en_US',): string
+    public function getLocalPastDateLocaleAware(\DateTimeZone $tz, string $dateTime = 'now', string $locale = 'en_US'): string
     {
-        $pastDate = new DateTime($dateTime, $tz);
+        $pastDate = new \DateTime($dateTime, $tz);
 
         // IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, etc.
         // 这些常量大致对应 toLocaleString, toLocaleDateString, toLocaleTimeString 的不同形式
         // 但具体格式仍然取决于 locale 和 ICU 库版本
-        $dateType = IntlDateFormatter::SHORT;
-        $timeType = IntlDateFormatter::MEDIUM; // 或者 IntlDateFormatter::LONG, ::SHORT
+        $dateType = \IntlDateFormatter::SHORT;
+        $timeType = \IntlDateFormatter::MEDIUM; // 或者 IntlDateFormatter::LONG, ::SHORT
 
         // 创建格式化器
-        $formatter = new IntlDateFormatter(
+        $formatter = new \IntlDateFormatter(
             $locale,
             $dateType,
             $timeType,
             $tz->getName(), // 使用时区名称
-            IntlDateFormatter::GREGORIAN // 或者 IntlDateFormatter::TRADITIONAL
+            \IntlDateFormatter::GREGORIAN // 或者 IntlDateFormatter::TRADITIONAL
         );
 
         if (!$formatter) {
-            throw new IntlException("Invalid date format: {$dateTime}");
+            throw new \IntlException("Invalid date format: {$dateTime}");
         }
 
         return $formatter->format($pastDate);
@@ -322,6 +335,7 @@ class DeviceID
      * Gets the name and description of a plugin if found.
      *
      * @param string $name Plugin name fragment to search for
+     *
      * @return string "Name|Description" or just "Name" or empty string
      */
     public function getPluginName(string $name): string
@@ -332,18 +346,18 @@ class DeviceID
                 $ret = $plugin['name'];
                 $desc = $plugin['description'] ?? ''; // Assuming description might exist
                 if ($desc) {
-                    $ret .= "|" . $desc;
+                    $ret .= '|'.$desc;
                 }
+
                 return $ret;
             }
         }
-        return "";
+
+        return '';
     }
 
     /**
      * Returns a fixed font height value.
-     *
-     * @return int
      */
     public function getFontHeight(): int
     {
@@ -355,12 +369,11 @@ class DeviceID
      * PHP's offset is positive west of UTC, negative east of UTC.
      * Python's offset convention seems opposite, hence the multiplication by -1 often.
      *
-     * @param DateTime $date
      * @return int Offset in minutes
      */
-    public function getTimezoneOffset(DateTime $date): int
+    public function getTimezoneOffset(\DateTime $date): int
     {
         // Get offset for the date's timezone from UTC
         return -$date->getOffset() / 60; // Convert seconds to minutes and invert sign to match Python logic
     }
-} 
+}

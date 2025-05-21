@@ -35,6 +35,5 @@ class DefaultShippingAddress extends Data
         public string $type,
         public ?string $county = null,
         public ?string $suburb = null,
-    ) {
-    }
+    ) {}
 }

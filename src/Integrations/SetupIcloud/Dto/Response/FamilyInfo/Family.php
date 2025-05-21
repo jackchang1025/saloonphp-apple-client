@@ -14,6 +14,5 @@ class Family extends Data
         public array $invitations = [],
         public array $members = [],
         public array $outgoingTransferRequests = [],
-    ) {
-    }
+    ) {}
 }

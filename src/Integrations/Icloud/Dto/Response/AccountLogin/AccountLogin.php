@@ -27,6 +27,5 @@ class AccountLogin extends Data
         public array $apps,
         public bool $termsUpdateNeeded = false,
         public bool $isRepairNeeded = false,
-    ) {
-    }
+    ) {}
 }

@@ -11,6 +11,5 @@ class Devices extends Data
     public function __construct(
         #[DataCollectionOf(Device::class)]
         public ?DataCollection $devices = null
-    ) {
-    }
+    ) {}
 }

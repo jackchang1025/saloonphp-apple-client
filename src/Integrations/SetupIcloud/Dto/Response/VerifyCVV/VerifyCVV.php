@@ -1,8 +1,9 @@
 <?php
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\SetupIcloud\Dto\Response\VerifyCVV;
-use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
+
 use Spatie\LaravelData\Attributes\MapName;
+use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 
 class VerifyCVV extends Data
 {
@@ -12,6 +13,5 @@ class VerifyCVV extends Data
         public int $status,
         public ?string $title = null,
         public ?string $verificationToken = null,
-    ) {
-    }
+    ) {}
 }

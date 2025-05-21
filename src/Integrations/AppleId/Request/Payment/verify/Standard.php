@@ -2,8 +2,8 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Request\Payment\verify;
 
-use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Saloon\Enums\Method;
+use Weijiajia\SaloonphpAppleClient\Integrations\Request;
 use Weijiajia\SaloonphpAppleClient\Plugins\HasContentTypeJson;
 
 class Standard extends Request
@@ -16,8 +16,7 @@ class Standard extends Request
         public string $location,
         public string $widgetKey,
         public string $sessionId,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

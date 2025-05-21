@@ -2,21 +2,21 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Resource\AppleId;
 
+use Saloon\Exceptions\Request\FatalRequestException;
+use Saloon\Exceptions\Request\RequestException;
 use Weijiajia\SaloonphpAppleClient\DataConstruct\AddSecurityVerifyPhone\AddSecurityVerifyPhoneInterface;
+use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\SendPhoneSecurityCodeFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\SendPhoneSecurityCodeSuccessEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\VerifySecurityCodeFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\VerifySecurityCodeSuccessEvent;
 use Weijiajia\SaloonphpAppleClient\Exception\DescriptionNotAvailableException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneException;
 use Weijiajia\SaloonphpAppleClient\Exception\Phone\PhoneNumberAlreadyExistsException;
 use Weijiajia\SaloonphpAppleClient\Exception\StolenDeviceProtectionException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeException;
 use Weijiajia\SaloonphpAppleClient\Exception\VerificationCodeSentTooManyTimesException;
-use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountManager\DeleteSecurityVerify;
-use Saloon\Exceptions\Request\FatalRequestException;
-use Saloon\Exceptions\Request\RequestException;
-use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\SendPhoneSecurityCodeSuccessEvent;
-use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\SendPhoneSecurityCodeFailedEvent;
-use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\VerifySecurityCodeSuccessEvent;
-use Weijiajia\SaloonphpAppleClient\Events\SecurityPhone\VerifySecurityCodeFailedEvent;
+use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\SecurityVerifyPhone\SecurityVerifyPhone;
 
 class SecurityPhoneResource
 {
@@ -30,11 +30,6 @@ class SecurityPhoneResource
     }
 
     /**
-     * @param string $countryCode
-     * @param string $phoneNumber
-     * @param string $countryDialCode
-     * @param bool $nonFTEU
-     * @return SecurityVerifyPhone
      * @throws FatalRequestException
      * @throws RequestException
      * @throws StolenDeviceProtectionException
@@ -49,17 +44,12 @@ class SecurityPhoneResource
         string $countryDialCode,
         bool $nonFTEU = true
     ): SecurityVerifyPhone {
-
         try {
-
             return $this->executeSecurityVerifyPhoneCall($countryCode, $phoneNumber, $countryDialCode, $nonFTEU);
-
         } catch (RequestException $e) {
-
             $response = $e->getResponse();
 
-            if ($response->status() == 451) {
-
+            if (451 == $response->status()) {
                 $this->getAppleIdResource()->getAccountManagerResource()->authenticatePassword();
 
                 return $this->executeSecurityVerifyPhoneCall($countryCode, $phoneNumber, $countryDialCode, $nonFTEU);
@@ -68,35 +58,14 @@ class SecurityPhoneResource
             $this->getAppleIdResource()
                 ->appleId()
                 ->dispatcher()
-                ?->dispatch(new SendPhoneSecurityCodeFailedEvent($this->getAppleIdResource()->appleId(), $e));
+                ?->dispatch(new SendPhoneSecurityCodeFailedEvent($this->getAppleIdResource()->appleId(), $e))
+            ;
 
             throw $e;
         }
     }
 
-    protected function executeSecurityVerifyPhoneCall(string $countryCode, string $phoneNumber, string $countryDialCode, bool $nonFTEU): SecurityVerifyPhone
-    {
-        $response = $this->getAppleIdResource()
-            ->appleIdConnector()
-            ->getSecurityPhoneResources()
-            ->securityVerifyPhone(
-                countryCode: $countryCode,
-                phoneNumber: $phoneNumber,
-                countryDialCode: $countryDialCode,
-                nonFTEU: $nonFTEU
-            );
-
-        $this->getAppleIdResource()
-            ->appleId()
-            ->dispatcher()
-            ?->dispatch(new SendPhoneSecurityCodeSuccessEvent($this->getAppleIdResource()->appleId(), $response));
-
-        return $response;
-    }
-
     /**
-     * @param AddSecurityVerifyPhoneInterface $addSecurityVerifyPhone
-     * @return SecurityVerifyPhone
      * @throws DescriptionNotAvailableException
      * @throws FatalRequestException
      * @throws PhoneException
@@ -126,14 +95,8 @@ class SecurityPhoneResource
     }
 
     /**
-     * @param int $id
-     * @param string $phoneNumber
-     * @param string $countryCode
-     * @param string $countryDialCode
-     * @param string $code
-     * @return SecurityVerifyPhone
      * @throws VerificationCodeException
-     * @throws \Saloon\Exceptions\Request\FatalRequestException
+     * @throws FatalRequestException
      */
     public function securityVerifyPhoneSecurityCode(
         int $id,
@@ -143,7 +106,6 @@ class SecurityPhoneResource
         string $code
     ): SecurityVerifyPhone {
         try {
-
             $response = $this->getAppleIdResource()
                 ->appleIdConnector()
                 ->getSecurityPhoneResources()
@@ -153,28 +115,28 @@ class SecurityPhoneResource
                     countryCode: $countryCode,
                     countryDialCode: $countryDialCode,
                     code: $code
-                );
+                )
+            ;
 
             $this->getAppleIdResource()
                 ->appleId()
                 ->dispatcher()
-                ?->dispatch(new VerifySecurityCodeSuccessEvent($this->getAppleIdResource()->appleId(), $response));
+                ?->dispatch(new VerifySecurityCodeSuccessEvent($this->getAppleIdResource()->appleId(), $response))
+            ;
 
             return $response;
         } catch (RequestException $e) {
-
             $this->getAppleIdResource()
                 ->appleId()
                 ->dispatcher()
-                ?->dispatch(new VerifySecurityCodeFailedEvent($this->getAppleIdResource()->appleId(), $e));
+                ?->dispatch(new VerifySecurityCodeFailedEvent($this->getAppleIdResource()->appleId(), $e))
+            ;
 
             throw $e;
         }
     }
 
     /**
-     * @param int $id
-     * @return DeleteSecurityVerify
      * @throws FatalRequestException
      * @throws RequestException
      */
@@ -183,6 +145,28 @@ class SecurityPhoneResource
         return $this->getAppleIdResource()
             ->appleIdConnector()
             ->getSecurityPhoneResources()
-            ->deleteSecurityVerify($id);
+            ->deleteSecurityVerify($id)
+        ;
+    }
+
+    protected function executeSecurityVerifyPhoneCall(string $countryCode, string $phoneNumber, string $countryDialCode, bool $nonFTEU): SecurityVerifyPhone
+    {
+        $response = $this->getAppleIdResource()
+            ->appleIdConnector()
+            ->getSecurityPhoneResources()
+            ->securityVerifyPhone(
+                countryCode: $countryCode,
+                phoneNumber: $phoneNumber,
+                countryDialCode: $countryDialCode,
+                nonFTEU: $nonFTEU
+            )
+        ;
+
+        $this->getAppleIdResource()
+            ->appleId()
+            ->dispatcher()
+            ?->dispatch(new SendPhoneSecurityCodeSuccessEvent($this->getAppleIdResource()->appleId(), $response));
+
+        return $response;
     }
 }
