@@ -14,8 +14,8 @@ class TwoSV extends Data
      * @param int                     $sourceAppId             源应用ID
      */
     public function __construct(
-        public array $supportedPushModes,
-        public array $authFactors,
+        public array $supportedPushModes = [],
+        public array $authFactors = [],
         public ?string $source_returnurl = null,
         public ?int $sourceAppId = null,
         public array $emailVerification = [],
