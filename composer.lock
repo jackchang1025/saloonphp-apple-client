@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcf2624259c79196da2f18868f5b600a",
+    "content-hash": "ba1b5c0f90848e46ef8fe6fa8f118223",
     "packages": [
         {
             "name": "amphp/amp",
@@ -5467,12 +5467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin.git",
-                "reference": "ae4d198cd07b3eb278454f2196452e965659094c"
+                "reference": "7fe3751a569591fe144b92e5c8a4a6c136cb01b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackchang1025/saloonphp-http-proxy-plugin/zipball/ae4d198cd07b3eb278454f2196452e965659094c",
-                "reference": "ae4d198cd07b3eb278454f2196452e965659094c",
+                "url": "https://api.github.com/repos/jackchang1025/saloonphp-http-proxy-plugin/zipball/7fe3751a569591fe144b92e5c8a4a6c136cb01b0",
+                "reference": "7fe3751a569591fe144b92e5c8a4a6c136cb01b0",
                 "shasum": ""
             },
             "require": {
@@ -5515,7 +5515,7 @@
                 "issues": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin/issues",
                 "source": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin/tree/main"
             },
-            "time": "2025-03-19T12:01:53+00:00"
+            "time": "2025-06-26T17:54:12+00:00"
         },
         {
             "name": "weijiajia/saloonphp-logs-plugin",
@@ -9741,8 +9741,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0"
+        "php": ">=8.1"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

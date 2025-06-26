@@ -29,6 +29,7 @@ use Weijiajia\SaloonphpHttpProxyPlugin\Contracts\ProxyManagerInterface;
 use Weijiajia\SaloonphpHttpProxyPlugin\HasProxy;
 use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\SaloonphpLogsPlugin\HasLogger;
+use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize, ProxyManagerInterface, HasLoggerInterface
 {
@@ -48,31 +49,30 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public function __construct(protected AppleId $appleId)
     {
-        if($this->appleId->debug()){
+        if ($this->appleId->debug()) {
             $this->debug();
         }
 
-        if($this->appleId->headerSynchronizeDriver()){
+        if ($this->appleId->headerSynchronizeDriver()) {
             $this->withHeaderSynchronizeDriver($this->appleId->headerSynchronizeDriver());
         }
 
-        if($this->appleId->cookieJar()){
+        if ($this->appleId->cookieJar()) {
             $this->withCookies($this->appleId->cookieJar());
         }
 
-        if($this->appleId->logger()){
+        if ($this->appleId->logger()) {
             $this->withLogger($this->appleId->logger());
-        }
-
-        if($this->appleId->proxySplQueue()){
-            $this->withProxyQueue($this->appleId->proxySplQueue());
-            
-        }else{
-            $this->withProxyEnabled(false);
         }
 
         $this->middleware()->merge($this->appleId->middleware());
     }
+
+    public function getProxyQueue(): ?ProxySplQueue
+    {
+        return $this->appleId->proxySplQueue();
+    }
+
     public function appleId(): AppleId
     {
         return $this->appleId;
