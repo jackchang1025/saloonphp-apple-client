@@ -5467,12 +5467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin.git",
-                "reference": "7fe3751a569591fe144b92e5c8a4a6c136cb01b0"
+                "reference": "8160c2901afdfec081856c7156bf2288096cd7d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackchang1025/saloonphp-http-proxy-plugin/zipball/7fe3751a569591fe144b92e5c8a4a6c136cb01b0",
-                "reference": "7fe3751a569591fe144b92e5c8a4a6c136cb01b0",
+                "url": "https://api.github.com/repos/jackchang1025/saloonphp-http-proxy-plugin/zipball/8160c2901afdfec081856c7156bf2288096cd7d4",
+                "reference": "8160c2901afdfec081856c7156bf2288096cd7d4",
                 "shasum": ""
             },
             "require": {
@@ -5515,7 +5515,7 @@
                 "issues": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin/issues",
                 "source": "https://github.com/jackchang1025/saloonphp-http-proxy-plugin/tree/main"
             },
-            "time": "2025-06-26T17:54:12+00:00"
+            "time": "2025-06-26T18:08:58+00:00"
         },
         {
             "name": "weijiajia/saloonphp-logs-plugin",
