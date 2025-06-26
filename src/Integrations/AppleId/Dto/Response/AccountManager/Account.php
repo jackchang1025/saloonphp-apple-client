@@ -84,27 +84,6 @@ class Account extends Data
         public bool $recycled,
 
         /**
-         * 受益人数量.
-         *
-         * @var int
-         */
-        public int $beneficiaryCount,
-
-        /**
-         * 监护人数量.
-         *
-         * @var int
-         */
-        public int $custodianCount,
-
-        /**
-         * 是否启用恢复密钥.
-         *
-         * @var bool
-         */
-        public bool $recoveryKeyEnabled,
-
-        /**
          * 数据恢复服务状态是否在 UI 上可读.
          *
          * @var bool
@@ -242,6 +221,27 @@ class Account extends Data
          *
          * @var string
          */
-        public string $type
+        public string $type,
+
+        /**
+         * 受益人数量.
+         *
+         * @var int
+         */
+        public ?int $beneficiaryCount = null,
+
+        /**
+         * 监护人数量.
+         *
+         * @var int
+         */
+        public ?int $custodianCount = null,
+
+        /**
+         * 是否启用恢复密钥.
+         *
+         * @var bool
+         */
+        public ?bool $recoveryKeyEnabled = null,
     ) {}
 }

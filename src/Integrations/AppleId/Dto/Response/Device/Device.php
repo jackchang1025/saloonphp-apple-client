@@ -2,7 +2,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\Device;
 
-use App\Models\Devices;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
