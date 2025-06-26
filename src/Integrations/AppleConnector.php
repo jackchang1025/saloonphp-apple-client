@@ -33,7 +33,7 @@ use Weijiajia\SaloonphpHttpProxyPlugin\HasProxy;
 use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\SaloonphpLogsPlugin\HasLogger;
-
+use Saloon\Http\PendingRequest;
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize, ProxyManagerInterface, HasLoggerInterface
 {
     use HasTimeout;
@@ -48,34 +48,38 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public ?int $tries = 3;
 
+    public ?int $retryInterval = 500;
+
     public function __construct(protected AppleId $appleId)
     {
-        $this->when($this->appleId->debug(), fn (AppleConnector $connector) => $connector->debug())
-            ->when(
-                $this->appleId->headerSynchronizeDriver(),
-                fn (
-                    AppleConnector $connector,
-                    HeaderSynchronizeDriver $headerSynchronize
-                ) => $connector->withHeaderSynchronizeDriver($headerSynchronize)
-            )
-            ->when(
-                $this->appleId->cookieJar(),
-                fn (AppleConnector $connector, CookieJar $cookieJar) => $connector->withCookies($cookieJar)
-            )
-            ->when(
-                $this->appleId->logger(),
-                fn (AppleConnector $connector, LoggerInterface $logger) => $connector->withLogger($logger)
-            )
-            ->when(
-                $this->appleId->proxySplQueue(),
-                fn (AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
-                    $proxySplQueue
-                ),
-                fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
-            )
-            ->middleware()
-            ->merge($this->appleId->middleware())
-        ;
+        if($this->appleId->debug()){
+            $this->debug();
+        }
+
+        if($this->appleId->headerSynchronizeDriver()){
+            $this->withHeaderSynchronizeDriver($this->appleId->headerSynchronizeDriver());
+        }
+
+        if($this->appleId->cookieJar()){
+            $this->withCookies($this->appleId->cookieJar());
+        }
+
+        if($this->appleId->logger()){
+            $this->withLogger($this->appleId->logger());
+        }
+
+        $this->middleware()->merge($this->appleId->middleware());
+    }
+
+    public function boot(PendingRequest $pendingRequest): void
+    {
+        $pendingRequest->when(
+            value: fn (AppleConnector $connector): ProxySplQueue|null => $connector->appleId()->proxySplQueue(),
+            callback: fn (AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
+            queue: $proxySplQueue
+            ),
+            default: fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
+        );
     }
 
     public function appleId(): AppleId
