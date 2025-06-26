@@ -16,10 +16,6 @@ class DefaultShippingAddress extends Data
         public bool $shipping,
         public string $countryCode,
         public string $label,
-        public string $company,
-        public string $line1,
-        public string $line2,
-        public string $line3,
         public string $city,
         public StateProvince $stateProvince,
         public string $postalCode,
@@ -35,5 +31,9 @@ class DefaultShippingAddress extends Data
         public string $type,
         public ?string $county = null,
         public ?string $suburb = null,
+        public ?string $company = null,
+        public ?string $line1 = null,
+        public ?string $line2 = null,
+        public ?string $line3 = null,
     ) {}
 }
