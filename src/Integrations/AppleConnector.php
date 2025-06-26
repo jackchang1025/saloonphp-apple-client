@@ -7,8 +7,6 @@
 
 namespace Weijiajia\SaloonphpAppleClient\Integrations;
 
-use GuzzleHttp\Cookie\CookieJar;
-use Psr\Log\LoggerInterface;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Exceptions\Request\ServerException;
@@ -26,14 +24,12 @@ use Weijiajia\SaloonphpAppleClient\Response\Response;
 use Weijiajia\SaloonphpCookiePlugin\Contracts\CookieJarInterface;
 use Weijiajia\SaloonphpCookiePlugin\HasCookie;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronize;
-use Weijiajia\SaloonphpHeaderSynchronizePlugin\Contracts\HeaderSynchronizeDriver;
 use Weijiajia\SaloonphpHeaderSynchronizePlugin\HasHeaderSynchronize;
 use Weijiajia\SaloonphpHttpProxyPlugin\Contracts\ProxyManagerInterface;
 use Weijiajia\SaloonphpHttpProxyPlugin\HasProxy;
-use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Weijiajia\SaloonphpLogsPlugin\Contracts\HasLoggerInterface;
 use Weijiajia\SaloonphpLogsPlugin\HasLogger;
-use Saloon\Http\PendingRequest;
+
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize, ProxyManagerInterface, HasLoggerInterface
 {
     use HasTimeout;
@@ -68,20 +64,15 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
             $this->withLogger($this->appleId->logger());
         }
 
+        if($this->appleId->proxySplQueue()){
+            $this->withProxyQueue($this->appleId->proxySplQueue());
+            
+        }else{
+            $this->withProxyEnabled(false);
+        }
+
         $this->middleware()->merge($this->appleId->middleware());
     }
-
-    public function boot(PendingRequest $pendingRequest): void
-    {
-        $pendingRequest->when(
-            value: fn (AppleConnector $connector): ProxySplQueue|null => $connector->appleId()->proxySplQueue(),
-            callback: fn (AppleConnector $connector, ProxySplQueue $proxySplQueue) => $connector->withProxyQueue(
-            queue: $proxySplQueue
-            ),
-            default: fn (AppleConnector $connector) => $connector->withProxyEnabled(false)
-        );
-    }
-
     public function appleId(): AppleId
     {
         return $this->appleId;
