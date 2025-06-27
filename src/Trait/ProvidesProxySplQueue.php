@@ -13,7 +13,7 @@ trait ProvidesProxySplQueue
         return $this->proxySplQueue;
     }
 
-    public function withProxySplQueue(ProxySplQueue $proxySplQueue): static
+    public function withProxySplQueue(?ProxySplQueue $proxySplQueue = null): static
     {
         $this->proxySplQueue = $proxySplQueue;
 

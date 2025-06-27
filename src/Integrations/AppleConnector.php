@@ -85,7 +85,14 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
     {
-        return $exception instanceof FatalRequestException || $exception instanceof ServerException;
+        if ($exception instanceof FatalRequestException || $exception instanceof ServerException) {
+
+            if ($this->appleId->proxySplQueue()) {
+                $this->appleId->withProxySplQueue(null);
+            }
+        }
+
+        return true;
     }
 
     /**

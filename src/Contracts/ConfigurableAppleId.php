@@ -31,7 +31,7 @@ interface ConfigurableAppleId
     /**
      * Set or replace the ProxySplQueue instance.
      */
-    public function withProxySplQueue(ProxySplQueue $proxySplQueue): static; // 注意这里用的是具体的类，保持和 Trait 一致
+    public function withProxySplQueue(?ProxySplQueue $proxySplQueue = null): static;
 
     /**
      * Set or replace the Browser instance.
