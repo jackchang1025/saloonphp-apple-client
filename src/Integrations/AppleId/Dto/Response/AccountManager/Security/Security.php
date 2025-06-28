@@ -13,6 +13,10 @@ class Security extends Data
         #[DataCollectionOf(Device::class)]
         public DataCollection $devices,
 
+         /** @var PhoneNumber[] 电话号码列表 */
+         #[DataCollectionOf(PhoneNumber::class)]
+         public DataCollection $phoneNumbers,
+
         /** @var bool 是否支持设备退出 */
         public bool $supportsDeviceSignout = true,
 
@@ -39,10 +43,6 @@ class Security extends Data
 
         /** @var bool 联系邮箱是否已验证 */
         public bool $isContactEmailVerified = false,
-
-        /** @var PhoneNumber[] 电话号码列表 */
-        #[DataCollectionOf(PhoneNumber::class)]
-        public DataCollection $phoneNumbers,
 
         /** @var null|string 生日 */
         public ?string $birthday = null,
