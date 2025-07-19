@@ -96,12 +96,7 @@ class ReachableAtOptions extends Data
          */
         public string $iMessageLoginHandleOwnershipLearnMoreLink,
 
-        /**
-         * 主电子邮件地址
-         *
-         * @var PrimaryEmailAddress
-         */
-        public PrimaryEmailAddress $primaryEmailAddress,
+       
 
         /**
          * 备用电子邮件地址列表.
@@ -165,5 +160,12 @@ class ReachableAtOptions extends Data
          * @var array
          */
         public array $phoneNumbers = [],
+
+         /**
+         * 主电子邮件地址
+         *
+         * @var PrimaryEmailAddress
+         */
+        public ?PrimaryEmailAddress $primaryEmailAddress = null,
     ) {}
 }

@@ -7,7 +7,7 @@ use Weijiajia\SaloonphpAppleClient\DataConstruct\Data;
 class StateProvince extends Data
 {
     public function __construct(
-        public string $code,
-        public string $name,
+        public ?string $code = null,
+        public ?string $name = null,
     ) {}
 }
