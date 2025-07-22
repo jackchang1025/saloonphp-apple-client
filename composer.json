@@ -1,58 +1,57 @@
 {
-    "name": "weijiajia/saloonphp-apple-client",
-    "description": "A PHP client for Apple's APIs built with Saloon PHP HTTP client framework",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
-        "apple",
-        "api",
-        "client",
-        "saloon",
-        "php",
-        "apple-id",
-        "icloud"
-    ],
-    "authors": [
-        {
-            "name": "Wei Jiajia",
-            "email": "email@example.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Weijiajia\\SaloonphpAppleClient\\": "src/"
-        }
-    },
-    "require": {
-        "php": ">=8.1",
-        "egulias/email-validator": "^4.0",
-        "league/flysystem": "^3",
-        "matomo/device-detector": "^6.4",
-        "propaganistas/laravel-phone": "^5.0",
-        "psr/event-dispatcher": "^1.0",
-        "saloonphp/cache-plugin": "^3.0",
-        "saloonphp/saloon": "^3.0",
-        "spatie/laravel-data": "^4.13",
-        "symfony/intl": "^7.2",
-        "weijiajia/country-accept-language": "dev-main",
-        "weijiajia/saloonphp-cookie-plugin": "dev-main",
-        "weijiajia/saloonphp-header-synchronize-plugin": "dev-main",
-        "weijiajia/saloonphp-http-proxy-plugin": "dev-main",
-        "weijiajia/saloonphp-logs-plugin": "dev-main"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.75",
-        "mockery/mockery": "^1.5",
-        "pestphp/pest": "^1.23",
-        "phpunit/phpunit": "^9.0",
-        "symfony/var-dumper": "^7.2"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "weijiajia/saloonphp-apple-client",
+  "description": "A PHP client for Apple's APIs built with Saloon PHP HTTP client framework",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "apple",
+    "api",
+    "client",
+    "saloon",
+    "php",
+    "apple-id",
+    "icloud"
+  ],
+  "authors": [
+    {
+      "name": "Wei Jiajia",
+      "email": "email@example.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Weijiajia\\SaloonphpAppleClient\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "egulias/email-validator": "^4.0",
+    "league/flysystem": "^3",
+    "matomo/device-detector": "^6.4",
+    "propaganistas/laravel-phone": "^5.0",
+    "psr/event-dispatcher": "^1.0",
+    "saloonphp/cache-plugin": "^3.0",
+    "saloonphp/saloon": "^3.0",
+    "spatie/laravel-data": "^4.13",
+    "symfony/intl": "^7.2",
+    "weijiajia/country-accept-language": "dev-main",
+    "weijiajia/saloonphp-cookie-plugin": "dev-main",
+    "weijiajia/saloonphp-header-synchronize-plugin": "dev-main",
+    "weijiajia/saloonphp-http-proxy-plugin": "dev-main",
+    "weijiajia/saloonphp-logs-plugin": "dev-main"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.75",
+    "mockery/mockery": "^1.5",
+    "pestphp/pest": "3.x",
+    "symfony/var-dumper": "^7.2"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
