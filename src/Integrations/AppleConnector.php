@@ -32,7 +32,7 @@ use Weijiajia\SaloonphpLogsPlugin\HasLogger;
 use Weijiajia\SaloonphpHttpProxyPlugin\ProxySplQueue;
 use Saloon\Exceptions\Request\Statuses\ServiceUnavailableException;
 use Saloon\Exceptions\Request\Statuses\GatewayTimeoutException;
-
+use Weijiajia\SaloonphpAppleClient\Exception\ProxyConnectEstablishedException;
 abstract class AppleConnector extends Connector implements CookieJarInterface, HeaderSynchronize, ProxyManagerInterface, HasLoggerInterface
 {
     use HasTimeout;
@@ -87,7 +87,7 @@ abstract class AppleConnector extends Connector implements CookieJarInterface, H
 
     public function handleRetry(FatalRequestException|RequestException $exception, Request $request): bool
     {
-        if ($exception instanceof FatalRequestException || $exception instanceof ServiceUnavailableException || $exception instanceof GatewayTimeoutException) {
+        if ($exception instanceof ProxyConnectEstablishedException || $exception instanceof FatalRequestException || $exception instanceof ServiceUnavailableException || $exception instanceof GatewayTimeoutException) {
 
             if ($this->appleId->proxySplQueue()) {
                 $this->appleId->withProxySplQueue(null);
