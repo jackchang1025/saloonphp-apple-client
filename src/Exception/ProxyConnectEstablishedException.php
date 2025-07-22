@@ -16,6 +16,6 @@ class ProxyConnectEstablishedException extends RequestException
     public static function isProxyConnectResponse(Response $response): bool
     {
         return $response->status() === 200 
-            && str_contains(strtolower($response->body()), 'connection established');
+            && str_contains(strtolower($response->getPsrResponse()->getReasonPhrase()), 'connection established');
     }
 } 
