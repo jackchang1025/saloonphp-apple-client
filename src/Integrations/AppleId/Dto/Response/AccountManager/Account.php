@@ -13,33 +13,7 @@ use Weijiajia\SaloonphpAppleClient\Integrations\AppleId\Dto\Response\AccountMana
 class Account extends Data
 {
     public function __construct(
-        /**
-         * 账户名称.
-         *
-         * @var string
-         */
-        public string $name,
-
-        /**
-         * 格式化的账户名称.
-         *
-         * @var string
-         */
-        public string $formattedAccountName,
-
-        /**
-         * 名称前缀
-         *
-         * @var string
-         */
-        public string $namePrefix,
-
-        /**
-         * 名称后缀
-         *
-         * @var string
-         */
-        public string $nameSuffix,
+       
 
         /**
          * 个人信息.
@@ -243,5 +217,34 @@ class Account extends Data
          * @var bool
          */
         public ?bool $recoveryKeyEnabled = null,
+
+
+         /**
+         * 账户名称.
+         *
+         * @var string
+         */
+        public ?string $name = null,
+
+        /**
+         * 格式化的账户名称.
+         *
+         * @var string
+         */
+        public ?string $formattedAccountName = null,
+
+        /**
+         * 名称前缀
+         *
+         * @var string
+         */
+        public ?string $namePrefix = null,
+
+        /**
+         * 名称后缀
+         *
+         * @var string
+         */
+        public ?string $nameSuffix = null,
     ) {}
 }
